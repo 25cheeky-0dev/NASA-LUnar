@@ -2,6 +2,7 @@
 // JSON Schema/OpenAPI constraints remain authoritative; TS cannot express numerical limits.
 export type AnalysisResponse = { "dataset": Metadata; "dataset_sha256": string; "scenario": Scenario; "results": Array<CombinedCell>; "comparison": Comparison; "scope": string; "scenario_id": string; };
 export type AnalyzeResponse = { "api_version": string; "backend_version": string; "computed_at_utc": string; "source_type": string; "calculation_mode": string; "data_quality": string; "limitations": Array<string>; "provenance": { [key: string]: unknown; }; "scenarios": Array<ScenarioSummary>; [key: string]: unknown; };
+export type AtlasScreen = { "maximum_slope_deg"?: number; "maximum_roughness_m"?: (number | null); "minimum_coverage"?: number; "limit"?: number; };
 export type BackendStatus = { "status": string; "authoritative_modules": Array<string>; "datasets": Array<{ [key: string]: unknown; }>; "sources": Array<{ [key: string]: unknown; }>; "limitations": Array<string>; };
 export type CandidateResponse = { "cell_ids": Array<string>; "total": number; "offset": number; "limit": number; "filters": Filters; "units": { [key: string]: string; }; "ordering": string; };
 export type Candidates = { "nside"?: 64 | 128 | 256; "bbox"?: ([number, number, number, number] | null); "maximum_slope_deg"?: (number | null); "maximum_roughness_m"?: (number | null); "minimum_coverage"?: number; "quality"?: (string | null); "offset"?: number; "limit"?: number; };
@@ -49,6 +50,7 @@ export type RankingResponse = { "scenario_id": string; "comparison": Comparison;
 export type RecoveryRequest = { "original_site_id"?: ("R01" | "R04" | null); "original_arrival_utc"?: (string | null); "study_duration_hours"?: (number | null); "delay_hours"?: 168; "min_continuous_overlap_minutes"?: number; "candidate_site_ids"?: Array<"R01" | "R04">; "horizon_model"?: "GEOMETRIC" | "LOCAL_TERRAIN"; "observer_height_m"?: number; "step_minutes"?: number; "future_search_days"?: number; };
 export type RecoveryResponse = { "request": { [key: string]: unknown; }; "search_scope": { [key: string]: unknown; }; "original_scenarios": Array<ScenarioSummary>; "delayed_scenarios": Array<ScenarioSummary>; "ranked_eligible": Array<ScenarioSummary>; "recommended_outcome": "KEEP_SITE_AFTER_DELAY" | "SWITCH_SITE_AFTER_DELAY" | "POSTPONE_AND_REEVALUATE" | "NO_QUALIFYING_OPTION_WITHIN_SEARCH" | "INSUFFICIENT_DATA" | "NEEDS_INPUT"; "recommended_site_id": (string | null); "recommended_window": (app__schemas__VisibilityWindow | null); [key: string]: unknown; };
 export type RegionContext = { "region": { [key: string]: unknown; }; "available_datasets": Array<{ [key: string]: unknown; }>; "measurement_support": { [key: string]: unknown; }; "missing_measurements": Array<string>; "quality": string; "source_fingerprint": string; "capabilities": { [key: string]: boolean; }; "coordinate_frame": string; "tool_version": string; "observation_time"?: (string | null); "mission"?: ({ [key: string]: unknown; } | null); };
+export type RegionSelection = { "kind"?: string; "latitude_deg"?: (number | null); "longitude_deg"?: (number | null); "target_width_m"?: number; "coordinates_lonlat"?: (Array<Array<number>> | null); };
 export type ReportRef = { "report_id": string; "result": { [key: string]: unknown; }; "report_url": string; };
 export type RepresentationFit = { "dataset_id": string; "dimensions"?: number; };
 export type RepresentationResponse = { "metadata": { [key: string]: unknown; }; };
@@ -133,4 +135,8 @@ export type ScienceOperations = {
 "POST /api/v1/science/regions/{region_id}/analyze": { parameters: { region_id: string; }; body: app__regions__agent__AnalyzeRequest; response: unknown; error: ScienceError; };
 "GET /api/v1/science/region-jobs/{job_id}": { parameters: { job_id: string; }; body: never; response: unknown; error: ScienceError; };
 "GET /api/v1/science/region-jobs/{job_id}/report": { parameters: { job_id: string; }; body: never; response: unknown; error: ScienceError; };
+"POST /api/v1/science/adaptive/regions/select": { parameters: {  }; body: RegionSelection; response: unknown; error: ScienceError; };
+"GET /api/v1/science/adaptive/atlas/layers": { parameters: {  }; body: never; response: unknown; error: ScienceError; };
+"POST /api/v1/science/adaptive/atlas/screen": { parameters: {  }; body: AtlasScreen; response: unknown; error: ScienceError; };
+"GET /api/v1/science/adaptive/atlas/elevation": { parameters: {  }; body: never; response: unknown; error: ScienceError; };
 };

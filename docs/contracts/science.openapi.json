@@ -106,6 +106,46 @@
         "title": "AnalyzeResponse",
         "type": "object"
       },
+      "AtlasScreen": {
+        "additionalProperties": false,
+        "properties": {
+          "limit": {
+            "default": 50,
+            "maximum": 100.0,
+            "minimum": 1.0,
+            "title": "Limit",
+            "type": "integer"
+          },
+          "maximum_roughness_m": {
+            "anyOf": [
+              {
+                "minimum": 0.0,
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Maximum Roughness M"
+          },
+          "maximum_slope_deg": {
+            "default": 5,
+            "maximum": 90.0,
+            "minimum": 0.0,
+            "title": "Maximum Slope Deg",
+            "type": "number"
+          },
+          "minimum_coverage": {
+            "default": 1,
+            "maximum": 1.0,
+            "minimum": 0.0,
+            "title": "Minimum Coverage",
+            "type": "number"
+          }
+        },
+        "title": "AtlasScreen",
+        "type": "object"
+      },
       "BackendStatus": {
         "additionalProperties": false,
         "properties": {
@@ -3496,6 +3536,62 @@
         "title": "RegionContext",
         "type": "object"
       },
+      "RegionSelection": {
+        "additionalProperties": false,
+        "properties": {
+          "coordinates_lonlat": {
+            "anyOf": [
+              {
+                "items": {
+                  "items": {
+                    "type": "number"
+                  },
+                  "type": "array"
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Coordinates Lonlat"
+          },
+          "kind": {
+            "default": "POINT",
+            "title": "Kind",
+            "type": "string"
+          },
+          "latitude_deg": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Latitude Deg"
+          },
+          "longitude_deg": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Longitude Deg"
+          },
+          "target_width_m": {
+            "default": 250,
+            "title": "Target Width M",
+            "type": "number"
+          }
+        },
+        "title": "RegionSelection",
+        "type": "object"
+      },
       "ReportRef": {
         "additionalProperties": false,
         "properties": {
@@ -6644,6 +6740,123 @@
           }
         },
         "summary": "Recovery"
+      }
+    },
+    "/api/v1/science/adaptive/atlas/elevation": {
+      "get": {
+        "operationId": "global_elevation_api_v1_science_adaptive_atlas_elevation_get",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "summary": "Global Elevation",
+        "tags": [
+          "adaptive-atlas"
+        ]
+      }
+    },
+    "/api/v1/science/adaptive/atlas/layers": {
+      "get": {
+        "operationId": "atlas_layers_api_v1_science_adaptive_atlas_layers_get",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "summary": "Atlas Layers",
+        "tags": [
+          "adaptive-atlas"
+        ]
+      }
+    },
+    "/api/v1/science/adaptive/atlas/screen": {
+      "post": {
+        "description": "Scan whole available NSIDE-128 snapshot; descriptive screening, not landing safety.",
+        "operationId": "screen_global_terrain_api_v1_science_adaptive_atlas_screen_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AtlasScreen"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Screen Global Terrain",
+        "tags": [
+          "adaptive-atlas"
+        ]
+      }
+    },
+    "/api/v1/science/adaptive/regions/select": {
+      "post": {
+        "operationId": "select_region_api_v1_science_adaptive_regions_select_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RegionSelection"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Select Region",
+        "tags": [
+          "adaptive-atlas"
+        ]
       }
     },
     "/api/v1/science/analysis": {

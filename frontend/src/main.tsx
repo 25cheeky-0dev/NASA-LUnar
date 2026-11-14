@@ -3,7 +3,7 @@ import { createRoot } from 'react-dom/client';
 import { api, BASE, MOCK, type Cell, type Features, type Grid, type MissionRequest, type Outcome, type Recovery, type Scenario } from './lib/api';
 import { fixture, fixtureGrids, fixtureFeatures } from './mocks/recovery';
 
-import { Explorer } from './Explorer';
+import { AtlasApp } from './AtlasApp';
 
 const outcomes: globalThis.Record<Outcome,string> = {KEEP_SITE_AFTER_DELAY:'Keep the original site',SWITCH_SITE_AFTER_DELAY:'Switch the delayed site',POSTPONE_AND_REEVALUATE:'Postpone and reevaluate',NO_QUALIFYING_OPTION_WITHIN_SEARCH:'No qualifying option in this search',INSUFFICIENT_DATA:'More data is needed',NEEDS_INPUT:'Complete the mission inputs'};
 const utc = (value?:string|null) => value ? value.replace('T',' ').replace('.000','') : '—';
@@ -115,4 +115,4 @@ function App() {
     <footer><span>WISPR / THE MOON AS A SEARCHABLE MEMORY</span><span>Reference regions. Declared assumptions. Traceable results.</span></footer></main></div>;
 }
 
-createRoot(document.getElementById('root')!).render(<React.StrictMode><Explorer/></React.StrictMode>);
+createRoot(document.getElementById('root')!).render(<React.StrictMode><AtlasApp/></React.StrictMode>);
