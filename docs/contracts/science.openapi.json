@@ -6374,6 +6374,83 @@
         ]
       }
     },
+    "/api/v1/explorer/terrain-globe": {
+      "get": {
+        "operationId": "globe_api_v1_explorer_terrain_globe_get",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "summary": "Globe",
+        "tags": [
+          "digital-moon"
+        ]
+      }
+    },
+    "/api/v1/explorer/terrain-tile/{level}/{x}/{y}": {
+      "get": {
+        "operationId": "tile_api_v1_explorer_terrain_tile__level___x___y__get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "level",
+            "required": true,
+            "schema": {
+              "title": "Level",
+              "type": "integer"
+            }
+          },
+          {
+            "in": "path",
+            "name": "x",
+            "required": true,
+            "schema": {
+              "title": "X",
+              "type": "integer"
+            }
+          },
+          {
+            "in": "path",
+            "name": "y",
+            "required": true,
+            "schema": {
+              "title": "Y",
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Tile",
+        "tags": [
+          "digital-moon"
+        ]
+      }
+    },
     "/api/v1/export/{scenario_id}.csv": {
       "get": {
         "operationId": "export_api_v1_export__scenario_id__csv_get",

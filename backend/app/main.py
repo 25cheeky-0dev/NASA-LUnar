@@ -36,6 +36,8 @@ from app.regions.api import router as regions_router
 app.include_router(regions_router)
 from lunar_global.adaptive_api import router as atlas_router
 app.include_router(atlas_router)
+from app.digital_terrain import router as digital_router
+app.include_router(digital_router)
 from app.security import ResourceLimits
 if os.getenv('WISPR_RESOURCE_LIMITS', 'true') == 'true':
     app.add_middleware(ResourceLimits)

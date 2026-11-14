@@ -1,0 +1,36 @@
+# Digital Moon implementation — 15 November 2026
+
+Dedicated branch: feature/digital-moon-illumination. The canonical consolidated backend remains unchanged except for additive rendering adapters and retry handling; historical repository branches were audited in ADAPTIVE_REGIONS_RELEASE.md. Atlas milestone: 963b4be. The subsequent rendering milestone is identified by Git history on this branch.
+
+## Running application
+http://127.0.0.1:8010/ serves the built React application and FastAPI API. Run scripts/run-local.ps1 after installing locked dependencies and building frontend. A refresh loads the new default full-screen digital Moon. No external cloud deployment is claimed.
+
+## Integrated supplied patch
+Inspected README.md, adaptive_agent.py, adaptive_api.py, adaptive_selection.py, test_adaptive_selection.py, AdaptiveAtlas.tsx, adaptive-atlas.css and apply_to_repo.py supplied from the user's Temp folder. Adopted and adapted the atlas interface, available-layer discovery and global terrain screening. The supplied installer was not run: it assumed an extracted directory structure and an older GlobalExplorer entrypoint. The older selection/SQLite/LLM modules were superseded by the existing canonical region identity, polar intersection, persistence, bounded job and Gemini adapter implementations. This avoids duplicate ROI IDs and preserves working antimeridian/polar behavior. The provided originals were not edited. Existing tests were supplemented with adapter integration tests.
+
+## Implemented rendering
+- Entire Moon: radial DEM geometry on the declared 1,737,400 m lunar sphere, body-fixed coordinates, numerical shader colors for elevation/slope/roughness, LROC texture, shaded relief, solar incidence and Earth-direction screening. Elevation palette spans -8,000 to +6,000 m with saturation outside the legend; reports preserve original values.
+- Initial globe is 257×129 vertices, about 1.57 MB of JSON terrain fields. Regional quadtree tiles are 33×33 samples, streamed at close zoom with two concurrent requests, 32 cached payloads, at most 24 resident regional meshes, automatic frustum culling, disposed GPU geometry, and overlapping edge skirts. Edge samples match across neighboring tiles. Skirts are rendering geometry, not measured terrain. Exact-pole closure uses the source terminal-row mean for display only.
+- Up to 12× vertical exaggeration, with the factor visible. Refinement uses the existing native DEM; it is not high-resolution scientific evidence. Textures, numerical colors and LROC comparison remain geographically registered.
+- Explicit UTC input, bounded duration/cadence, playback and a cached time slider. NASA apparent local Sun azimuth/elevation is transformed through east/north/up to the renderer's Moon-fixed frame. GPU illumination and the terminator update from that direction. Sun and Earth have separate directional markers; Earth is not a light source.
+- Selected-site Sun/Earth angles come from the unchanged validated Horizons engine. The global Sun is a parallel-ray visualization approximation. Global Earth shading is directional ideal-horizon screening, not exact finite-distance or terrain-obstructed visibility. Its gray band is a display guard, not quantified uncertainty. Authoritative reports retain the selected observer and raw NASA query hashes.
+- Actual geographic selection, visible region boundary, parent-compatible HEALPix identity, native-pixel statistics, real tool events, optional configured Gemini planning, candidate collection, seven-day decision-engine requests and evidence downloads are connected. No mission date is inferred. Thermal, source quality, polygon drawing and global screening remain in the integrated 2D/3D atlas.
+
+## Scientific data and limits
+LOLA LDEM_4 V3.0, SHA-256 c04632eba6449af49e3108ed7c25b3b1c450600abd3690df4fc815853a1af476. Nominal native spacing 7,580.84 m. LROC and Diviner products retain the existing verified registry and file hashes. The original Site04 archive was deleted by the user and is not used or reconstructed; preserved recorded fixtures remain unchanged.
+
+Generated a lossless float32 lunar equidistant-cylindrical Cloud Optimized GeoTIFF locally (3,343,643 bytes). Native pixels were compared back to the source array, and original/source/output hashes are recorded in docs/evidence/digital-moon/cog-manifest.json. Original products were not rewritten.
+
+No high-resolution regional DEM is installed. Display interpolation, 50 m HEALPix selection, and mesh density do not create 50 m measurements. Terrain-datum compatibility and uncertainty remain unresolved; no verified terrain-shadow, physical horizon-clearance or landing-safety conclusion is enabled. GPU incidence shading is not numerical topographic ray tracing. The requested verified crater-rim shadow demonstration remains blocked by suitable validated regional geometry. The registered local DEM window/quadtree pipeline remains available for future source registration.
+
+## Actual verification
+See pytest.txt and http-verification.json in docs/evidence/digital-moon. Backend tests include native NoData, exact-pole closure, tile bounds and edge continuity. Frontend tests check the lunar coordinate adapter, east/north/up sky conversion at poles and equator, unit-vector norms, horizon invariants, existing recovery fixtures and unknown values. Production TypeScript/Vite build succeeds; Three.js retains a bundle-size advisory.
+
+Eight real HTTP checks verify global geometry, adjacent tiles, canonical atlas selection, 169 validated NASA time samples, bounded job completion and report export. Initial globe response measured 0.787 s and 1,569,126 bytes on this machine (one observed run, not a performance guarantee). Browser observed approximately 55–60 fps at global scale and issued real close-zoom tile requests. The source-backed reference-point Sun elevation changes from -24.422309707 degrees on 2026-11-15 00:00 UTC to +60.653470134 degrees on 2026-11-22 00:00 UTC; screenshots show the corresponding changed illumination. The 3-hour documented regional comparison, shifted exactly 168 hours, returns KEEP under geometric-only assumptions.
+
+Browser additionally selected MOON:HPX:NESTED:64:18090, ran the static tools, displayed -729.75 m mean elevation over 24 native pixels, and downloaded its hashed JSON report. No synthetic data was labeled as NASA science.
+
+## Deployment / authorization blockers
+Google Cloud was checked again: no active CLI account and no selected project. Required user action is local Google Cloud sign-in and selection of the intended billed project. Do not send access codes or private keys in chat. No cloud resources or model calls have been charged. Confirmed infrastructure authorization remains $25/month, not the separately mentioned possible AI credit.
+
+Gemini remains optional and unverified live; its agent daily currency budget defaults to zero. Cloud Run/PostGIS deployment, cloud job execution, distributed worker coordination, cloud persistence and a public HTTPS end-to-end test are not complete. Existing Terraform and deployment scripts are preparation, not deployment evidence. The full scientific/cloud acceptance criteria are therefore not claimed complete.

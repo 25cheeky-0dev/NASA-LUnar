@@ -172,3 +172,16 @@ def test_delay_adapter_preserves_explicit_lunar_reference(monkeypatch):
     monkeypatch.setattr(tools,'engine',lambda:SimpleNamespace(celestial=object()))
     result=run('calculate_delay_impact',Arguments(region_id=r['region_id'],mission=Mission(start_utc='2026-11-15T00:00:00Z',end_utc='2026-11-15T03:00:00Z')),context(r),{})
     assert result['status']=='COMPLETE'
+
+def test_delay_source_outage_is_not_cacheable(tmp_path,monkeypatch):
+    from types import SimpleNamespace
+    from app.regions import tools
+    monkeypatch.setenv('WISPR_GLOBAL_ROOT',str(tmp_path/'absent'))
+    r=cell_region(lookup(0,0,64));store.put('region',r['region_id'],r)
+    class UnavailableEngine:
+        def __init__(self,*args,**kwargs):pass
+        def delay(self,*args):return {'original':{'results':[{'status':'UNKNOWN','reasons':['SOURCE_UNAVAILABLE']}]},'delayed':{'results':[]},'outcome':'INSUFFICIENT_DATA'}
+    monkeypatch.setattr(tools,'AnalysisEngine',UnavailableEngine)
+    monkeypatch.setattr(tools,'engine',lambda:SimpleNamespace(celestial=object()))
+    result=run('calculate_delay_impact',Arguments(region_id=r['region_id'],mission=Mission(start_utc='2026-11-15T00:00:00Z',end_utc='2026-11-15T03:00:00Z')),context(r),{})
+    assert result['status']=='UNAVAILABLE'

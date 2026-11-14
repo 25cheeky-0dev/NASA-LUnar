@@ -1,0 +1,6 @@
+
+> wispr-frontend@0.1.0 test
+> node scripts/check-fixtures.mjs
+
+Six synthetic outcomes: UTC shifts, window consistency, missing features and shared grid IDs passed.
+Moon coordinate, wrap, NoData, ENU/Sun direction and horizon invariants passed

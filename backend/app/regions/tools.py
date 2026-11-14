@@ -114,6 +114,8 @@ def run(name,args,ctx,memo):
             req=Scenario(dataset_id='SELECTED_REGIONS',cell_ids=ids,**args.mission.model_dump(),horizon_model='GEOMETRIC_IDEAL',
                 filters={'minimum_coverage':0,'qualities':['NO_TERRAIN_EVIDENCE','SOURCE_BACKED']})
             data=service.delay(req,args.region_id) if name=='calculate_delay_impact' else service.analyze(req)
+            scenarios=[data.get('original',{}),data.get('delayed',{})] if name=='calculate_delay_impact' else [data]
+            if any(r.get('status')=='UNKNOWN' for scenario in scenarios for r in scenario.get('results',[])):status='UNAVAILABLE'
             limitations=['Representative points only; does not certify an entire polygon.','No terrain qualification or landing-safety recommendation.']
     else:
         from lunar_global.api import store as global_store,Similarity

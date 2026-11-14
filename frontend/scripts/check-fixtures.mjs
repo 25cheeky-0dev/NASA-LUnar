@@ -35,5 +35,8 @@ try {
   const back=moonLatLon(...moonXYZ(lat,lon));assert(Math.abs(back[0]-lat)<1e-8);assert(Math.abs(back[1]-lon)<1e-8);
  }
  assert.equal(measurementColor(null,0,90),'#52606c');
- console.log('Moon coordinate registration, wrap and unknown-color checks passed');
+ const {skyDirection}=await mathServer.ssrLoadModule('/src/skyMath.ts');
+ for(const [az,el,expected] of [[0,0,[0,1,0]],[90,0,[0,0,-1]],[0,90,[1,0,0]]])skyDirection(0,0,az,el).forEach((v,i)=>assert(Math.abs(v-expected[i])<1e-12));
+ for(const lat of [-90,-45,0,45,90])for(const lon of [0,90,180,270])for(const el of [-30,0,45,90]){const v=skyDirection(lat,lon,37,el),up=moonXYZ(lat,lon);assert(Math.abs(Math.hypot(...v)-1)<1e-12);assert(Math.abs(v.reduce((sum,x,i)=>sum+x*up[i],0)-Math.sin(el*Math.PI/180))<1e-12);}
+ console.log('Moon coordinate, wrap, NoData, ENU/Sun direction and horizon invariants passed');
 }finally{await mathServer.close();}
