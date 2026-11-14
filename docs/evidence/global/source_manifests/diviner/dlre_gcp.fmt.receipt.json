@@ -1,0 +1,7 @@
+{
+  "authentication": "TLS official archive; locally computed SHA256, not publisher signature",
+  "bytes": 4288,
+  "downloaded_utc": "2026-11-14T14:36:36.597872+00:00",
+  "sha256": "36675f98d6ec647a3c32004f72d6d42c85dbe23140e094fff84a2b36b79fe299",
+  "url": "https://pds-geosciences.wustl.edu/lro/urn-nasa-pds-lro_diviner_derived1/label/dlre_gcp.fmt"
+}

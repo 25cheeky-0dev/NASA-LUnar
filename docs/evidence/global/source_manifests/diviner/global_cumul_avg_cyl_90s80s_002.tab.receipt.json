@@ -1,0 +1,7 @@
+{
+  "authentication": "TLS official archive; locally computed SHA256, not publisher signature",
+  "bytes": 156211313,
+  "downloaded_utc": "2026-11-14T14:37:07.981511+00:00",
+  "sha256": "4bc7093fe5bf08ca7fd0c7ddaf94f7c452b27f705fe975a73c8614d8d41e28b6",
+  "url": "https://pds-geosciences.wustl.edu/lro/urn-nasa-pds-lro_diviner_derived1/data_derived_gcp/global_cumul_avg_cyl_90s80s_002.tab"
+}

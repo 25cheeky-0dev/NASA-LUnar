@@ -1,0 +1,31 @@
+{
+  "status_code": 200,
+  "body": {
+    "site_id": "R01",
+    "coverage": "UNAVAILABLE",
+    "verified_import_state": "UNVERIFIED",
+    "far_field_complete": false,
+    "reason": "No source-documented local DEM configured",
+    "api_version": "v1",
+    "backend_version": "0.1.0",
+    "computed_at_utc": "2026-11-14T10:42:19.371665Z",
+    "source_type": "UNAVAILABLE",
+    "calculation_mode": "TERRAIN_UNAVAILABLE",
+    "data_quality": "INSUFFICIENT_DATA",
+    "provenance": {
+      "dataset_ids": [],
+      "source_urls": [],
+      "request_params": {},
+      "raw_sha256": [],
+      "coordinate_frame": null,
+      "sample_step_minutes": null
+    },
+    "limitations": [
+      "Target-center visibility above an ideal zero-degree plane, not solar-disc illumination or radio-link margin.",
+      "Sampled intervals are MODEL_ESTIMATE; between-sample behavior is not verified continuous visibility.",
+      "No flight safety, power, battery, propellant or landing certification.",
+      "Horizons reference-sphere height is independent of observer height above local DEM ground; no terrain datum conversion is claimed.",
+      "No source-documented local DEM configured"
+    ]
+  }
+}

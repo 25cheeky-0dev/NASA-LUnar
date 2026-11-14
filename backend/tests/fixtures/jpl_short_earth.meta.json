@@ -1,0 +1,26 @@
+{
+  "params": {
+    "format": "json",
+    "COMMAND": "'399'",
+    "MAKE_EPHEM": "'YES'",
+    "OBJ_DATA": "'NO'",
+    "EPHEM_TYPE": "'OBSERVER'",
+    "CENTER": "'coord@301'",
+    "COORD_TYPE": "'GEODETIC'",
+    "SITE_COORD": "'222.51,-89.4632,0.0'",
+    "START_TIME": "'2026-11-20 00:00'",
+    "STOP_TIME": "'2026-11-20 00:10'",
+    "STEP_SIZE": "'5 min'",
+    "TIME_TYPE": "'UT'",
+    "TIME_ZONE": "'+00:00'",
+    "QUANTITIES": "'4'",
+    "APPARENT": "'AIRLESS'",
+    "CSV_FORMAT": "'YES'",
+    "ANG_FORMAT": "'DEG'",
+    "TIME_DIGITS": "'SECONDS'"
+  },
+  "parser_version": "horizons-az-el-v1",
+  "raw_sha256": "20a911d29b5c94ae5f9a49bcf3e54121cd463655893cfbb7e03fd1aa0400ba7b",
+  "fetched_at_utc": "2026-11-14T10:29:35.002654Z",
+  "source_url": "https://ssd.jpl.nasa.gov/api/horizons.api?format=json&COMMAND=%27399%27&MAKE_EPHEM=%27YES%27&OBJ_DATA=%27NO%27&EPHEM_TYPE=%27OBSERVER%27&CENTER=%27coord%40301%27&COORD_TYPE=%27GEODETIC%27&SITE_COORD=%27222.51%2C-89.4632%2C0.0%27&START_TIME=%272026-11-20+00%3A00%27&STOP_TIME=%272026-11-20+00%3A10%27&STEP_SIZE=%275+min%27&TIME_TYPE=%27UT%27&TIME_ZONE=%27%2B00%3A00%27&QUANTITIES=%274%27&APPARENT=%27AIRLESS%27&CSV_FORMAT=%27YES%27&ANG_FORMAT=%27DEG%27&TIME_DIGITS=%27SECONDS%27"
+}

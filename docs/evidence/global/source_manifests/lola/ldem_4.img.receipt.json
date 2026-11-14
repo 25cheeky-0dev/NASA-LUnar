@@ -1,0 +1,7 @@
+{
+  "authentication": "TLS official archive; locally computed SHA256, not publisher signature",
+  "bytes": 2073600,
+  "downloaded_utc": "2026-11-14T14:24:28.810386+00:00",
+  "sha256": "c04632eba6449af49e3108ed7c25b3b1c450600abd3690df4fc815853a1af476",
+  "url": "https://pds-geosciences.wustl.edu/lro/lro-l-lola-3-rdr-v1/lrolol_1xxx/data/lola_gdr/cylindrical/img/ldem_4.img"
+}

@@ -1,0 +1,684 @@
+[
+  {
+    "site_id": "R01",
+    "grid_version": "south_polar_v1",
+    "projection": {
+      "name": "MOON_SOUTH_POLAR_STEREOGRAPHIC",
+      "wkt_or_proj": "+proj=stere +lat_0=-90 +lat_ts=-90 +lon_0=0 +R=1737400 +units=m +no_defs",
+      "axis_units": "metre",
+      "reference_radius_m": 1737400.0,
+      "frame": "Canonical spherical lunar ME grid; terrain frame transformations require separate verification"
+    },
+    "center_cell_id": "SP1KM:-11:-12",
+    "cells": [
+      {
+        "cell_id": "SP1KM:-12:-13",
+        "grid_version": "south_polar_v1",
+        "cell_size_m": 1000,
+        "center_lat_deg": -89.43986557440067,
+        "center_lon_east_deg": 222.61405596961117,
+        "center_x_m": -11500.0,
+        "center_y_m": -12500.0,
+        "boundary_lonlat_east": [
+          [
+            222.70938995736145,
+            -89.4165666757411
+          ],
+          [
+            220.2363583092738,
+            -89.43841133014837
+          ],
+          [
+            222.51044707800082,
+            -89.463162834037
+          ],
+          [
+            225.0,
+            -89.44035116228117
+          ],
+          [
+            222.70938995736145,
+            -89.4165666757411
+          ]
+        ],
+        "raster_coverage": "UNVERIFIED",
+        "ephemeris_status": "UNEVALUATED",
+        "observations_represent_center_only": true
+      },
+      {
+        "cell_id": "SP1KM:-12:-12",
+        "grid_version": "south_polar_v1",
+        "cell_size_m": 1000,
+        "center_lat_deg": -89.4636695159077,
+        "center_lon_east_deg": 225.0,
+        "center_x_m": -11500.0,
+        "center_y_m": -11500.0,
+        "boundary_lonlat_east": [
+          [
+            225.0,
+            -89.44035116228117
+          ],
+          [
+            222.51044707800082,
+            -89.463162834037
+          ],
+          [
+            225.0,
+            -89.48698791395202
+          ],
+          [
+            227.48955292199915,
+            -89.463162834037
+          ],
+          [
+            225.0,
+            -89.44035116228117
+          ]
+        ],
+        "raster_coverage": "UNVERIFIED",
+        "ephemeris_status": "UNEVALUATED",
+        "observations_represent_center_only": true
+      },
+      {
+        "cell_id": "SP1KM:-12:-11",
+        "grid_version": "south_polar_v1",
+        "cell_size_m": 1000,
+        "center_lat_deg": -89.4864582233403,
+        "center_lon_east_deg": 227.6025622024998,
+        "center_x_m": -11500.0,
+        "center_y_m": -10500.0,
+        "boundary_lonlat_east": [
+          [
+            227.48955292199915,
+            -89.463162834037
+          ],
+          [
+            225.0,
+            -89.48698791395202
+          ],
+          [
+            227.72631099390625,
+            -89.50975146742279
+          ],
+          [
+            230.1944289077348,
+            -89.48487241966173
+          ],
+          [
+            227.48955292199915,
+            -89.463162834037
+          ]
+        ],
+        "raster_coverage": "UNVERIFIED",
+        "ephemeris_status": "UNEVALUATED",
+        "observations_represent_center_only": true
+      },
+      {
+        "cell_id": "SP1KM:-11:-13",
+        "grid_version": "south_polar_v1",
+        "cell_size_m": 1000,
+        "center_lat_deg": -89.46164564982111,
+        "center_lon_east_deg": 220.0302592718897,
+        "center_x_m": -10500.0,
+        "center_y_m": -12500.0,
+        "boundary_lonlat_east": [
+          [
+            220.2363583092738,
+            -89.43841133014837
+          ],
+          [
+            217.56859202882748,
+            -89.45912646726028
+          ],
+          [
+            219.80557109226518,
+            -89.48487241966173
+          ],
+          [
+            222.51044707800082,
+            -89.463162834037
+          ],
+          [
+            220.2363583092738,
+            -89.43841133014837
+          ]
+        ],
+        "raster_coverage": "UNVERIFIED",
+        "ephemeris_status": "UNEVALUATED",
+        "observations_represent_center_only": true
+      },
+      {
+        "cell_id": "SP1KM:-11:-12",
+        "grid_version": "south_polar_v1",
+        "cell_size_m": 1000,
+        "center_lat_deg": -89.4864582233403,
+        "center_lon_east_deg": 222.3974377975002,
+        "center_x_m": -10500.0,
+        "center_y_m": -11500.0,
+        "boundary_lonlat_east": [
+          [
+            222.51044707800082,
+            -89.463162834037
+          ],
+          [
+            219.80557109226518,
+            -89.48487241966173
+          ],
+          [
+            222.27368900609375,
+            -89.50975146742279
+          ],
+          [
+            225.0,
+            -89.48698791395202
+          ],
+          [
+            222.51044707800082,
+            -89.463162834037
+          ]
+        ],
+        "raster_coverage": "UNVERIFIED",
+        "ephemeris_status": "UNEVALUATED",
+        "observations_represent_center_only": true
+      },
+      {
+        "cell_id": "SP1KM:-11:-11",
+        "grid_version": "south_polar_v1",
+        "cell_size_m": 1000,
+        "center_lat_deg": -89.51030635448309,
+        "center_lon_east_deg": 225.0,
+        "center_x_m": -10500.0,
+        "center_y_m": -10500.0,
+        "boundary_lonlat_east": [
+          [
+            225.0,
+            -89.48698791395202
+          ],
+          [
+            222.27368900609375,
+            -89.50975146742279
+          ],
+          [
+            225.0,
+            -89.53362483556982
+          ],
+          [
+            227.72631099390625,
+            -89.50975146742279
+          ],
+          [
+            225.0,
+            -89.48698791395202
+          ]
+        ],
+        "raster_coverage": "UNVERIFIED",
+        "ephemeris_status": "UNEVALUATED",
+        "observations_represent_center_only": true
+      },
+      {
+        "cell_id": "SP1KM:-10:-13",
+        "grid_version": "south_polar_v1",
+        "cell_size_m": 1000,
+        "center_lat_deg": -89.48224020739151,
+        "center_lon_east_deg": 217.23483398157467,
+        "center_x_m": -9500.0,
+        "center_y_m": -12500.0,
+        "boundary_lonlat_east": [
+          [
+            217.56859202882748,
+            -89.45912646726028
+          ],
+          [
+            214.69515353123396,
+            -89.47857743439259
+          ],
+          [
+            216.86989764584402,
+            -89.50533477938205
+          ],
+          [
+            219.80557109226518,
+            -89.48487241966173
+          ],
+          [
+            217.56859202882748,
+            -89.45912646726028
+          ]
+        ],
+        "raster_coverage": "UNVERIFIED",
+        "ephemeris_status": "UNEVALUATED",
+        "observations_represent_center_only": true
+      },
+      {
+        "cell_id": "SP1KM:-10:-12",
+        "grid_version": "south_polar_v1",
+        "cell_size_m": 1000,
+        "center_lat_deg": -89.50809056197572,
+        "center_lon_east_deg": 219.5596679689945,
+        "center_x_m": -9500.0,
+        "center_y_m": -11500.0,
+        "boundary_lonlat_east": [
+          [
+            219.80557109226518,
+            -89.48487241966173
+          ],
+          [
+            216.86989764584402,
+            -89.50533477938205
+          ],
+          [
+            219.28940686250033,
+            -89.53129878634819
+          ],
+          [
+            222.27368900609375,
+            -89.50975146742279
+          ],
+          [
+            219.80557109226518,
+            -89.48487241966173
+          ]
+        ],
+        "raster_coverage": "UNVERIFIED",
+        "ephemeris_status": "UNEVALUATED",
+        "observations_represent_center_only": true
+      },
+      {
+        "cell_id": "SP1KM:-10:-11",
+        "grid_version": "south_polar_v1",
+        "cell_size_m": 1000,
+        "center_lat_deg": -89.53304223696071,
+        "center_lon_east_deg": 222.13759477388825,
+        "center_x_m": -9500.0,
+        "center_y_m": -10500.0,
+        "boundary_lonlat_east": [
+          [
+            222.27368900609375,
+            -89.50975146742279
+          ],
+          [
+            219.28940686250033,
+            -89.53129878634819
+          ],
+          [
+            221.98721249581664,
+            -89.55633013392185
+          ],
+          [
+            225.0,
+            -89.53362483556982
+          ],
+          [
+            222.27368900609375,
+            -89.50975146742279
+          ]
+        ],
+        "raster_coverage": "UNVERIFIED",
+        "ephemeris_status": "UNEVALUATED",
+        "observations_represent_center_only": true
+      }
+    ],
+    "api_version": "v1",
+    "backend_version": "0.1.0",
+    "computed_at_utc": "2026-11-14T10:40:03.772084Z",
+    "source_type": "UNAVAILABLE",
+    "calculation_mode": "NOT_CALCULATED",
+    "data_quality": "INSUFFICIENT_DATA",
+    "provenance": {
+      "dataset_ids": [],
+      "source_urls": [],
+      "request_params": {},
+      "raw_sha256": [],
+      "coordinate_frame": null,
+      "sample_step_minutes": null
+    },
+    "limitations": [
+      "Target-center visibility above an ideal zero-degree plane, not solar-disc illumination or radio-link margin.",
+      "Sampled intervals are MODEL_ESTIMATE; between-sample behavior is not verified continuous visibility.",
+      "No flight safety, power, battery, propellant or landing certification.",
+      "Horizons reference-sphere height is independent of observer height above local DEM ground; no terrain datum conversion is claimed.",
+      "Grid construction performs no astronomy requests. Reference-point results do not evaluate a containing cell center."
+    ]
+  },
+  {
+    "site_id": "R04",
+    "grid_version": "south_polar_v1",
+    "projection": {
+      "name": "MOON_SOUTH_POLAR_STEREOGRAPHIC",
+      "wkt_or_proj": "+proj=stere +lat_0=-90 +lat_ts=-90 +lon_0=0 +R=1737400 +units=m +no_defs",
+      "axis_units": "metre",
+      "reference_radius_m": 1737400.0,
+      "frame": "Canonical spherical lunar ME grid; terrain frame transformations require separate verification"
+    },
+    "center_cell_id": "SP1KM:-2:-8",
+    "cells": [
+      {
+        "cell_id": "SP1KM:-3:-9",
+        "grid_version": "south_polar_v1",
+        "cell_size_m": 1000,
+        "center_lat_deg": -89.70781581690379,
+        "center_lon_east_deg": 196.38954033403476,
+        "center_x_m": -2500.0,
+        "center_y_m": -8500.0,
+        "boundary_lonlat_east": [
+          [
+            198.434948822922,
+            -89.68714507873804
+          ],
+          [
+            192.52880770915152,
+            -89.69595962537471
+          ],
+          [
+            194.03624346792648,
+            -89.7280578941465
+          ],
+          [
+            200.55604521958347,
+            -89.7182373844892
+          ],
+          [
+            198.434948822922,
+            -89.68714507873804
+          ]
+        ],
+        "raster_coverage": "UNVERIFIED",
+        "ephemeris_status": "UNEVALUATED",
+        "observations_represent_center_only": true
+      },
+      {
+        "cell_id": "SP1KM:-3:-8",
+        "grid_version": "south_polar_v1",
+        "cell_size_m": 1000,
+        "center_lat_deg": -89.73928736768517,
+        "center_lon_east_deg": 198.434948822922,
+        "center_x_m": -2500.0,
+        "center_y_m": -7500.0,
+        "boundary_lonlat_east": [
+          [
+            200.55604521958347,
+            -89.7182373844892
+          ],
+          [
+            194.03624346792648,
+            -89.7280578941465
+          ],
+          [
+            195.94539590092288,
+            -89.7599177157064
+          ],
+          [
+            203.19859051364818,
+            -89.7488483032068
+          ],
+          [
+            200.55604521958347,
+            -89.7182373844892
+          ]
+        ],
+        "raster_coverage": "UNVERIFIED",
+        "ephemeris_status": "UNEVALUATED",
+        "observations_represent_center_only": true
+      },
+      {
+        "cell_id": "SP1KM:-3:-7",
+        "grid_version": "south_polar_v1",
+        "cell_size_m": 1000,
+        "center_lat_deg": -89.77033590561167,
+        "center_lon_east_deg": 201.03751102542182,
+        "center_x_m": -2500.0,
+        "center_y_m": -6500.0,
+        "boundary_lonlat_east": [
+          [
+            203.19859051364818,
+            -89.7488483032068
+          ],
+          [
+            195.94539590092288,
+            -89.7599177157064
+          ],
+          [
+            198.434948822922,
+            -89.7914297645937
+          ],
+          [
+            206.565051177078,
+            -89.7787778888221
+          ],
+          [
+            203.19859051364818,
+            -89.7488483032068
+          ]
+        ],
+        "raster_coverage": "UNVERIFIED",
+        "ephemeris_status": "UNEVALUATED",
+        "observations_represent_center_only": true
+      },
+      {
+        "cell_id": "SP1KM:-2:-9",
+        "grid_version": "south_polar_v1",
+        "cell_size_m": 1000,
+        "center_lat_deg": -89.71535729469548,
+        "center_lon_east_deg": 190.0079798014413,
+        "center_x_m": -1500.0,
+        "center_y_m": -8500.0,
+        "boundary_lonlat_east": [
+          [
+            192.52880770915152,
+            -89.69595962537471
+          ],
+          [
+            186.3401917459099,
+            -89.7013732152873
+          ],
+          [
+            187.1250163489018,
+            -89.7341242584273
+          ],
+          [
+            194.03624346792648,
+            -89.7280578941465
+          ],
+          [
+            192.52880770915152,
+            -89.69595962537471
+          ]
+        ],
+        "raster_coverage": "UNVERIFIED",
+        "ephemeris_status": "UNEVALUATED",
+        "observations_represent_center_only": true
+      },
+      {
+        "cell_id": "SP1KM:-2:-8",
+        "grid_version": "south_polar_v1",
+        "cell_size_m": 1000,
+        "center_lat_deg": -89.74776807935152,
+        "center_lon_east_deg": 191.3099324740202,
+        "center_x_m": -1500.0,
+        "center_y_m": -7500.0,
+        "boundary_lonlat_east": [
+          [
+            194.03624346792648,
+            -89.7280578941465
+          ],
+          [
+            187.1250163489018,
+            -89.7341242584273
+          ],
+          [
+            188.13010235415598,
+            -89.76681145215035
+          ],
+          [
+            195.94539590092288,
+            -89.7599177157064
+          ],
+          [
+            194.03624346792648,
+            -89.7280578941465
+          ]
+        ],
+        "raster_coverage": "UNVERIFIED",
+        "ephemeris_status": "UNEVALUATED",
+        "observations_represent_center_only": true
+      },
+      {
+        "cell_id": "SP1KM:-2:-7",
+        "grid_version": "south_polar_v1",
+        "cell_size_m": 1000,
+        "center_lat_deg": -89.7800103305347,
+        "center_lon_east_deg": 192.9946167919165,
+        "center_x_m": -1500.0,
+        "center_y_m": -6500.0,
+        "boundary_lonlat_east": [
+          [
+            195.94539590092288,
+            -89.7599177157064
+          ],
+          [
+            188.13010235415598,
+            -89.76681145215035
+          ],
+          [
+            189.46232220802563,
+            -89.7994035542928
+          ],
+          [
+            198.434948822922,
+            -89.7914297645937
+          ],
+          [
+            195.94539590092288,
+            -89.7599177157064
+          ]
+        ],
+        "raster_coverage": "UNVERIFIED",
+        "ephemeris_status": "UNEVALUATED",
+        "observations_represent_center_only": true
+      },
+      {
+        "cell_id": "SP1KM:-1:-9",
+        "grid_version": "south_polar_v1",
+        "cell_size_m": 1000,
+        "center_lat_deg": -89.71920397905552,
+        "center_lon_east_deg": 183.36646066342982,
+        "center_x_m": -500.0,
+        "center_y_m": -8500.0,
+        "boundary_lonlat_east": [
+          [
+            186.3401917459099,
+            -89.7013732152873
+          ],
+          [
+            180.0,
+            -89.70319968774245
+          ],
+          [
+            180.0,
+            -89.73617737639924
+          ],
+          [
+            187.1250163489018,
+            -89.7341242584273
+          ],
+          [
+            186.3401917459099,
+            -89.7013732152873
+          ]
+        ],
+        "raster_coverage": "UNVERIFIED",
+        "ephemeris_status": "UNEVALUATED",
+        "observations_represent_center_only": true
+      },
+      {
+        "cell_id": "SP1KM:-1:-8",
+        "grid_version": "south_polar_v1",
+        "cell_size_m": 1000,
+        "center_lat_deg": -89.75211721793112,
+        "center_lon_east_deg": 183.81407483429035,
+        "center_x_m": -500.0,
+        "center_y_m": -7500.0,
+        "boundary_lonlat_east": [
+          [
+            187.1250163489018,
+            -89.7341242584273
+          ],
+          [
+            180.0,
+            -89.73617737639924
+          ],
+          [
+            180.0,
+            -89.76915510875575
+          ],
+          [
+            188.13010235415598,
+            -89.76681145215035
+          ],
+          [
+            187.1250163489018,
+            -89.7341242584273
+          ]
+        ],
+        "raster_coverage": "UNVERIFIED",
+        "ephemeris_status": "UNEVALUATED",
+        "observations_represent_center_only": true
+      },
+      {
+        "cell_id": "SP1KM:-1:-7",
+        "grid_version": "south_polar_v1",
+        "cell_size_m": 1000,
+        "center_lat_deg": -89.78501073710297,
+        "center_lon_east_deg": 184.3987053549955,
+        "center_x_m": -500.0,
+        "center_y_m": -6500.0,
+        "boundary_lonlat_east": [
+          [
+            188.13010235415598,
+            -89.76681145215035
+          ],
+          [
+            180.0,
+            -89.76915510875575
+          ],
+          [
+            180.0,
+            -89.80213287934959
+          ],
+          [
+            189.46232220802563,
+            -89.7994035542928
+          ],
+          [
+            188.13010235415598,
+            -89.76681145215035
+          ]
+        ],
+        "raster_coverage": "UNVERIFIED",
+        "ephemeris_status": "UNEVALUATED",
+        "observations_represent_center_only": true
+      }
+    ],
+    "api_version": "v1",
+    "backend_version": "0.1.0",
+    "computed_at_utc": "2026-11-14T10:40:03.772084Z",
+    "source_type": "UNAVAILABLE",
+    "calculation_mode": "NOT_CALCULATED",
+    "data_quality": "INSUFFICIENT_DATA",
+    "provenance": {
+      "dataset_ids": [],
+      "source_urls": [],
+      "request_params": {},
+      "raw_sha256": [],
+      "coordinate_frame": null,
+      "sample_step_minutes": null
+    },
+    "limitations": [
+      "Target-center visibility above an ideal zero-degree plane, not solar-disc illumination or radio-link margin.",
+      "Sampled intervals are MODEL_ESTIMATE; between-sample behavior is not verified continuous visibility.",
+      "No flight safety, power, battery, propellant or landing certification.",
+      "Horizons reference-sphere height is independent of observer height above local DEM ground; no terrain datum conversion is claimed.",
+      "Grid construction performs no astronomy requests. Reference-point results do not evaluate a containing cell center."
+    ]
+  }
+]

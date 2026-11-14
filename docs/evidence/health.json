@@ -1,0 +1,19 @@
+{
+  "status_code": 200,
+  "body": {
+    "status": "DEGRADED",
+    "horizons_live": false,
+    "horizons_probe_status": "NOT_TESTED",
+    "cache_available": true,
+    "dem_status_by_site": {
+      "R01": "UNAVAILABLE",
+      "R04": "UNAVAILABLE"
+    },
+    "llm_provider_status": "UNCONFIGURED",
+    "mode": "GEOMETRIC",
+    "warnings": [
+      "Team-supplied reference-region coordinates; not certified landing sites or independently verified NASA DEM centers.",
+      "Live Horizons has not succeeded in this process."
+    ]
+  }
+}

@@ -1,0 +1,658 @@
+{
+  "metadata": {
+    "dataset_id": "SITE04_NW_ORIGIN_PRESERVED_2KM_100M__tiles_3.0.0",
+    "grid_version": "2.0.0",
+    "processing_version": "3.0.0",
+    "reference_radius_m": 1737400.0,
+    "scope": "REGIONAL",
+    "coordinate_frame": "MOON_ME_DE421",
+    "latitude_type": "planetocentric_spherical",
+    "longitude_convention": "east_positive_-180_180",
+    "elevation_units": "m",
+    "elevation_datum": "DEM height Z in metres as defined by NASA PGDA; verify JPL Horizons compatibility before using observer elevation",
+    "projected_crs": "PROJCS[\"unnamed\",GEOGCS[\"unnamed ellipse\",DATUM[\"unknown\",SPHEROID[\"unnamed\",1737400,0]],PRIMEM[\"Greenwich\",0],UNIT[\"degree\",0.0174532925199433,AUTHORITY[\"EPSG\",\"9122\"]]],PROJECTION[\"Polar_Stereographic\"],PARAMETER[\"latitude_of_origin\",-90],PARAMETER[\"central_meridian\",0],PARAMETER[\"false_easting\",0],PARAMETER[\"false_northing\",0],UNIT[\"metre\",1],AXIS[\"Easting\",NORTH],AXIS[\"Northing\",NORTH]]",
+    "source": {
+      "original_metadata": {
+        "grid_version": "2.0.0",
+        "site": "NASA LOLA Site04 Shackleton Rim",
+        "grid_configuration_id": "SITE04_NW_ORIGIN_PRESERVED_2KM_100M",
+        "source": {
+          "filename": "Site04_final_adj_5mpp_surf.tif",
+          "sha256": "38ff70dbdf2f066c2cfa94a646c3a59d653ce7f6b4528b15fc1b43ee397ce758",
+          "url": "https://pgda.gsfc.nasa.gov/data/LOLA_5mpp/Site04/Site04_final_adj_5mpp_surf.tif",
+          "documentation": "https://pgda.gsfc.nasa.gov/products/78",
+          "raster_width": 3200,
+          "raster_height": 3200,
+          "native_pixel_m": 5,
+          "nodata": "NaN",
+          "data_type": "float32",
+          "source_affine": [
+            5.0,
+            0.0,
+            -9000.0,
+            0.0,
+            -5.0,
+            1000.0
+          ]
+        },
+        "crs": {
+          "name": "WISPR:MOON_ME_DE421_SOUTH_POLAR_STEREOGRAPHIC",
+          "wkt": "PROJCS[\"unnamed\",GEOGCS[\"unnamed ellipse\",DATUM[\"unknown\",SPHEROID[\"unnamed\",1737400,0]],PRIMEM[\"Greenwich\",0],UNIT[\"degree\",0.0174532925199433,AUTHORITY[\"EPSG\",\"9122\"]]],PROJECTION[\"Polar_Stereographic\"],PARAMETER[\"latitude_of_origin\",-90],PARAMETER[\"central_meridian\",0],PARAMETER[\"false_easting\",0],PARAMETER[\"false_northing\",0],UNIT[\"metre\",1],AXIS[\"Easting\",NORTH],AXIS[\"Northing\",NORTH]]",
+          "frame": "MOON_ME / DE421",
+          "body": "Moon",
+          "radius_m": 1737400,
+          "projection": "South polar stereographic",
+          "central_meridian_deg": 0,
+          "latitude_origin_deg": -90,
+          "longitude_convention": "east-positive [-180,180)",
+          "latitude_convention": "planetocentric latitude in degrees (on source sphere)",
+          "vertical_reference": "DEM height Z in metres as defined by NASA PGDA; verify JPL Horizons compatibility before using observer elevation",
+          "geojson_note": "Project-specific GeoJSON with lunar metres, NOT RFC7946 WGS84"
+        },
+        "grid": {
+          "rows": 20,
+          "columns": 20,
+          "cells": 400,
+          "cell_size_m": 100,
+          "origin_upper_left_m": [
+            -1500.0,
+            -6500.0
+          ],
+          "bounds_order": [
+            "xmin",
+            "ymin",
+            "xmax",
+            "ymax"
+          ],
+          "bounds_m": [
+            -1500.0,
+            -8500.0,
+            500.0,
+            -6500.0
+          ],
+          "source_window": {
+            "row_off": 1500,
+            "col_off": 1500,
+            "height": 400,
+            "width": 400
+          },
+          "row_axis": "increasing row = decreasing projected Y",
+          "column_axis": "increasing col = increasing projected X",
+          "id_format": "SITE04_R{row:03d}_C{column:03d}",
+          "preservation": "Rows 0..9 and columns 0..9 are spatially identical to V1. Only boundary neighbor lists expand.",
+          "source_vertical_height": "metres as specified in NASA LOLA DEM"
+        },
+        "methods": {
+          "elevation_m": "arithmetic mean of 400 native 5m DEM heights per 100m cell",
+          "elevation_min_m": "minimum native DEM height in cell",
+          "elevation_max_m": "maximum native DEM height in cell",
+          "elevation_std_m": "population standard deviation of native DEM heights",
+          "slope_deg": "mean arctan of 5m DEM centered-difference derivatives (dzdx,dzdy), one-pixel halo",
+          "slope_max_deg": "maximum native-pixel derived slope, not a landing threshold",
+          "roughness_m": "root mean square residual of native heights after per-cell least squares plane fit",
+          "valid_coverage_fraction": "finite source pixels divided by 400",
+          "missing": "Abort generation on any invalid source or gradient pixel. Never invent values.",
+          "quality": "Interpolated LOLA DEM: high pixel spacing does not mean every pixel independently observed."
+        },
+        "parquet": {
+          "geometry_wkb": "OGC WKB polygon coordinates in lunar projected metres",
+          "writer": "minimal Apache-Thrift/Parquet PLAIN/UNCOMPRESSED REQUIRED fields; independent interoperability check needed",
+          "geometry_crs": "Do not assume terrestrial EPSG4326"
+        },
+        "models": {
+          "glb": "terrain_site04_5m.glb",
+          "mesh_coordinates": "[X_m, Y_m, Z_m] = original projected lunar X/Y and DEM elevation",
+          "mesh_vertices": "one per native DEM pixel center, exact 5 m spacing",
+          "mesh_vertex_extent": "pixel centres inset 2.5 m from outer cell boundaries",
+          "terrain_z_scale": 1.0,
+          "moon_globe_registration": "not supplied; global globe may have unrelated axis/orientation until independently registered",
+          "rendering": "Z is terrain up; adapt Three.js camera.up or camera/orientation accordingly; never rotate science data in saved files"
+        }
+      },
+      "tile_manifest": {
+        "prototype_only": true,
+        "full_moon_coverage": false,
+        "grid_scope": "NASA Site04 original frozen 2x2 km / 400 cells",
+        "tile_processing_version": "3.0.0",
+        "legacy_grid_version": "2.0.0",
+        "source_sha256": "38ff70dbdf2f066c2cfa94a646c3a59d653ce7f6b4528b15fc1b43ee397ce758",
+        "tiles": [
+          {
+            "tile_id": "SITE04_TILE_R00_C00",
+            "core_window": {
+              "column_offset": 1500,
+              "row_offset": 1500,
+              "width": 200,
+              "height": 200
+            },
+            "transform_6": [
+              5.0,
+              0.0,
+              -1500.0,
+              0.0,
+              -5.0,
+              -6500.0
+            ],
+            "projected_bounds_m": [
+              -1500.0,
+              -7500.0,
+              -500.0,
+              -6500.0
+            ],
+            "cell_count": 100,
+            "missing_core_source_pixels": 0,
+            "source_change_at_tile_edge": "none_identified_in_site04_dem_only",
+            "resolution_change_at_tile_edge": "none_identified_in_site04_dem_only"
+          },
+          {
+            "tile_id": "SITE04_TILE_R00_C01",
+            "core_window": {
+              "column_offset": 1700,
+              "row_offset": 1500,
+              "width": 200,
+              "height": 200
+            },
+            "transform_6": [
+              5.0,
+              0.0,
+              -500.0,
+              0.0,
+              -5.0,
+              -6500.0
+            ],
+            "projected_bounds_m": [
+              -500.0,
+              -7500.0,
+              500.0,
+              -6500.0
+            ],
+            "cell_count": 100,
+            "missing_core_source_pixels": 0,
+            "source_change_at_tile_edge": "none_identified_in_site04_dem_only",
+            "resolution_change_at_tile_edge": "none_identified_in_site04_dem_only"
+          },
+          {
+            "tile_id": "SITE04_TILE_R01_C00",
+            "core_window": {
+              "column_offset": 1500,
+              "row_offset": 1700,
+              "width": 200,
+              "height": 200
+            },
+            "transform_6": [
+              5.0,
+              0.0,
+              -1500.0,
+              0.0,
+              -5.0,
+              -7500.0
+            ],
+            "projected_bounds_m": [
+              -1500.0,
+              -8500.0,
+              -500.0,
+              -7500.0
+            ],
+            "cell_count": 100,
+            "missing_core_source_pixels": 0,
+            "source_change_at_tile_edge": "none_identified_in_site04_dem_only",
+            "resolution_change_at_tile_edge": "none_identified_in_site04_dem_only"
+          },
+          {
+            "tile_id": "SITE04_TILE_R01_C01",
+            "core_window": {
+              "column_offset": 1700,
+              "row_offset": 1700,
+              "width": 200,
+              "height": 200
+            },
+            "transform_6": [
+              5.0,
+              0.0,
+              -500.0,
+              0.0,
+              -5.0,
+              -7500.0
+            ],
+            "projected_bounds_m": [
+              -500.0,
+              -8500.0,
+              500.0,
+              -7500.0
+            ],
+            "cell_count": 100,
+            "missing_core_source_pixels": 0,
+            "source_change_at_tile_edge": "none_identified_in_site04_dem_only",
+            "resolution_change_at_tile_edge": "none_identified_in_site04_dem_only"
+          }
+        ],
+        "quality_and_gaps": {
+          "site04_elevation_dem": "complete in test window",
+          "lola_count_raster": "not downloaded",
+          "z_uncertainty_raster": "not downloaded",
+          "northern_and_equatorial_dem_sources": "cataloged only; not downloaded",
+          "other_global_tiles": "not generated"
+        },
+        "original_dem_unchanged": true,
+        "freeze_note": "All SITE04_R###_C### IDs, center coordinates, elevations and neighbors match existing V2 output."
+      },
+      "verified_files": {
+        "baseline/grid_metadata.json": "e2dd99b19aa03acd5c26f19791332b3191e274932ea454cf44accbdaeb1670b6",
+        "Site04_final_adj_5mpp_surf.tif": "38ff70dbdf2f066c2cfa94a646c3a59d653ce7f6b4528b15fc1b43ee397ce758",
+        "tile_manifest.json": "51e1437f06155f128923f51386fc45588342bce395c256c7b44ad5ca1423ba42",
+        "baseline/grid.parquet": "dc32b04162bd3db3e114ba816a1958f1ef918d7f38effa7eaee992ca32fa45e4",
+        "baseline/neighbors.parquet": "952c3be5e22f1fefa9066f9354555d1935a73e58d0621bcde0e02d3ae27110e5",
+        "baseline/grid_geometry.parquet": "2de40301a6f4cddbf572f57060c3b6637a03f681a6d084ed540ee29930dcf8b0",
+        "tiles/SITE04_TILE_R00_C00/tile_metadata.json": "ba07187468f3d712507c974d1650a09e01508d6904c3bc1063e74a370efd0d8d",
+        "tiles/SITE04_TILE_R00_C00/cells.jsonl": "d075004423fc646cf3e20edc9a4fad3e553702ab908554c014a6d1630d5de646",
+        "tiles/SITE04_TILE_R00_C01/tile_metadata.json": "982bbdb87ad68624d5a33411b7451a371ebbc01c411d482d7affbd4468ebb7b8",
+        "tiles/SITE04_TILE_R00_C01/cells.jsonl": "bf91d7a1bd7bfacec004d777a4d4fc32e4dd11d245853b2f339caf8e2a49253c",
+        "tiles/SITE04_TILE_R01_C00/tile_metadata.json": "767613394aca7d88ab7e6199feafb8642f620484c9afccb56c44d2b9cb6aba96",
+        "tiles/SITE04_TILE_R01_C00/cells.jsonl": "6010b75c0447dca003a1ca0025481e4505a23e38a2697402c8db2444c296f225",
+        "tiles/SITE04_TILE_R01_C01/tile_metadata.json": "249a93dbbe20bba3b20927635c92633501e9d0887384e3271ebf48ccb0547445",
+        "tiles/SITE04_TILE_R01_C01/cells.jsonl": "8cf6bc6b876e0883378658e1aeb68dcca28a1adaba99bd25b5e15d23c81120cd"
+      },
+      "latitude_mapping": "Identity on declared 1737400 m sphere; Horizons center radii checked before use"
+    },
+    "terrain_definition": "{\"elevation_m\": \"arithmetic mean of 400 native 5m DEM heights per 100m cell\", \"elevation_max_m\": \"maximum native DEM height in cell\", \"elevation_min_m\": \"minimum native DEM height in cell\", \"elevation_std_m\": \"population standard deviation of native DEM heights\", \"missing\": \"Abort generation on any invalid source or gradient pixel. Never invent values.\", \"quality\": \"Interpolated LOLA DEM: high pixel spacing does not mean every pixel independently observed.\", \"roughness_m\": \"root mean square residual of native heights after per-cell least squares plane fit\", \"slope_deg\": \"mean arctan of 5m DEM centered-difference derivatives (dzdx,dzdy), one-pixel halo\", \"slope_max_deg\": \"maximum native-pixel derived slope, not a landing threshold\", \"valid_coverage_fraction\": \"finite source pixels divided by 400\"}",
+    "resolution_m": 5.0,
+    "region": "Site04",
+    "synthetic": false
+  },
+  "cells": [
+    {
+      "cell_id": "SITE04_R000_C000",
+      "latitude_deg": -89.7787655990766,
+      "longitude_deg": -167.51751061504552,
+      "projected_x": -1450.0,
+      "projected_y": -6550.0,
+      "elevation_m": 1072.0976434326171,
+      "slope_deg": 32.13135594956228,
+      "roughness_m": 0.9163221785602584,
+      "valid": true,
+      "coverage_fraction": 1.0,
+      "quality": "source_lola_count_and_uncertainty_not_supplied",
+      "uncertainty": {
+        "elevation_uncertainty_m": null,
+        "lola_shot_count": null
+      },
+      "source": {
+        "source_id": "NASA_PGDA_SITE04_LOLA_LDEM_5MPP",
+        "tile_id": "SITE04_TILE_R00_C00",
+        "raw_dem_sha256": "38ff70dbdf2f066c2cfa94a646c3a59d653ce7f6b4528b15fc1b43ee397ce758",
+        "tile_metadata": {
+          "tile_id": "SITE04_TILE_R00_C00",
+          "existing_grid_version": "2.0.0",
+          "tile_processing_version": "3.0.0",
+          "body": "Moon",
+          "frame": "MOON_ME / DE421",
+          "projected_crs_wkt": "PROJCS[\"unnamed\",GEOGCS[\"unnamed ellipse\",DATUM[\"unknown\",SPHEROID[\"unnamed\",1737400,0]],PRIMEM[\"Greenwich\",0],UNIT[\"degree\",0.0174532925199433,AUTHORITY[\"EPSG\",\"9122\"]]],PROJECTION[\"Polar_Stereographic\"],PARAMETER[\"latitude_of_origin\",-90],PARAMETER[\"central_meridian\",0],PARAMETER[\"false_easting\",0],PARAMETER[\"false_northing\",0],UNIT[\"metre\",1],AXIS[\"Easting\",NORTH],AXIS[\"Northing\",NORTH]]",
+          "source_file": "Site04_final_adj_5mpp_surf.tif",
+          "source_sha256": "38ff70dbdf2f066c2cfa94a646c3a59d653ce7f6b4528b15fc1b43ee397ce758",
+          "source_pixel_size_m": [
+            5.0,
+            5.0
+          ],
+          "source_nodata": "nan",
+          "source_affine_6": [
+            5.0,
+            0.0,
+            -9000.0,
+            0.0,
+            -5.0,
+            1000.0
+          ],
+          "source_pixel_core_window": {
+            "column_offset": 1500,
+            "row_offset": 1500,
+            "width": 200,
+            "height": 200
+          },
+          "source_pixel_halo_window": {
+            "column_offset": 1499,
+            "row_offset": 1499,
+            "width": 202,
+            "height": 202
+          },
+          "core_transform_6": [
+            5.0,
+            0.0,
+            -1500.0,
+            0.0,
+            -5.0,
+            -6500.0
+          ],
+          "halo_transform_6": [
+            5.0,
+            0.0,
+            -1505.0,
+            0.0,
+            -5.0,
+            -6495.0
+          ],
+          "projected_bounds_xmin_ymin_xmax_ymax_m": [
+            -1500.0,
+            -7500.0,
+            -500.0,
+            -6500.0
+          ],
+          "cell_id_scheme": "SITE04_R{row:03d}_C{column:03d} (FROZEN)",
+          "cell_count": 100,
+          "native_pixel_count": 40000,
+          "source_valid_pixel_count": 40000,
+          "slope_valid_pixel_count": 40000,
+          "pixel_halo_width": 1,
+          "source_change_at_tile_edge": "none_identified_in_site04_dem_only",
+          "resolution_change_at_tile_edge": "none_identified_in_site04_dem_only",
+          "missing_core_source_pixels": 0,
+          "latitude_convention": "Moon planetocentric degrees; south negative",
+          "longitude_convention": "Moon east-positive degrees [-180,180)",
+          "vertical_reference": "NASA PGDA Site04 LDEM height in m; JPL Horizons observer-height compatibility unvalidated",
+          "quality_layers": {
+            "lola_count": "not supplied",
+            "total_z_uncertainty": "not supplied",
+            "slope_uncertainty": "not supplied"
+          },
+          "data_policy": "Original GeoTIFF is preserved byte-for-byte; masks and cells are derived, not raw shot measurements."
+        },
+        "calculation_method_version": "SITE04_V2_SLOPE_CENTERED_5M_ROUGHNESS_PLANE_V1"
+      },
+      "resolution_m": 5.0,
+      "region": "Site04",
+      "neighbors": [
+        "SITE04_R000_C001",
+        "SITE04_R001_C000"
+      ],
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -1500.0,
+              -6600.0
+            ],
+            [
+              -1400.0,
+              -6600.0
+            ],
+            [
+              -1400.0,
+              -6500.0
+            ],
+            [
+              -1500.0,
+              -6500.0
+            ],
+            [
+              -1500.0,
+              -6600.0
+            ]
+          ]
+        ],
+        "coordinate_units": "m",
+        "crs": "PROJCS[\"unnamed\",GEOGCS[\"unnamed ellipse\",DATUM[\"unknown\",SPHEROID[\"unnamed\",1737400,0]],PRIMEM[\"Greenwich\",0],UNIT[\"degree\",0.0174532925199433,AUTHORITY[\"EPSG\",\"9122\"]]],PROJECTION[\"Polar_Stereographic\"],PARAMETER[\"latitude_of_origin\",-90],PARAMETER[\"central_meridian\",0],PARAMETER[\"false_easting\",0],PARAMETER[\"false_northing\",0],UNIT[\"metre\",1],AXIS[\"Easting\",NORTH],AXIS[\"Northing\",NORTH]]"
+      },
+      "existing_grid_version": "2.0.0",
+      "tile_id": "SITE04_TILE_R00_C00",
+      "tile_processing_version": "3.0.0",
+      "row": 0,
+      "column": 0,
+      "x_m": -1450.0,
+      "y_m": -6550.0,
+      "latitude": -89.7787655990766,
+      "longitude": -167.51751061504552,
+      "bounds_m": [
+        -1500.0,
+        -6600.0,
+        -1400.0,
+        -6500.0
+      ],
+      "footprint_projected_m": [
+        [
+          -1500.0,
+          -6600.0
+        ],
+        [
+          -1400.0,
+          -6600.0
+        ],
+        [
+          -1400.0,
+          -6500.0
+        ],
+        [
+          -1500.0,
+          -6500.0
+        ],
+        [
+          -1500.0,
+          -6600.0
+        ]
+      ],
+      "neighbor_ids": [
+        "SITE04_R000_C001",
+        "SITE04_R001_C000"
+      ],
+      "elevation_min_m": 1040.158447265625,
+      "elevation_max_m": 1107.8587646484375,
+      "elevation_std_m": 18.22401561152015,
+      "slope_min_deg": 23.90099070302874,
+      "slope_max_deg": 42.3200011907853,
+      "slope_std_deg": 2.5000666017701842,
+      "source_pixel_count_total": 400,
+      "source_pixel_count_valid": 400,
+      "source_pixel_valid_fraction": 1.0,
+      "slope_pixel_valid_fraction": 1.0,
+      "data_valid": true,
+      "source_id": "NASA_PGDA_SITE04_LOLA_LDEM_5MPP",
+      "source_file": "Site04_final_adj_5mpp_surf.tif",
+      "source_pixel_size_m": 5.0,
+      "source_change_flag": false,
+      "resolution_change_flag": false,
+      "data_gap_flag": false,
+      "lola_shot_count": null,
+      "elevation_uncertainty_m": null,
+      "quality_status": "source_lola_count_and_uncertainty_not_supplied",
+      "calculation_method_version": "SITE04_V2_SLOPE_CENTERED_5M_ROUGHNESS_PLANE_V1",
+      "original_geometry_wkb_hex": "0103000000010000000500000000000000007097c00000000000c8b9c00000000000e095c00000000000c8b9c00000000000e095c0000000000064b9c000000000007097c0000000000064b9c000000000007097c00000000000c8b9c0"
+    },
+    {
+      "cell_id": "SITE04_R000_C001",
+      "latitude_deg": -89.779454879477,
+      "longitude_deg": -168.3540257515168,
+      "projected_x": -1350.0,
+      "projected_y": -6550.0,
+      "elevation_m": 1008.3839926147461,
+      "slope_deg": 33.10994714843948,
+      "roughness_m": 0.908064780045918,
+      "valid": true,
+      "coverage_fraction": 1.0,
+      "quality": "source_lola_count_and_uncertainty_not_supplied",
+      "uncertainty": {
+        "elevation_uncertainty_m": null,
+        "lola_shot_count": null
+      },
+      "source": {
+        "source_id": "NASA_PGDA_SITE04_LOLA_LDEM_5MPP",
+        "tile_id": "SITE04_TILE_R00_C00",
+        "raw_dem_sha256": "38ff70dbdf2f066c2cfa94a646c3a59d653ce7f6b4528b15fc1b43ee397ce758",
+        "tile_metadata": {
+          "tile_id": "SITE04_TILE_R00_C00",
+          "existing_grid_version": "2.0.0",
+          "tile_processing_version": "3.0.0",
+          "body": "Moon",
+          "frame": "MOON_ME / DE421",
+          "projected_crs_wkt": "PROJCS[\"unnamed\",GEOGCS[\"unnamed ellipse\",DATUM[\"unknown\",SPHEROID[\"unnamed\",1737400,0]],PRIMEM[\"Greenwich\",0],UNIT[\"degree\",0.0174532925199433,AUTHORITY[\"EPSG\",\"9122\"]]],PROJECTION[\"Polar_Stereographic\"],PARAMETER[\"latitude_of_origin\",-90],PARAMETER[\"central_meridian\",0],PARAMETER[\"false_easting\",0],PARAMETER[\"false_northing\",0],UNIT[\"metre\",1],AXIS[\"Easting\",NORTH],AXIS[\"Northing\",NORTH]]",
+          "source_file": "Site04_final_adj_5mpp_surf.tif",
+          "source_sha256": "38ff70dbdf2f066c2cfa94a646c3a59d653ce7f6b4528b15fc1b43ee397ce758",
+          "source_pixel_size_m": [
+            5.0,
+            5.0
+          ],
+          "source_nodata": "nan",
+          "source_affine_6": [
+            5.0,
+            0.0,
+            -9000.0,
+            0.0,
+            -5.0,
+            1000.0
+          ],
+          "source_pixel_core_window": {
+            "column_offset": 1500,
+            "row_offset": 1500,
+            "width": 200,
+            "height": 200
+          },
+          "source_pixel_halo_window": {
+            "column_offset": 1499,
+            "row_offset": 1499,
+            "width": 202,
+            "height": 202
+          },
+          "core_transform_6": [
+            5.0,
+            0.0,
+            -1500.0,
+            0.0,
+            -5.0,
+            -6500.0
+          ],
+          "halo_transform_6": [
+            5.0,
+            0.0,
+            -1505.0,
+            0.0,
+            -5.0,
+            -6495.0
+          ],
+          "projected_bounds_xmin_ymin_xmax_ymax_m": [
+            -1500.0,
+            -7500.0,
+            -500.0,
+            -6500.0
+          ],
+          "cell_id_scheme": "SITE04_R{row:03d}_C{column:03d} (FROZEN)",
+          "cell_count": 100,
+          "native_pixel_count": 40000,
+          "source_valid_pixel_count": 40000,
+          "slope_valid_pixel_count": 40000,
+          "pixel_halo_width": 1,
+          "source_change_at_tile_edge": "none_identified_in_site04_dem_only",
+          "resolution_change_at_tile_edge": "none_identified_in_site04_dem_only",
+          "missing_core_source_pixels": 0,
+          "latitude_convention": "Moon planetocentric degrees; south negative",
+          "longitude_convention": "Moon east-positive degrees [-180,180)",
+          "vertical_reference": "NASA PGDA Site04 LDEM height in m; JPL Horizons observer-height compatibility unvalidated",
+          "quality_layers": {
+            "lola_count": "not supplied",
+            "total_z_uncertainty": "not supplied",
+            "slope_uncertainty": "not supplied"
+          },
+          "data_policy": "Original GeoTIFF is preserved byte-for-byte; masks and cells are derived, not raw shot measurements."
+        },
+        "calculation_method_version": "SITE04_V2_SLOPE_CENTERED_5M_ROUGHNESS_PLANE_V1"
+      },
+      "resolution_m": 5.0,
+      "region": "Site04",
+      "neighbors": [
+        "SITE04_R000_C002",
+        "SITE04_R001_C001",
+        "SITE04_R000_C000"
+      ],
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -1400.0,
+              -6600.0
+            ],
+            [
+              -1300.0,
+              -6600.0
+            ],
+            [
+              -1300.0,
+              -6500.0
+            ],
+            [
+              -1400.0,
+              -6500.0
+            ],
+            [
+              -1400.0,
+              -6600.0
+            ]
+          ]
+        ],
+        "coordinate_units": "m",
+        "crs": "PROJCS[\"unnamed\",GEOGCS[\"unnamed ellipse\",DATUM[\"unknown\",SPHEROID[\"unnamed\",1737400,0]],PRIMEM[\"Greenwich\",0],UNIT[\"degree\",0.0174532925199433,AUTHORITY[\"EPSG\",\"9122\"]]],PROJECTION[\"Polar_Stereographic\"],PARAMETER[\"latitude_of_origin\",-90],PARAMETER[\"central_meridian\",0],PARAMETER[\"false_easting\",0],PARAMETER[\"false_northing\",0],UNIT[\"metre\",1],AXIS[\"Easting\",NORTH],AXIS[\"Northing\",NORTH]]"
+      },
+      "existing_grid_version": "2.0.0",
+      "tile_id": "SITE04_TILE_R00_C00",
+      "tile_processing_version": "3.0.0",
+      "row": 0,
+      "column": 1,
+      "x_m": -1350.0,
+      "y_m": -6550.0,
+      "latitude": -89.779454879477,
+      "longitude": -168.3540257515168,
+      "bounds_m": [
+        -1400.0,
+        -6600.0,
+        -1300.0,
+        -6500.0
+      ],
+      "footprint_projected_m": [
+        [
+          -1400.0,
+          -6600.0
+        ],
+        [
+          -1300.0,
+          -6600.0
+        ],
+        [
+          -1300.0,
+          -6500.0
+        ],
+        [
+          -1400.0,
+          -6500.0
+        ],
+        [
+          -1400.0,
+          -6600.0
+        ]
+      ],
+      "neighbor_ids": [
+        "SITE04_R000_C002",
+        "SITE04_R001_C001",
+        "SITE04_R000_C000"
+      ],
+      "elevation_min_m": 975.8374633789062,
+      "elevation_max_m": 1042.769287109375,
+      "elevation_std_m": 19.063311962256464,
+      "slope_min_deg": 12.117720322667708,
+      "slope_max_deg": 56.51096685920679,
+      "slope_std_deg": 3.6904470460825607,
+      "source_pixel_count_total": 400,
+      "source_pixel_count_valid": 400,
+      "source_pixel_valid_fraction": 1.0,
+      "slope_pixel_valid_fraction": 1.0,
+      "data_valid": true,
+      "source_id": "NASA_PGDA_SITE04_LOLA_LDEM_5MPP",
+      "source_file": "Site04_final_adj_5mpp_surf.tif",
+      "source_pixel_size_m": 5.0,
+      "source_change_flag": false,
+      "resolution_change_flag": false,
+      "data_gap_flag": false,
+      "lola_shot_count": null,
+      "elevation_uncertainty_m": null,
+      "quality_status": "source_lola_count_and_uncertainty_not_supplied",
+      "calculation_method_version": "SITE04_V2_SLOPE_CENTERED_5M_ROUGHNESS_PLANE_V1",
+      "original_geometry_wkb_hex": "010300000001000000050000000000000000e095c00000000000c8b9c000000000005094c00000000000c8b9c000000000005094c0000000000064b9c00000000000e095c0000000000064b9c00000000000e095c00000000000c8b9c0"
+    }
+  ]
+}

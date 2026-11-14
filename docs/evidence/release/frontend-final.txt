@@ -1,0 +1,26 @@
+
+> wispr-frontend@0.1.0 build
+> tsc -b && vite build
+
+vite v6.4.6 building for production...
+transforming...
+✓ 41 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/index.html                   0.71 kB │ gzip:   0.42 kB
+dist/assets/index-DFowPuoF.css   15.70 kB │ gzip:   4.34 kB
+dist/assets/react-DHz4kLit.js    12.46 kB │ gzip:   4.37 kB
+dist/assets/index-DMfsiTq2.js   313.52 kB │ gzip:  96.22 kB
+dist/assets/three-dOax6hWY.js   582.91 kB │ gzip: 146.15 kB
+
+(!) Some chunks are larger than 500 kB after minification. Consider:
+- Using dynamic import() to code-split the application
+- Use build.rollupOptions.output.manualChunks to improve chunking: https://rollupjs.org/configuration-options/#output-manualchunks
+- Adjust chunk size limit for this warning via build.chunkSizeWarningLimit.
+✓ built in 836ms
+
+> wispr-frontend@0.1.0 test
+> node scripts/check-fixtures.mjs
+
+Six synthetic outcomes: UTC shifts, window consistency, missing features and shared grid IDs passed.
+Moon coordinate registration, wrap and unknown-color checks passed

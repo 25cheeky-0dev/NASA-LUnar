@@ -1,0 +1,49 @@
+[
+  {
+    "path": "/",
+    "status": 200,
+    "seconds": 0.004,
+    "bytes": 707
+  },
+  {
+    "path": "/health",
+    "status": 200,
+    "seconds": 0.001,
+    "bytes": 405
+  },
+  {
+    "path": "/api/v1/navigation/locations",
+    "status": 200,
+    "seconds": 0.0,
+    "bytes": 1127
+  },
+  {
+    "path": "/api/v1/science/datasets",
+    "status": 200,
+    "seconds": 0.001,
+    "bytes": 9630
+  },
+  {
+    "path": "/moon/lroc_color_2k.jpg",
+    "status": 200,
+    "seconds": 0.002,
+    "bytes": 549787
+  },
+  {
+    "path": "/api/v1/navigation/terrain/model",
+    "status": 200,
+    "seconds": 0.018,
+    "bytes": 6381784
+  },
+  {
+    "path": "/api/v1/navigation/demo/delay",
+    "status": 200,
+    "outcome": "KEEP",
+    "delivery": "PRESERVED_REAL_DATA_OFFLINE"
+  },
+  {
+    "path": "/api/v1/navigation/interpret",
+    "status": 200,
+    "result": "LLM_UNAVAILABLE"
+  }
+]

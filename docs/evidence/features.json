@@ -1,0 +1,508 @@
+{
+  "status_code": 200,
+  "body": {
+    "api_version": "v1",
+    "backend_version": "0.1.0",
+    "computed_at_utc": "2026-11-14T10:42:19.383693Z",
+    "source_type": "NASA_JPL_VERIFIED_CACHE",
+    "calculation_mode": "GEOMETRIC_IDEAL",
+    "data_quality": "MODEL_ESTIMATE",
+    "limitations": [
+      "Target-center visibility above an ideal zero-degree plane, not solar-disc illumination or radio-link margin.",
+      "Sampled intervals are MODEL_ESTIMATE; between-sample behavior is not verified continuous visibility.",
+      "No flight safety, power, battery, propellant or landing certification.",
+      "Horizons reference-sphere height is independent of observer height above local DEM ground; no terrain datum conversion is claimed.",
+      "Reference-point features are separate from cell-center features. Unknown slope is null. No PCA, embeddings or similarity ranking is claimed."
+    ],
+    "provenance": {
+      "dataset_ids": [
+        "JPL Horizons"
+      ],
+      "source_urls": [
+        "https://ssd.jpl.nasa.gov/api/horizons.api?format=json&COMMAND=%2710%27&MAKE_EPHEM=%27YES%27&OBJ_DATA=%27NO%27&EPHEM_TYPE=%27OBSERVER%27&CENTER=%27coord%40301%27&COORD_TYPE=%27GEODETIC%27&SITE_COORD=%27222.51%2C-89.4632%2C0.0%27&START_TIME=%272026-11-27+00%3A00%27&STOP_TIME=%272026-11-28+00%3A00%27&STEP_SIZE=%275+min%27&TIME_TYPE=%27UT%27&TIME_ZONE=%27%2B00%3A00%27&QUANTITIES=%274%27&APPARENT=%27AIRLESS%27&CSV_FORMAT=%27YES%27&ANG_FORMAT=%27DEG%27&TIME_DIGITS=%27SECONDS%27",
+        "https://ssd.jpl.nasa.gov/api/horizons.api?format=json&COMMAND=%27399%27&MAKE_EPHEM=%27YES%27&OBJ_DATA=%27NO%27&EPHEM_TYPE=%27OBSERVER%27&CENTER=%27coord%40301%27&COORD_TYPE=%27GEODETIC%27&SITE_COORD=%27222.51%2C-89.4632%2C0.0%27&START_TIME=%272026-11-27+00%3A00%27&STOP_TIME=%272026-11-28+00%3A00%27&STEP_SIZE=%275+min%27&TIME_TYPE=%27UT%27&TIME_ZONE=%27%2B00%3A00%27&QUANTITIES=%274%27&APPARENT=%27AIRLESS%27&CSV_FORMAT=%27YES%27&ANG_FORMAT=%27DEG%27&TIME_DIGITS=%27SECONDS%27"
+      ],
+      "request_params": {
+        "sun": {
+          "format": "json",
+          "COMMAND": "'10'",
+          "MAKE_EPHEM": "'YES'",
+          "OBJ_DATA": "'NO'",
+          "EPHEM_TYPE": "'OBSERVER'",
+          "CENTER": "'coord@301'",
+          "COORD_TYPE": "'GEODETIC'",
+          "SITE_COORD": "'222.51,-89.4632,0.0'",
+          "START_TIME": "'2026-11-27 00:00'",
+          "STOP_TIME": "'2026-11-28 00:00'",
+          "STEP_SIZE": "'5 min'",
+          "TIME_TYPE": "'UT'",
+          "TIME_ZONE": "'+00:00'",
+          "QUANTITIES": "'4'",
+          "APPARENT": "'AIRLESS'",
+          "CSV_FORMAT": "'YES'",
+          "ANG_FORMAT": "'DEG'",
+          "TIME_DIGITS": "'SECONDS'"
+        },
+        "earth": {
+          "format": "json",
+          "COMMAND": "'399'",
+          "MAKE_EPHEM": "'YES'",
+          "OBJ_DATA": "'NO'",
+          "EPHEM_TYPE": "'OBSERVER'",
+          "CENTER": "'coord@301'",
+          "COORD_TYPE": "'GEODETIC'",
+          "SITE_COORD": "'222.51,-89.4632,0.0'",
+          "START_TIME": "'2026-11-27 00:00'",
+          "STOP_TIME": "'2026-11-28 00:00'",
+          "STEP_SIZE": "'5 min'",
+          "TIME_TYPE": "'UT'",
+          "TIME_ZONE": "'+00:00'",
+          "QUANTITIES": "'4'",
+          "APPARENT": "'AIRLESS'",
+          "CSV_FORMAT": "'YES'",
+          "ANG_FORMAT": "'DEG'",
+          "TIME_DIGITS": "'SECONDS'"
+        }
+      },
+      "raw_sha256": [
+        "32db0589a31a6f528ad0dbf4e60838af487a76343772ceb1b6e9b03dd32232f4",
+        "9f503791570963070a4673160332ea43e5aa9d4a44d07fa2cde2042fea74c778"
+      ],
+      "coordinate_frame": "Lunar MEAN_ME; JPL reference sphere; local ENU",
+      "sample_step_minutes": 5,
+      "fetched_at_utc": [
+        "2026-11-14T10:32:59.000153Z",
+        "2026-11-14T10:33:00.178379Z"
+      ],
+      "reference_height_km": 0.0,
+      "observer_height_above_ground_m": 1.0,
+      "observer_height_applied_to_horizons": false,
+      "target_timestamp_sets_match": true,
+      "axes": "east, north, up; azimuth clockwise from north; input degrees"
+    },
+    "scenario_id": "7b3697cc2ee6d0ed4c98e04f",
+    "feature_definitions": [
+      {
+        "name": "sun_visible_fraction",
+        "unit": "fraction",
+        "direction": "descriptive"
+      },
+      {
+        "name": "earth_visible_fraction",
+        "unit": "fraction",
+        "direction": "descriptive"
+      },
+      {
+        "name": "shared_visible_fraction",
+        "unit": "fraction",
+        "direction": "descriptive"
+      },
+      {
+        "name": "longest_shared_hours",
+        "unit": "hours",
+        "direction": "descriptive"
+      },
+      {
+        "name": "unknown_fraction",
+        "unit": "fraction",
+        "direction": "descriptive"
+      },
+      {
+        "name": "terrain_slope_deg",
+        "unit": "degrees",
+        "direction": "descriptive"
+      }
+    ],
+    "points": [
+      {
+        "cell_id": "SP1KM:-12:-13",
+        "scenario_id": "7b3697cc2ee6d0ed4c98e04f",
+        "feature_names": [
+          "sun_visible_fraction",
+          "earth_visible_fraction",
+          "shared_visible_fraction",
+          "longest_shared_hours",
+          "unknown_fraction",
+          "terrain_slope_deg"
+        ],
+        "values": [
+          null,
+          null,
+          null,
+          null,
+          null,
+          null
+        ],
+        "normalized_values": null,
+        "normalization_version": "v1",
+        "available_features": [],
+        "missing_features": [
+          "sun_visible_fraction",
+          "earth_visible_fraction",
+          "shared_visible_fraction",
+          "longest_shared_hours",
+          "unknown_fraction",
+          "terrain_slope_deg"
+        ],
+        "similarity_eligible": false,
+        "quality": "UNEVALUATED"
+      },
+      {
+        "cell_id": "SP1KM:-12:-12",
+        "scenario_id": "7b3697cc2ee6d0ed4c98e04f",
+        "feature_names": [
+          "sun_visible_fraction",
+          "earth_visible_fraction",
+          "shared_visible_fraction",
+          "longest_shared_hours",
+          "unknown_fraction",
+          "terrain_slope_deg"
+        ],
+        "values": [
+          null,
+          null,
+          null,
+          null,
+          null,
+          null
+        ],
+        "normalized_values": null,
+        "normalization_version": "v1",
+        "available_features": [],
+        "missing_features": [
+          "sun_visible_fraction",
+          "earth_visible_fraction",
+          "shared_visible_fraction",
+          "longest_shared_hours",
+          "unknown_fraction",
+          "terrain_slope_deg"
+        ],
+        "similarity_eligible": false,
+        "quality": "UNEVALUATED"
+      },
+      {
+        "cell_id": "SP1KM:-12:-11",
+        "scenario_id": "7b3697cc2ee6d0ed4c98e04f",
+        "feature_names": [
+          "sun_visible_fraction",
+          "earth_visible_fraction",
+          "shared_visible_fraction",
+          "longest_shared_hours",
+          "unknown_fraction",
+          "terrain_slope_deg"
+        ],
+        "values": [
+          null,
+          null,
+          null,
+          null,
+          null,
+          null
+        ],
+        "normalized_values": null,
+        "normalization_version": "v1",
+        "available_features": [],
+        "missing_features": [
+          "sun_visible_fraction",
+          "earth_visible_fraction",
+          "shared_visible_fraction",
+          "longest_shared_hours",
+          "unknown_fraction",
+          "terrain_slope_deg"
+        ],
+        "similarity_eligible": false,
+        "quality": "UNEVALUATED"
+      },
+      {
+        "cell_id": "SP1KM:-11:-13",
+        "scenario_id": "7b3697cc2ee6d0ed4c98e04f",
+        "feature_names": [
+          "sun_visible_fraction",
+          "earth_visible_fraction",
+          "shared_visible_fraction",
+          "longest_shared_hours",
+          "unknown_fraction",
+          "terrain_slope_deg"
+        ],
+        "values": [
+          null,
+          null,
+          null,
+          null,
+          null,
+          null
+        ],
+        "normalized_values": null,
+        "normalization_version": "v1",
+        "available_features": [],
+        "missing_features": [
+          "sun_visible_fraction",
+          "earth_visible_fraction",
+          "shared_visible_fraction",
+          "longest_shared_hours",
+          "unknown_fraction",
+          "terrain_slope_deg"
+        ],
+        "similarity_eligible": false,
+        "quality": "UNEVALUATED"
+      },
+      {
+        "cell_id": "SP1KM:-11:-12",
+        "scenario_id": "7b3697cc2ee6d0ed4c98e04f",
+        "feature_names": [
+          "sun_visible_fraction",
+          "earth_visible_fraction",
+          "shared_visible_fraction",
+          "longest_shared_hours",
+          "unknown_fraction",
+          "terrain_slope_deg"
+        ],
+        "values": [
+          null,
+          null,
+          null,
+          null,
+          null,
+          null
+        ],
+        "normalized_values": null,
+        "normalization_version": "v1",
+        "available_features": [],
+        "missing_features": [
+          "sun_visible_fraction",
+          "earth_visible_fraction",
+          "shared_visible_fraction",
+          "longest_shared_hours",
+          "unknown_fraction",
+          "terrain_slope_deg"
+        ],
+        "similarity_eligible": false,
+        "quality": "UNEVALUATED"
+      },
+      {
+        "cell_id": "SP1KM:-11:-11",
+        "scenario_id": "7b3697cc2ee6d0ed4c98e04f",
+        "feature_names": [
+          "sun_visible_fraction",
+          "earth_visible_fraction",
+          "shared_visible_fraction",
+          "longest_shared_hours",
+          "unknown_fraction",
+          "terrain_slope_deg"
+        ],
+        "values": [
+          null,
+          null,
+          null,
+          null,
+          null,
+          null
+        ],
+        "normalized_values": null,
+        "normalization_version": "v1",
+        "available_features": [],
+        "missing_features": [
+          "sun_visible_fraction",
+          "earth_visible_fraction",
+          "shared_visible_fraction",
+          "longest_shared_hours",
+          "unknown_fraction",
+          "terrain_slope_deg"
+        ],
+        "similarity_eligible": false,
+        "quality": "UNEVALUATED"
+      },
+      {
+        "cell_id": "SP1KM:-10:-13",
+        "scenario_id": "7b3697cc2ee6d0ed4c98e04f",
+        "feature_names": [
+          "sun_visible_fraction",
+          "earth_visible_fraction",
+          "shared_visible_fraction",
+          "longest_shared_hours",
+          "unknown_fraction",
+          "terrain_slope_deg"
+        ],
+        "values": [
+          null,
+          null,
+          null,
+          null,
+          null,
+          null
+        ],
+        "normalized_values": null,
+        "normalization_version": "v1",
+        "available_features": [],
+        "missing_features": [
+          "sun_visible_fraction",
+          "earth_visible_fraction",
+          "shared_visible_fraction",
+          "longest_shared_hours",
+          "unknown_fraction",
+          "terrain_slope_deg"
+        ],
+        "similarity_eligible": false,
+        "quality": "UNEVALUATED"
+      },
+      {
+        "cell_id": "SP1KM:-10:-12",
+        "scenario_id": "7b3697cc2ee6d0ed4c98e04f",
+        "feature_names": [
+          "sun_visible_fraction",
+          "earth_visible_fraction",
+          "shared_visible_fraction",
+          "longest_shared_hours",
+          "unknown_fraction",
+          "terrain_slope_deg"
+        ],
+        "values": [
+          null,
+          null,
+          null,
+          null,
+          null,
+          null
+        ],
+        "normalized_values": null,
+        "normalization_version": "v1",
+        "available_features": [],
+        "missing_features": [
+          "sun_visible_fraction",
+          "earth_visible_fraction",
+          "shared_visible_fraction",
+          "longest_shared_hours",
+          "unknown_fraction",
+          "terrain_slope_deg"
+        ],
+        "similarity_eligible": false,
+        "quality": "UNEVALUATED"
+      },
+      {
+        "cell_id": "SP1KM:-10:-11",
+        "scenario_id": "7b3697cc2ee6d0ed4c98e04f",
+        "feature_names": [
+          "sun_visible_fraction",
+          "earth_visible_fraction",
+          "shared_visible_fraction",
+          "longest_shared_hours",
+          "unknown_fraction",
+          "terrain_slope_deg"
+        ],
+        "values": [
+          null,
+          null,
+          null,
+          null,
+          null,
+          null
+        ],
+        "normalized_values": null,
+        "normalization_version": "v1",
+        "available_features": [],
+        "missing_features": [
+          "sun_visible_fraction",
+          "earth_visible_fraction",
+          "shared_visible_fraction",
+          "longest_shared_hours",
+          "unknown_fraction",
+          "terrain_slope_deg"
+        ],
+        "similarity_eligible": false,
+        "quality": "UNEVALUATED"
+      }
+    ],
+    "reference_points": [
+      {
+        "cell_id": "SP1KM:-11:-12",
+        "scenario_id": "7b3697cc2ee6d0ed4c98e04f",
+        "feature_names": [
+          "sun_visible_fraction",
+          "earth_visible_fraction",
+          "shared_visible_fraction",
+          "longest_shared_hours",
+          "unknown_fraction",
+          "terrain_slope_deg"
+        ],
+        "values": [
+          1.0,
+          1.0,
+          1.0,
+          24.0,
+          0.0,
+          null
+        ],
+        "normalized_values": null,
+        "normalization_version": "v1",
+        "available_features": [
+          "sun_visible_fraction",
+          "earth_visible_fraction",
+          "shared_visible_fraction",
+          "longest_shared_hours",
+          "unknown_fraction"
+        ],
+        "missing_features": [
+          "terrain_slope_deg"
+        ],
+        "similarity_eligible": false,
+        "quality": "MODEL_ESTIMATE",
+        "observation_point_type": "REFERENCE_SITE",
+        "site_id": "R01",
+        "observer_lat_deg": -89.4632,
+        "observer_lon_east_deg": 222.51,
+        "arrival_utc": "2026-11-27T00:00:00Z",
+        "end_utc": "2026-11-28T00:00:00Z",
+        "horizon_model": "GEOMETRIC",
+        "observer_height_m": 1,
+        "does_not_evaluate_cell_center": true
+      }
+    ],
+    "scatter_axes": {
+      "x": "sun_visible_fraction",
+      "y": "longest_shared_hours",
+      "z": "earth_visible_fraction"
+    },
+    "normalization": {
+      "method": null,
+      "reason": "No complete terrain vectors; raw physical axes only"
+    },
+    "ignored_or_missing": [
+      {
+        "cell_id": "SP1KM:-12:-13",
+        "reason": "CELL_CENTER_UNEVALUATED"
+      },
+      {
+        "cell_id": "SP1KM:-12:-12",
+        "reason": "CELL_CENTER_UNEVALUATED"
+      },
+      {
+        "cell_id": "SP1KM:-12:-11",
+        "reason": "CELL_CENTER_UNEVALUATED"
+      },
+      {
+        "cell_id": "SP1KM:-11:-13",
+        "reason": "CELL_CENTER_UNEVALUATED"
+      },
+      {
+        "cell_id": "SP1KM:-11:-12",
+        "reason": "CELL_CENTER_UNEVALUATED"
+      },
+      {
+        "cell_id": "SP1KM:-11:-11",
+        "reason": "CELL_CENTER_UNEVALUATED"
+      },
+      {
+        "cell_id": "SP1KM:-10:-13",
+        "reason": "CELL_CENTER_UNEVALUATED"
+      },
+      {
+        "cell_id": "SP1KM:-10:-12",
+        "reason": "CELL_CENTER_UNEVALUATED"
+      },
+      {
+        "cell_id": "SP1KM:-10:-11",
+        "reason": "CELL_CENTER_UNEVALUATED"
+      }
+    ]
+  }
+}

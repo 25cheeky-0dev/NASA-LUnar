@@ -1,0 +1,38 @@
+{
+  "cache": "first build",
+  "cpu_count": 18,
+  "disk_bytes": 12470746,
+  "hardware": "Windows-11-10.0.26300-SP0",
+  "levels": [
+    {
+      "cells": 49152,
+      "crosswalk_rows": 400,
+      "crosswalk_seconds": 1.571161399999255,
+      "crosswalk_sha256": "2d3d2fa03c64ae5a38c7bb2dc7182d31c853e9a7cc09ad3a6c3956a043975ac5",
+      "grid_build_seconds": 2.335074100001293,
+      "nside": 64
+    },
+    {
+      "cells": 196608,
+      "crosswalk_rows": 400,
+      "crosswalk_seconds": 1.5639263999983086,
+      "crosswalk_sha256": "9aabf391066786eac708e99f2453eef8e2a050258117dacb4a4cd0bcf3f8aeed",
+      "grid_build_seconds": 8.90638460000082,
+      "nside": 128
+    },
+    {
+      "cells": 786432,
+      "crosswalk_rows": 400,
+      "crosswalk_seconds": 1.4800036999986332,
+      "crosswalk_sha256": "5cb75a886c1e8b9d6857d2f15a47106d5e5b93e833816f8c56eea79e9be80779",
+      "grid_build_seconds": 36.44042200000149,
+      "nside": 256
+    }
+  ],
+  "peak_rss_bytes": 140427264,
+  "preserved_regional_cells": 400,
+  "processor": "Intel64 Family 6 Model 170 Stepping 4, GenuineIntel",
+  "python": "3.13.17",
+  "regional_dataset_sha256": "af7ada607c292caa4da066fdbfb6ccb3900f02365cc19c2aa2bb80a7de2d95a3",
+  "total_memory_bytes": 16573128704
+}

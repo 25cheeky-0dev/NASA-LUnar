@@ -1,0 +1,10 @@
+......................s................................................. [ 35%]
+.......sss.s............................................................ [ 71%]
+.ss......................................................                [100%]
+=============================== warnings summary ===============================
+../../../../private/tmp/wispr-release-clean/lib/python3.13/site-packages/fastapi/testclient.py:1
+  /private/tmp/wispr-release-clean/lib/python3.13/site-packages/fastapi/testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+    from starlette.testclient import TestClient as TestClient  # noqa
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+194 passed, 7 skipped, 1 warning in 26.29s

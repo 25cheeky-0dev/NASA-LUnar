@@ -1,0 +1,8 @@
+{
+  "source": "NASA SVS CGI Moon Kit, LRO/LROC; Ernie Wright, Noah Petro and instrument teams",
+  "official_source": "https://svs.gsfc.nasa.gov/4720/",
+  "delivery_url": "https://raw.githubusercontent.com/MaxwellLee/physics-lab/main/assets/textures/moon_2048.jpg",
+  "processing": "Third-party documented JPEG quality 93 recompression retaining 2048x1024 source dimensions. Original NASA host unreachable during this session. Visual context only; not numerical terrain evidence.",
+  "retrieved_at_utc": "2026-11-14T15:52:30.252582+00:00",
+  "sha256": "ec98386c3b39ad2dab5970db5b5aecb8946db3f450aee4d78ce7382e0060bf87"
+}

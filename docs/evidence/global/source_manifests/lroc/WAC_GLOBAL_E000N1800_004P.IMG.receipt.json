@@ -1,0 +1,7 @@
+{
+  "authentication": "TLS official archive; locally computed SHA256, not publisher signature",
+  "bytes": 4152960,
+  "downloaded_utc": "2026-11-14T14:29:13.969645+00:00",
+  "sha256": "edc6f137499e8c11761669d4ddcbe4117c14d683a53d3ab12f96d9644555b580",
+  "url": "https://pds.mcp.nasa.gov/data/store/img/lunar_reconnaissance_orbiter/pds4/lroc/lro-l-lroc-5-rdr/LROLRC_2001/DATA/BDR/WAC_GLOBAL/WAC_GLOBAL_E000N1800_004P.IMG"
+}

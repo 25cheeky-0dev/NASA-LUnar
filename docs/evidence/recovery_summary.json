@@ -1,0 +1,51 @@
+{
+  "status_code": 200,
+  "outcome": "KEEP_SITE_AFTER_DELAY",
+  "source_type": "NASA_JPL_VERIFIED_CACHE",
+  "scenarios": [
+    {
+      "site_id": "R01",
+      "arrival_utc": "2026-11-20T00:00:00Z",
+      "samples": 289,
+      "longest_shared_minutes": 1440.0,
+      "source_type": "NASA_JPL_VERIFIED_CACHE",
+      "raw_sha256": [
+        "c6ec19c82f9aa0a69877a3cd36a3871d72443ab9f917e7ed3d0aaac28e5ae5af",
+        "bb271b19647cb66758af5d253c1dbde4ca354e509e1bc26466d359dd4b0e35d2"
+      ]
+    },
+    {
+      "site_id": "R04",
+      "arrival_utc": "2026-11-20T00:00:00Z",
+      "samples": 289,
+      "longest_shared_minutes": 1440.0,
+      "source_type": "NASA_JPL_VERIFIED_CACHE",
+      "raw_sha256": [
+        "82145d5bbf8f12f1a21eb69be97f9a919f5a6d78d0ebf2eb1323571ee2b5e32c",
+        "617435a6531fb216401167f07584be3c62dd2257b806e8b7cf48276cc024169d"
+      ]
+    },
+    {
+      "site_id": "R01",
+      "arrival_utc": "2026-11-27T00:00:00Z",
+      "samples": 289,
+      "longest_shared_minutes": 1440.0,
+      "source_type": "NASA_JPL_VERIFIED_CACHE",
+      "raw_sha256": [
+        "32db0589a31a6f528ad0dbf4e60838af487a76343772ceb1b6e9b03dd32232f4",
+        "9f503791570963070a4673160332ea43e5aa9d4a44d07fa2cde2042fea74c778"
+      ]
+    },
+    {
+      "site_id": "R04",
+      "arrival_utc": "2026-11-27T00:00:00Z",
+      "samples": 289,
+      "longest_shared_minutes": 1440.0,
+      "source_type": "NASA_JPL_VERIFIED_CACHE",
+      "raw_sha256": [
+        "8f8ed36f40f3c88c3a5999d211a7331149cbbc5fb1f6cf4deeabc2b846700be0",
+        "046744482f605ef7e42713aed00035aac12deff0a572730575e2695b36523d17"
+      ]
+    }
+  ]
+}

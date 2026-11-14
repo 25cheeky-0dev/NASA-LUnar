@@ -1,0 +1,438 @@
+{
+  "dataset_id": "SITE04_NW_ORIGIN_PRESERVED_2KM_100M__tiles_3.0.0",
+  "grid_version": "2.0.0",
+  "tile_processing_version": "3.0.0",
+  "cell_count": 400,
+  "dataset_sha256": "af7ada607c292caa4da066fdbfb6ccb3900f02365cc19c2aa2bb80a7de2d95a3",
+  "all_static_vectors_sha256": "d7d55423533b5c3f697349f89c61a5e143d02120651f85431bc054bb878e2207",
+  "selected_cell_ids": [
+    "SITE04_R000_C000",
+    "SITE04_R000_C001"
+  ],
+  "outcome": "KEEP",
+  "quality_limitations": "source_lola_count_and_uncertainty_not_supplied",
+  "observer_altitude_km": 0,
+  "horizon_model": "GEOMETRIC_IDEAL",
+  "scenarios": {
+    "original": [
+      {
+        "cell_id": "SITE04_R000_C000",
+        "status": "EVALUATED",
+        "features": {
+          "sun_modeled_visibility_fraction": 1.0,
+          "earth_modeled_visibility_fraction": 0.5941420202281746,
+          "shared_modeled_visibility_fraction": 0.5941420202281746,
+          "longest_shared_minutes": 5988.9515639,
+          "earliest_qualifying_shared_window": {
+            "start_utc": "2026-11-17T20:11:02.906166Z",
+            "end_utc": "2026-11-22T00:00:00Z",
+            "duration_minutes": 5988.9515639,
+            "kind": "BOTH",
+            "estimate_status": "MODEL_ESTIMATE",
+            "boundary_uncertainty_seconds": 3600,
+            "model": "GEOMETRIC_IDEAL"
+          },
+          "unknown_data_fraction": 0.0,
+          "summary": {
+            "sun_windows": [
+              {
+                "start_utc": "2026-11-15T00:00:00Z",
+                "end_utc": "2026-11-22T00:00:00Z",
+                "duration_minutes": 10080.0,
+                "kind": "SUN",
+                "estimate_status": "MODEL_ESTIMATE",
+                "boundary_uncertainty_seconds": 3600,
+                "model": "GEOMETRIC_IDEAL"
+              }
+            ],
+            "earth_windows": [
+              {
+                "start_utc": "2026-11-17T20:11:02.906166Z",
+                "end_utc": "2026-11-22T00:00:00Z",
+                "duration_minutes": 5988.9515639,
+                "kind": "EARTH",
+                "estimate_status": "MODEL_ESTIMATE",
+                "boundary_uncertainty_seconds": 3600,
+                "model": "GEOMETRIC_IDEAL"
+              }
+            ],
+            "shared_windows": [
+              {
+                "start_utc": "2026-11-17T20:11:02.906166Z",
+                "end_utc": "2026-11-22T00:00:00Z",
+                "duration_minutes": 5988.9515639,
+                "kind": "BOTH",
+                "estimate_status": "MODEL_ESTIMATE",
+                "boundary_uncertainty_seconds": 3600,
+                "model": "GEOMETRIC_IDEAL"
+              }
+            ],
+            "longest_shared_minutes": 5988.9515639,
+            "earliest_qualifying_window": {
+              "start_utc": "2026-11-17T20:11:02.906166Z",
+              "end_utc": "2026-11-22T00:00:00Z",
+              "duration_minutes": 5988.9515639,
+              "kind": "BOTH",
+              "estimate_status": "MODEL_ESTIMATE",
+              "boundary_uncertainty_seconds": 3600,
+              "model": "GEOMETRIC_IDEAL"
+            },
+            "known_fraction": 1.0,
+            "unknown_fraction": 0.0,
+            "qualifying_status": "QUALIFIES",
+            "reason_codes": [],
+            "unknown_intervals": [],
+            "next_crossings": {
+              "sunset": {
+                "timestamp_utc": null,
+                "reason": "not_observed_in_range",
+                "boundary_uncertainty_seconds": 3600
+              },
+              "earthset": {
+                "timestamp_utc": null,
+                "reason": "not_observed_in_range",
+                "boundary_uncertainty_seconds": 3600
+              }
+            },
+            "metrics": {
+              "sun_visible_fraction": 1.0,
+              "earth_visible_fraction": 0.5941420202281746,
+              "both_visible_fraction": 0.5941420202281746
+            }
+          },
+          "fraction_definition": "Known modeled visible duration / full requested duration; lower bound when unknown > 0",
+          "window_model": "Piecewise-linear elevation between adjacent UTC samples; no gap extrapolation",
+          "terrain_clearance_supported": false
+        },
+        "queries": {
+          "sun": {
+            "raw_sha256": "73efe2d411c9b91ed43c1fa8abd66d6fd2d56efd59dd0a39e39c70130f73a078",
+            "source_url": "https://ssd.jpl.nasa.gov/api/horizons.api?format=json&COMMAND=%2710%27&EPHEM_TYPE=%27OBSERVER%27&CENTER=%27coord%40301%27&COORD_TYPE=%27GEODETIC%27&SITE_COORD=%27192.48248938495448%2C-89.7787655990766%2C0.0%27&START_TIME=%272026-11-15+00%3A00%27&STOP_TIME=%272026-11-22+00%3A00%27&STEP_SIZE=%2760+min%27&QUANTITIES=%274%27&TIME_TYPE=%27UT%27&TIME_ZONE=%27%2B00%3A00%27&CSV_FORMAT=%27YES%27&MAKE_EPHEM=%27YES%27&OBJ_DATA=%27NO%27&APPARENT=%27AIRLESS%27&ANG_FORMAT=%27DEG%27&TIME_DIGITS=%27SECONDS%27&ELEV_CUT=%27-90%27&SKIP_DAYLT=%27NO%27&EXTRA_PREC=%27YES%27",
+            "retrieved_at_utc": "2026-11-14T15:54:00.702845+00:00",
+            "delivery": "LIVE"
+          },
+          "earth": {
+            "raw_sha256": "b578011fea59071015f913432a3abdfcbb2582c702ca16e6059e7adf7d146738",
+            "source_url": "https://ssd.jpl.nasa.gov/api/horizons.api?format=json&COMMAND=%27399%27&EPHEM_TYPE=%27OBSERVER%27&CENTER=%27coord%40301%27&COORD_TYPE=%27GEODETIC%27&SITE_COORD=%27192.48248938495448%2C-89.7787655990766%2C0.0%27&START_TIME=%272026-11-15+00%3A00%27&STOP_TIME=%272026-11-22+00%3A00%27&STEP_SIZE=%2760+min%27&QUANTITIES=%274%27&TIME_TYPE=%27UT%27&TIME_ZONE=%27%2B00%3A00%27&CSV_FORMAT=%27YES%27&MAKE_EPHEM=%27YES%27&OBJ_DATA=%27NO%27&APPARENT=%27AIRLESS%27&ANG_FORMAT=%27DEG%27&TIME_DIGITS=%27SECONDS%27&ELEV_CUT=%27-90%27&SKIP_DAYLT=%27NO%27&EXTRA_PREC=%27YES%27",
+            "retrieved_at_utc": "2026-11-14T15:54:01.860604+00:00",
+            "delivery": "LIVE"
+          }
+        }
+      },
+      {
+        "cell_id": "SITE04_R000_C001",
+        "status": "EVALUATED",
+        "features": {
+          "sun_modeled_visibility_fraction": 1.0,
+          "earth_modeled_visibility_fraction": 0.5941065908349868,
+          "shared_modeled_visibility_fraction": 0.5941065908349868,
+          "longest_shared_minutes": 5988.594435616667,
+          "earliest_qualifying_shared_window": {
+            "start_utc": "2026-11-17T20:11:24.333863Z",
+            "end_utc": "2026-11-22T00:00:00Z",
+            "duration_minutes": 5988.594435616667,
+            "kind": "BOTH",
+            "estimate_status": "MODEL_ESTIMATE",
+            "boundary_uncertainty_seconds": 3600,
+            "model": "GEOMETRIC_IDEAL"
+          },
+          "unknown_data_fraction": 0.0,
+          "summary": {
+            "sun_windows": [
+              {
+                "start_utc": "2026-11-15T00:00:00Z",
+                "end_utc": "2026-11-22T00:00:00Z",
+                "duration_minutes": 10080.0,
+                "kind": "SUN",
+                "estimate_status": "MODEL_ESTIMATE",
+                "boundary_uncertainty_seconds": 3600,
+                "model": "GEOMETRIC_IDEAL"
+              }
+            ],
+            "earth_windows": [
+              {
+                "start_utc": "2026-11-17T20:11:24.333863Z",
+                "end_utc": "2026-11-22T00:00:00Z",
+                "duration_minutes": 5988.594435616667,
+                "kind": "EARTH",
+                "estimate_status": "MODEL_ESTIMATE",
+                "boundary_uncertainty_seconds": 3600,
+                "model": "GEOMETRIC_IDEAL"
+              }
+            ],
+            "shared_windows": [
+              {
+                "start_utc": "2026-11-17T20:11:24.333863Z",
+                "end_utc": "2026-11-22T00:00:00Z",
+                "duration_minutes": 5988.594435616667,
+                "kind": "BOTH",
+                "estimate_status": "MODEL_ESTIMATE",
+                "boundary_uncertainty_seconds": 3600,
+                "model": "GEOMETRIC_IDEAL"
+              }
+            ],
+            "longest_shared_minutes": 5988.594435616667,
+            "earliest_qualifying_window": {
+              "start_utc": "2026-11-17T20:11:24.333863Z",
+              "end_utc": "2026-11-22T00:00:00Z",
+              "duration_minutes": 5988.594435616667,
+              "kind": "BOTH",
+              "estimate_status": "MODEL_ESTIMATE",
+              "boundary_uncertainty_seconds": 3600,
+              "model": "GEOMETRIC_IDEAL"
+            },
+            "known_fraction": 1.0,
+            "unknown_fraction": 0.0,
+            "qualifying_status": "QUALIFIES",
+            "reason_codes": [],
+            "unknown_intervals": [],
+            "next_crossings": {
+              "sunset": {
+                "timestamp_utc": null,
+                "reason": "not_observed_in_range",
+                "boundary_uncertainty_seconds": 3600
+              },
+              "earthset": {
+                "timestamp_utc": null,
+                "reason": "not_observed_in_range",
+                "boundary_uncertainty_seconds": 3600
+              }
+            },
+            "metrics": {
+              "sun_visible_fraction": 1.0,
+              "earth_visible_fraction": 0.5941065908349868,
+              "both_visible_fraction": 0.5941065908349868
+            }
+          },
+          "fraction_definition": "Known modeled visible duration / full requested duration; lower bound when unknown > 0",
+          "window_model": "Piecewise-linear elevation between adjacent UTC samples; no gap extrapolation",
+          "terrain_clearance_supported": false
+        },
+        "queries": {
+          "sun": {
+            "raw_sha256": "cf956b10cf07ed2f0bae48907868db34f4254a808febd17e5d7e20b214b6613a",
+            "source_url": "https://ssd.jpl.nasa.gov/api/horizons.api?format=json&COMMAND=%2710%27&EPHEM_TYPE=%27OBSERVER%27&CENTER=%27coord%40301%27&COORD_TYPE=%27GEODETIC%27&SITE_COORD=%27191.6459742484832%2C-89.779454879477%2C0.0%27&START_TIME=%272026-11-15+00%3A00%27&STOP_TIME=%272026-11-22+00%3A00%27&STEP_SIZE=%2760+min%27&QUANTITIES=%274%27&TIME_TYPE=%27UT%27&TIME_ZONE=%27%2B00%3A00%27&CSV_FORMAT=%27YES%27&MAKE_EPHEM=%27YES%27&OBJ_DATA=%27NO%27&APPARENT=%27AIRLESS%27&ANG_FORMAT=%27DEG%27&TIME_DIGITS=%27SECONDS%27&ELEV_CUT=%27-90%27&SKIP_DAYLT=%27NO%27&EXTRA_PREC=%27YES%27",
+            "retrieved_at_utc": "2026-11-14T15:54:03.011057+00:00",
+            "delivery": "LIVE"
+          },
+          "earth": {
+            "raw_sha256": "2eff82f858043152628ca565c3939c85a9675f1d3eb48a9db954c32ab0ec82d4",
+            "source_url": "https://ssd.jpl.nasa.gov/api/horizons.api?format=json&COMMAND=%27399%27&EPHEM_TYPE=%27OBSERVER%27&CENTER=%27coord%40301%27&COORD_TYPE=%27GEODETIC%27&SITE_COORD=%27191.6459742484832%2C-89.779454879477%2C0.0%27&START_TIME=%272026-11-15+00%3A00%27&STOP_TIME=%272026-11-22+00%3A00%27&STEP_SIZE=%2760+min%27&QUANTITIES=%274%27&TIME_TYPE=%27UT%27&TIME_ZONE=%27%2B00%3A00%27&CSV_FORMAT=%27YES%27&MAKE_EPHEM=%27YES%27&OBJ_DATA=%27NO%27&APPARENT=%27AIRLESS%27&ANG_FORMAT=%27DEG%27&TIME_DIGITS=%27SECONDS%27&ELEV_CUT=%27-90%27&SKIP_DAYLT=%27NO%27&EXTRA_PREC=%27YES%27",
+            "retrieved_at_utc": "2026-11-14T15:54:04.124512+00:00",
+            "delivery": "LIVE"
+          }
+        }
+      }
+    ],
+    "delayed": [
+      {
+        "cell_id": "SITE04_R000_C000",
+        "status": "EVALUATED",
+        "features": {
+          "sun_modeled_visibility_fraction": 1.0,
+          "earth_modeled_visibility_fraction": 1.0,
+          "shared_modeled_visibility_fraction": 1.0,
+          "longest_shared_minutes": 10080.0,
+          "earliest_qualifying_shared_window": {
+            "start_utc": "2026-11-22T00:00:00Z",
+            "end_utc": "2026-11-29T00:00:00Z",
+            "duration_minutes": 10080.0,
+            "kind": "BOTH",
+            "estimate_status": "MODEL_ESTIMATE",
+            "boundary_uncertainty_seconds": 3600,
+            "model": "GEOMETRIC_IDEAL"
+          },
+          "unknown_data_fraction": 0.0,
+          "summary": {
+            "sun_windows": [
+              {
+                "start_utc": "2026-11-22T00:00:00Z",
+                "end_utc": "2026-11-29T00:00:00Z",
+                "duration_minutes": 10080.0,
+                "kind": "SUN",
+                "estimate_status": "MODEL_ESTIMATE",
+                "boundary_uncertainty_seconds": 3600,
+                "model": "GEOMETRIC_IDEAL"
+              }
+            ],
+            "earth_windows": [
+              {
+                "start_utc": "2026-11-22T00:00:00Z",
+                "end_utc": "2026-11-29T00:00:00Z",
+                "duration_minutes": 10080.0,
+                "kind": "EARTH",
+                "estimate_status": "MODEL_ESTIMATE",
+                "boundary_uncertainty_seconds": 3600,
+                "model": "GEOMETRIC_IDEAL"
+              }
+            ],
+            "shared_windows": [
+              {
+                "start_utc": "2026-11-22T00:00:00Z",
+                "end_utc": "2026-11-29T00:00:00Z",
+                "duration_minutes": 10080.0,
+                "kind": "BOTH",
+                "estimate_status": "MODEL_ESTIMATE",
+                "boundary_uncertainty_seconds": 3600,
+                "model": "GEOMETRIC_IDEAL"
+              }
+            ],
+            "longest_shared_minutes": 10080.0,
+            "earliest_qualifying_window": {
+              "start_utc": "2026-11-22T00:00:00Z",
+              "end_utc": "2026-11-29T00:00:00Z",
+              "duration_minutes": 10080.0,
+              "kind": "BOTH",
+              "estimate_status": "MODEL_ESTIMATE",
+              "boundary_uncertainty_seconds": 3600,
+              "model": "GEOMETRIC_IDEAL"
+            },
+            "known_fraction": 1.0,
+            "unknown_fraction": 0.0,
+            "qualifying_status": "QUALIFIES",
+            "reason_codes": [],
+            "unknown_intervals": [],
+            "next_crossings": {
+              "sunset": {
+                "timestamp_utc": null,
+                "reason": "not_observed_in_range",
+                "boundary_uncertainty_seconds": 3600
+              },
+              "earthset": {
+                "timestamp_utc": null,
+                "reason": "not_observed_in_range",
+                "boundary_uncertainty_seconds": 3600
+              }
+            },
+            "metrics": {
+              "sun_visible_fraction": 1.0,
+              "earth_visible_fraction": 1.0,
+              "both_visible_fraction": 1.0
+            }
+          },
+          "fraction_definition": "Known modeled visible duration / full requested duration; lower bound when unknown > 0",
+          "window_model": "Piecewise-linear elevation between adjacent UTC samples; no gap extrapolation",
+          "terrain_clearance_supported": false
+        },
+        "queries": {
+          "sun": {
+            "raw_sha256": "7dd8adb5bf22a9493cf6579e8d78daad4c70d79b51522eba8dac548ceb169428",
+            "source_url": "https://ssd.jpl.nasa.gov/api/horizons.api?format=json&COMMAND=%2710%27&EPHEM_TYPE=%27OBSERVER%27&CENTER=%27coord%40301%27&COORD_TYPE=%27GEODETIC%27&SITE_COORD=%27192.48248938495448%2C-89.7787655990766%2C0.0%27&START_TIME=%272026-11-22+00%3A00%27&STOP_TIME=%272026-11-29+00%3A00%27&STEP_SIZE=%2760+min%27&QUANTITIES=%274%27&TIME_TYPE=%27UT%27&TIME_ZONE=%27%2B00%3A00%27&CSV_FORMAT=%27YES%27&MAKE_EPHEM=%27YES%27&OBJ_DATA=%27NO%27&APPARENT=%27AIRLESS%27&ANG_FORMAT=%27DEG%27&TIME_DIGITS=%27SECONDS%27&ELEV_CUT=%27-90%27&SKIP_DAYLT=%27NO%27&EXTRA_PREC=%27YES%27",
+            "retrieved_at_utc": "2026-11-14T15:54:05.296019+00:00",
+            "delivery": "LIVE"
+          },
+          "earth": {
+            "raw_sha256": "bbac9efcf6a24632db2fed295e00b1cea2e50c192622a5014fd6050dee80888d",
+            "source_url": "https://ssd.jpl.nasa.gov/api/horizons.api?format=json&COMMAND=%27399%27&EPHEM_TYPE=%27OBSERVER%27&CENTER=%27coord%40301%27&COORD_TYPE=%27GEODETIC%27&SITE_COORD=%27192.48248938495448%2C-89.7787655990766%2C0.0%27&START_TIME=%272026-11-22+00%3A00%27&STOP_TIME=%272026-11-29+00%3A00%27&STEP_SIZE=%2760+min%27&QUANTITIES=%274%27&TIME_TYPE=%27UT%27&TIME_ZONE=%27%2B00%3A00%27&CSV_FORMAT=%27YES%27&MAKE_EPHEM=%27YES%27&OBJ_DATA=%27NO%27&APPARENT=%27AIRLESS%27&ANG_FORMAT=%27DEG%27&TIME_DIGITS=%27SECONDS%27&ELEV_CUT=%27-90%27&SKIP_DAYLT=%27NO%27&EXTRA_PREC=%27YES%27",
+            "retrieved_at_utc": "2026-11-14T15:54:06.607034+00:00",
+            "delivery": "LIVE"
+          }
+        }
+      },
+      {
+        "cell_id": "SITE04_R000_C001",
+        "status": "EVALUATED",
+        "features": {
+          "sun_modeled_visibility_fraction": 1.0,
+          "earth_modeled_visibility_fraction": 1.0,
+          "shared_modeled_visibility_fraction": 1.0,
+          "longest_shared_minutes": 10080.0,
+          "earliest_qualifying_shared_window": {
+            "start_utc": "2026-11-22T00:00:00Z",
+            "end_utc": "2026-11-29T00:00:00Z",
+            "duration_minutes": 10080.0,
+            "kind": "BOTH",
+            "estimate_status": "MODEL_ESTIMATE",
+            "boundary_uncertainty_seconds": 3600,
+            "model": "GEOMETRIC_IDEAL"
+          },
+          "unknown_data_fraction": 0.0,
+          "summary": {
+            "sun_windows": [
+              {
+                "start_utc": "2026-11-22T00:00:00Z",
+                "end_utc": "2026-11-29T00:00:00Z",
+                "duration_minutes": 10080.0,
+                "kind": "SUN",
+                "estimate_status": "MODEL_ESTIMATE",
+                "boundary_uncertainty_seconds": 3600,
+                "model": "GEOMETRIC_IDEAL"
+              }
+            ],
+            "earth_windows": [
+              {
+                "start_utc": "2026-11-22T00:00:00Z",
+                "end_utc": "2026-11-29T00:00:00Z",
+                "duration_minutes": 10080.0,
+                "kind": "EARTH",
+                "estimate_status": "MODEL_ESTIMATE",
+                "boundary_uncertainty_seconds": 3600,
+                "model": "GEOMETRIC_IDEAL"
+              }
+            ],
+            "shared_windows": [
+              {
+                "start_utc": "2026-11-22T00:00:00Z",
+                "end_utc": "2026-11-29T00:00:00Z",
+                "duration_minutes": 10080.0,
+                "kind": "BOTH",
+                "estimate_status": "MODEL_ESTIMATE",
+                "boundary_uncertainty_seconds": 3600,
+                "model": "GEOMETRIC_IDEAL"
+              }
+            ],
+            "longest_shared_minutes": 10080.0,
+            "earliest_qualifying_window": {
+              "start_utc": "2026-11-22T00:00:00Z",
+              "end_utc": "2026-11-29T00:00:00Z",
+              "duration_minutes": 10080.0,
+              "kind": "BOTH",
+              "estimate_status": "MODEL_ESTIMATE",
+              "boundary_uncertainty_seconds": 3600,
+              "model": "GEOMETRIC_IDEAL"
+            },
+            "known_fraction": 1.0,
+            "unknown_fraction": 0.0,
+            "qualifying_status": "QUALIFIES",
+            "reason_codes": [],
+            "unknown_intervals": [],
+            "next_crossings": {
+              "sunset": {
+                "timestamp_utc": null,
+                "reason": "not_observed_in_range",
+                "boundary_uncertainty_seconds": 3600
+              },
+              "earthset": {
+                "timestamp_utc": null,
+                "reason": "not_observed_in_range",
+                "boundary_uncertainty_seconds": 3600
+              }
+            },
+            "metrics": {
+              "sun_visible_fraction": 1.0,
+              "earth_visible_fraction": 1.0,
+              "both_visible_fraction": 1.0
+            }
+          },
+          "fraction_definition": "Known modeled visible duration / full requested duration; lower bound when unknown > 0",
+          "window_model": "Piecewise-linear elevation between adjacent UTC samples; no gap extrapolation",
+          "terrain_clearance_supported": false
+        },
+        "queries": {
+          "sun": {
+            "raw_sha256": "1a64577329f13e0ef86186de8e570cdd1c16a2535777a997f5fb490983de59af",
+            "source_url": "https://ssd.jpl.nasa.gov/api/horizons.api?format=json&COMMAND=%2710%27&EPHEM_TYPE=%27OBSERVER%27&CENTER=%27coord%40301%27&COORD_TYPE=%27GEODETIC%27&SITE_COORD=%27191.6459742484832%2C-89.779454879477%2C0.0%27&START_TIME=%272026-11-22+00%3A00%27&STOP_TIME=%272026-11-29+00%3A00%27&STEP_SIZE=%2760+min%27&QUANTITIES=%274%27&TIME_TYPE=%27UT%27&TIME_ZONE=%27%2B00%3A00%27&CSV_FORMAT=%27YES%27&MAKE_EPHEM=%27YES%27&OBJ_DATA=%27NO%27&APPARENT=%27AIRLESS%27&ANG_FORMAT=%27DEG%27&TIME_DIGITS=%27SECONDS%27&ELEV_CUT=%27-90%27&SKIP_DAYLT=%27NO%27&EXTRA_PREC=%27YES%27",
+            "retrieved_at_utc": "2026-11-14T15:54:07.825945+00:00",
+            "delivery": "LIVE"
+          },
+          "earth": {
+            "raw_sha256": "6abb95eba3c2c573d29cafc5d17fc550f25604b6ade2a93cb8351af827643200",
+            "source_url": "https://ssd.jpl.nasa.gov/api/horizons.api?format=json&COMMAND=%27399%27&EPHEM_TYPE=%27OBSERVER%27&CENTER=%27coord%40301%27&COORD_TYPE=%27GEODETIC%27&SITE_COORD=%27191.6459742484832%2C-89.779454879477%2C0.0%27&START_TIME=%272026-11-22+00%3A00%27&STOP_TIME=%272026-11-29+00%3A00%27&STEP_SIZE=%2760+min%27&QUANTITIES=%274%27&TIME_TYPE=%27UT%27&TIME_ZONE=%27%2B00%3A00%27&CSV_FORMAT=%27YES%27&MAKE_EPHEM=%27YES%27&OBJ_DATA=%27NO%27&APPARENT=%27AIRLESS%27&ANG_FORMAT=%27DEG%27&TIME_DIGITS=%27SECONDS%27&ELEV_CUT=%27-90%27&SKIP_DAYLT=%27NO%27&EXTRA_PREC=%27YES%27",
+            "retrieved_at_utc": "2026-11-14T15:54:08.973666+00:00",
+            "delivery": "LIVE"
+          }
+        }
+      }
+    ]
+  }
+}

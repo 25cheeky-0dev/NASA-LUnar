@@ -1,0 +1,47 @@
+{
+  "access_conditions": "Public NASA PDS archive; retain LROC attribution",
+  "access_method": "PDS attached label IMG via migrated official archive",
+  "canonical_url": "https://pds.mcp.nasa.gov/data/store/img/lunar_reconnaissance_orbiter/pds4/lroc/lro-l-lroc-5-rdr/LROLRC_2001/DATA/BDR/WAC_GLOBAL/WAC_GLOBAL_E000N1800_004P.IMG",
+  "citation": "Speyerer et al. 2011, LPSC abstract 2387; WAC_GLOBAL v1.3",
+  "coordinate_frame": "MOON_ME_DE421",
+  "download_timestamp": "2026-11-14T14:29:13.969645+00:00",
+  "footprint": {
+    "east": 360,
+    "north": 90,
+    "south": -90,
+    "west": 0
+  },
+  "instrument": "LROC WAC",
+  "label_checksum": "f4d9bb673f8df67f8c34e256aa1a5e8a3ef511b1f517a48ccec456e71a2178a4",
+  "latitude_type": "planetocentric_spherical",
+  "limitations": [
+    "Visual context only; not terrain or hazard evidence",
+    "Multiple historical illumination conditions",
+    "Frame mapping follows NASA LRO mission-wide ME/DE421 convention: https://svs.gsfc.nasa.gov/4969/",
+    "No per-pixel positional uncertainty supplied"
+  ],
+  "longitude_convention": "east_positive_0_360",
+  "mission": "LRO",
+  "nodata": "PDS CORE_* special float bit patterns FF7FFFFB through FF7FFFFF",
+  "organization": "NASA / Arizona State University / PDS Imaging",
+  "processing_level": "RDR",
+  "product_identifier": "WAC_GLOBAL_E000N1800_004P",
+  "product_name": "WAC Global Morphologic Map",
+  "product_type": "imagery",
+  "projection": "EQUIRECTANGULAR",
+  "quality": "PHOTOMETRIC_MOSAIC_VISUAL_CONTEXT",
+  "reference_radius_m": 1737400.0,
+  "source_checksum": "edc6f137499e8c11761669d4ddcbe4117c14d683a53d3ab12f96d9644555b580",
+  "source_id": "LROC:WAC_GLOBAL_E000N1800_004P:v1.3:edc6f137499e8c11",
+  "spatial_resolution_m": 7580.837606037399,
+  "status": "VERIFIED",
+  "temporal_coverage": {
+    "simultaneous": false,
+    "start": "2009-11-07T03:02:36",
+    "stop": "2011-01-31T18:06:02"
+  },
+  "uncertainty": null,
+  "units": "stored image DN; radiometric unit not declared in this label",
+  "version": "v1.3",
+  "vertical_reference": "Not applicable to image DN"
+}

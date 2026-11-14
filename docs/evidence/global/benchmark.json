@@ -1,0 +1,215 @@
+{
+  "hardware": "Windows-11-10.0.26300-SP0",
+  "processor": "Intel64 Family 6 Model 170 Stepping 4, GenuineIntel",
+  "python": "3.13.17",
+  "cpu_count": 18,
+  "peak_rss_bytes": 273117184,
+  "total_disk_bytes": 266276050,
+  "input_source_bytes": 162459252,
+  "quadrature_refinement_max_delta": {
+    "elevation_m": 7.55029296875,
+    "slope_deg": 0.36058703965778705,
+    "roughness_m": 3.699768777715917
+  },
+  "quadrature_note": "Eight geographically dispersed validation cells, 256 vs 1024 equal-area samples; not a global uncertainty bound",
+  "benchmarks": [
+    {
+      "name": "levels-cold",
+      "method": "GET",
+      "path": "/api/v1/science/global/levels",
+      "seconds": 0.8439730000009149,
+      "response_bytes": 396,
+      "status": 200
+    },
+    {
+      "name": "lookup-cold",
+      "method": "GET",
+      "path": "/api/v1/science/global/cells/lookup?latitude=-89&longitude=45",
+      "seconds": 0.17945920000056503,
+      "response_bytes": 3411,
+      "status": 200
+    },
+    {
+      "name": "neighbors-cold",
+      "method": "GET",
+      "path": "/api/v1/science/global/cells/MOON:HPX:NESTED:128:131075/neighbors",
+      "seconds": 0.018025800000032177,
+      "response_bytes": 402,
+      "status": 200
+    },
+    {
+      "name": "vector-cold",
+      "method": "GET",
+      "path": "/api/v1/science/global/cells/MOON:HPX:NESTED:128:131075/vectors",
+      "seconds": 0.10237859999870125,
+      "response_bytes": 709,
+      "status": 200
+    },
+    {
+      "name": "sources-cold",
+      "method": "GET",
+      "path": "/api/v1/science/global/cells/MOON:HPX:NESTED:128:131075/sources",
+      "seconds": 0.7681209000002127,
+      "response_bytes": 3968,
+      "status": 200
+    },
+    {
+      "name": "regional-cold",
+      "method": "GET",
+      "path": "/api/v1/science/global/regional/SITE04_R000_C000/crosswalk",
+      "seconds": 0.08720999999968626,
+      "response_bytes": 482,
+      "status": 200
+    },
+    {
+      "name": "candidates-cold",
+      "method": "POST",
+      "path": "/api/v1/science/global/candidates",
+      "seconds": 0.6345249000005424,
+      "response_bytes": 9761,
+      "status": 200
+    },
+    {
+      "name": "similarity-cold",
+      "method": "POST",
+      "path": "/api/v1/science/global/similarity",
+      "seconds": 1.0237856000003376,
+      "response_bytes": 11553,
+      "status": 200
+    },
+    {
+      "name": "overlap-cold",
+      "method": "POST",
+      "path": "/api/v1/science/global/source-overlap",
+      "seconds": 0.6515461999988474,
+      "response_bytes": 10141,
+      "status": 200
+    },
+    {
+      "name": "thermal-cold",
+      "method": "GET",
+      "path": "/api/v1/science/global/cells/MOON:HPX:NESTED:128:131075/thermal?local_time_bin=0",
+      "seconds": 0.6563791000007768,
+      "response_bytes": 2640,
+      "status": 200
+    },
+    {
+      "name": "tiles-cold",
+      "method": "GET",
+      "path": "/api/v1/science/global/tiles/128/2560",
+      "seconds": 0.12722960000064631,
+      "response_bytes": 96945,
+      "status": 200
+    },
+    {
+      "name": "levels-warm",
+      "method": "GET",
+      "path": "/api/v1/science/global/levels",
+      "seconds": 0.01718590000018594,
+      "response_bytes": 396,
+      "status": 200
+    },
+    {
+      "name": "lookup-warm",
+      "method": "GET",
+      "path": "/api/v1/science/global/cells/lookup?latitude=-89&longitude=45",
+      "seconds": 0.16582279999965976,
+      "response_bytes": 3411,
+      "status": 200
+    },
+    {
+      "name": "neighbors-warm",
+      "method": "GET",
+      "path": "/api/v1/science/global/cells/MOON:HPX:NESTED:128:131075/neighbors",
+      "seconds": 0.01674329999877955,
+      "response_bytes": 402,
+      "status": 200
+    },
+    {
+      "name": "vector-warm",
+      "method": "GET",
+      "path": "/api/v1/science/global/cells/MOON:HPX:NESTED:128:131075/vectors",
+      "seconds": 0.0941514999994979,
+      "response_bytes": 709,
+      "status": 200
+    },
+    {
+      "name": "sources-warm",
+      "method": "GET",
+      "path": "/api/v1/science/global/cells/MOON:HPX:NESTED:128:131075/sources",
+      "seconds": 0.1737723999995069,
+      "response_bytes": 3968,
+      "status": 200
+    },
+    {
+      "name": "regional-warm",
+      "method": "GET",
+      "path": "/api/v1/science/global/regional/SITE04_R000_C000/crosswalk",
+      "seconds": 0.08582320000095933,
+      "response_bytes": 482,
+      "status": 200
+    },
+    {
+      "name": "candidates-warm",
+      "method": "POST",
+      "path": "/api/v1/science/global/candidates",
+      "seconds": 0.5682337999987794,
+      "response_bytes": 9761,
+      "status": 200
+    },
+    {
+      "name": "similarity-warm",
+      "method": "POST",
+      "path": "/api/v1/science/global/similarity",
+      "seconds": 1.004498500000409,
+      "response_bytes": 11553,
+      "status": 200
+    },
+    {
+      "name": "overlap-warm",
+      "method": "POST",
+      "path": "/api/v1/science/global/source-overlap",
+      "seconds": 0.6751180000010208,
+      "response_bytes": 10141,
+      "status": 200
+    },
+    {
+      "name": "thermal-warm",
+      "method": "GET",
+      "path": "/api/v1/science/global/cells/MOON:HPX:NESTED:128:131075/thermal?local_time_bin=0",
+      "seconds": 0.4863565000014205,
+      "response_bytes": 2640,
+      "status": 200
+    },
+    {
+      "name": "tiles-warm",
+      "method": "GET",
+      "path": "/api/v1/science/global/tiles/128/2560",
+      "seconds": 0.12550819999887608,
+      "response_bytes": 96945,
+      "status": 200
+    },
+    {
+      "name": "global-nasa-analysis",
+      "method": "POST",
+      "path": "/api/v1/science/global/analysis",
+      "seconds": 0.8790939999998955,
+      "response_bytes": 39501,
+      "status": 200
+    },
+    {
+      "name": "site04-seven-day",
+      "method": "POST",
+      "path": "/api/v1/science/global/delay",
+      "seconds": 0.6605084999991959,
+      "response_bytes": 437189,
+      "status": 200
+    }
+  ],
+  "live_requested": true,
+  "sources": {
+    "source_products\\diviner\\source.json": "73fb2ae42ea7d2f07c5d65a0568c33f352a1bfd3d0aa40e9ee1e0aee6c1b4a87",
+    "source_products\\lola\\source.json": "4b202c155394403dff4fda3d90eac4789ba2182af9fe6e13cd647ade4e4cd68b",
+    "source_products\\lroc\\source.json": "c5ac6292c698fb6d5c3151d2fb7c24e7393da4550eda439770a87abbe82aa6c0"
+  }
+}
