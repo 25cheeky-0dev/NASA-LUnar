@@ -35,7 +35,7 @@ def test_generated_contracts_are_current_and_science_routes_typed():
                 assert operation["responses"][code]["content"]["application/json"]["schema"][
                     "$ref"
                 ].endswith("/ScienceError")
-    assert count == 11
+    assert count == 15
 
 
 def payload(d):

@@ -26,6 +26,10 @@ def read_v3(root):
         consumed[relative] = digest
         return path
 
+    # Verify every manifest-covered file, including evidence not consumed as features.
+    for relative in checksums:
+        verified(relative)
+    consumed.clear()  # Preserve the historical feature snapshot identity.
     baseline = json.loads(verified("baseline/grid_metadata.json").read_text())
     verified(baseline["source"]["filename"])
     manifest = json.loads(verified("tile_manifest.json").read_text())
@@ -41,13 +45,21 @@ def read_v3(root):
         raise ValueError("Unsupported V3 longitude convention")
     rows = pq.read_table(verified("baseline/grid.parquet")).to_pylist()
     originals = {r["cell_id"]: r for r in rows}
+    if len(originals) != len(rows):
+        raise ValueError("Duplicate baseline cell IDs")
     neighbors = {}
     for edge in pq.read_table(verified("baseline/neighbors.parquet")).to_pylist():
         neighbors.setdefault(edge["cell_id"], []).append(edge["neighbor_id"])
-    geometries = {
-        r["cell_id"]: r
-        for r in pq.read_table(verified("baseline/grid_geometry.parquet")).to_pylist()
-    }
+    geometry_rows = pq.read_table(verified("baseline/grid_geometry.parquet")).to_pylist()
+    geometries = {r["cell_id"]: r for r in geometry_rows}
+    if len(geometries) != len(geometry_rows):
+        raise ValueError("Duplicate geometry IDs")
+    from .topology import validate_topology
+
+    validate_topology(rows, geometries, neighbors, crs["wkt"])
+    tile_ids = [t["tile_id"] for t in manifest["tiles"]]
+    if len(set(tile_ids)) != len(tile_ids):
+        raise ValueError("Duplicate tile IDs")
     cells = []
     for tile in manifest["tiles"]:
         tile_id = tile["tile_id"]
@@ -63,6 +75,8 @@ def read_v3(root):
             raise ValueError("Tile count mismatch")
         for row in derived:
             original = originals[row["cell_id"]]
+            if any(original[k] != row[k] for k in original.keys() & row.keys()):
+                raise ValueError("Original V3 attributes differ from tiled record")
             if set(neighbors.get(row["cell_id"], [])) != set(row["neighbor_ids"]):
                 raise ValueError("Baseline neighbor mismatch")
             geometry = geometries[row["cell_id"]]

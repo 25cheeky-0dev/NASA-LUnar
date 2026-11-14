@@ -30,6 +30,11 @@ app.include_router(science_router)
 app.include_router(global_router)
 from app.navigation import router as navigation_router
 app.include_router(navigation_router)
+from app.explorer import router as explorer_router
+app.include_router(explorer_router)
+from app.security import ResourceLimits
+if os.getenv('WISPR_RESOURCE_LIMITS', 'true') == 'true':
+    app.add_middleware(ResourceLimits)
 provider = Horizons()
 scenarios = OrderedDict()
 requests_gate = asyncio.Semaphore(2)
@@ -64,7 +69,7 @@ async def health():
         horizons_probe_status='NOT_TESTED' if provider.live is None else 'REACHABLE' if provider.live else 'UNAVAILABLE',
         cache_available=provider.root.exists() and any(provider.root.glob('*.meta.json')),
         dem_status_by_site={s:'CONFIGURED_NOT_PROBED' if os.getenv('DEM_'+s) else 'UNAVAILABLE' for s in SITES},
-        llm_provider_status='CONFIGURED_NOT_TESTED' if any(os.getenv(p+'_API_KEY') and os.getenv(p+'_MODEL') for p in ('GROQ','NVIDIA')) else 'UNCONFIGURED',
+        llm_provider_status='CONFIGURED_NOT_TESTED' if any(os.getenv(p+'_API_KEY') and os.getenv(p+'_MODEL') for p in ('GROQ','NVIDIA','GEMINI')) else 'UNCONFIGURED',
         mode='GEOMETRIC',warnings=[SITE_WARNING]+([] if provider.live else ['Live Horizons has not succeeded in this process.']))
 
 

@@ -16,12 +16,13 @@ import pyarrow.parquet as pq
 from astropy import units as u
 from astropy_healpix import HEALPix
 
+from app.integration.vector_contract import FEATURES, NORMALIZATION
+
 from .grid import RADIUS_M, cell_id, hpx
 from .sources import SourceProduct
 from .storage import sha256, write_json
 
-FEATURES = ["elevation_m", "slope_deg", "roughness_m"]
-SCALES = [1000.0, 10.0, 10.0]
+SCALES = NORMALIZATION["scales"]
 METHOD = "ldem4-native-central-gradient-3x3std-hpx-quadrature-v1"
 
 

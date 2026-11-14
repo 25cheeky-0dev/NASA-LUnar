@@ -171,6 +171,54 @@
         "title": "AnalyzeResponse",
         "type": "object"
       },
+      "BackendStatus": {
+        "additionalProperties": false,
+        "properties": {
+          "authoritative_modules": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Authoritative Modules",
+            "type": "array"
+          },
+          "datasets": {
+            "items": {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            "title": "Datasets",
+            "type": "array"
+          },
+          "limitations": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Limitations",
+            "type": "array"
+          },
+          "sources": {
+            "items": {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            "title": "Sources",
+            "type": "array"
+          },
+          "status": {
+            "title": "Status",
+            "type": "string"
+          }
+        },
+        "required": [
+          "status",
+          "authoritative_modules",
+          "datasets",
+          "sources",
+          "limitations"
+        ],
+        "title": "BackendStatus",
+        "type": "object"
+      },
       "CandidateResponse": {
         "additionalProperties": false,
         "properties": {
@@ -2461,6 +2509,7 @@
             "enum": [
               "groq",
               "nvidia",
+              "gemini",
               "auto",
               "manual"
             ],
@@ -3350,6 +3399,108 @@
         "title": "RecoveryResponse",
         "type": "object"
       },
+      "ReportRef": {
+        "additionalProperties": false,
+        "properties": {
+          "report_id": {
+            "title": "Report Id",
+            "type": "string"
+          },
+          "report_url": {
+            "title": "Report Url",
+            "type": "string"
+          },
+          "result": {
+            "additionalProperties": true,
+            "title": "Result",
+            "type": "object"
+          }
+        },
+        "required": [
+          "report_id",
+          "result",
+          "report_url"
+        ],
+        "title": "ReportRef",
+        "type": "object"
+      },
+      "RepresentationFit": {
+        "additionalProperties": false,
+        "properties": {
+          "dataset_id": {
+            "title": "Dataset Id",
+            "type": "string"
+          },
+          "dimensions": {
+            "default": 2,
+            "maximum": 3.0,
+            "minimum": 1.0,
+            "title": "Dimensions",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "dataset_id"
+        ],
+        "title": "RepresentationFit",
+        "type": "object"
+      },
+      "RepresentationResponse": {
+        "additionalProperties": false,
+        "properties": {
+          "metadata": {
+            "additionalProperties": true,
+            "title": "Metadata",
+            "type": "object"
+          }
+        },
+        "required": [
+          "metadata"
+        ],
+        "title": "RepresentationResponse",
+        "type": "object"
+      },
+      "RepresentationSearch": {
+        "additionalProperties": false,
+        "properties": {
+          "accept_descriptive_similarity": {
+            "default": false,
+            "title": "Accept Descriptive Similarity",
+            "type": "boolean"
+          },
+          "cell_id": {
+            "title": "Cell Id",
+            "type": "string"
+          },
+          "dataset_id": {
+            "title": "Dataset Id",
+            "type": "string"
+          },
+          "limit": {
+            "default": 20,
+            "maximum": 1000.0,
+            "minimum": 1.0,
+            "title": "Limit",
+            "type": "integer"
+          },
+          "model_id": {
+            "title": "Model Id",
+            "type": "string"
+          },
+          "space": {
+            "default": "physical-scales-v1",
+            "title": "Space",
+            "type": "string"
+          }
+        },
+        "required": [
+          "dataset_id",
+          "model_id",
+          "cell_id"
+        ],
+        "title": "RepresentationSearch",
+        "type": "object"
+      },
       "Retrieval": {
         "additionalProperties": false,
         "properties": {
@@ -3917,7 +4068,7 @@
         "type": "object"
       },
       "SkylineSample": {
-        "additionalProperties": false,
+        "additionalProperties": true,
         "properties": {
           "azimuth_deg": {
             "title": "Azimuth Deg",
@@ -4261,6 +4412,16 @@
             "additionalProperties": true,
             "title": "Uncertainty",
             "type": "object"
+          },
+          "uncertainty_status": {
+            "default": "UNCERTAINTY_UNKNOWN",
+            "enum": [
+              "VERIFIED_NUMERICAL_UNCERTAINTY",
+              "UNCERTAINTY_UNKNOWN",
+              "INCOMPATIBLE_EVIDENCE"
+            ],
+            "title": "Uncertainty Status",
+            "type": "string"
           }
         },
         "required": [
@@ -4519,6 +4680,42 @@
           "scope"
         ],
         "title": "TerrainPage",
+        "type": "object"
+      },
+      "TerrainRequest": {
+        "additionalProperties": false,
+        "properties": {
+          "azimuths_deg": {
+            "items": {
+              "type": "number"
+            },
+            "maxItems": 360,
+            "minItems": 1,
+            "title": "Azimuths Deg",
+            "type": "array"
+          },
+          "cell_id": {
+            "title": "Cell Id",
+            "type": "string"
+          },
+          "dataset_id": {
+            "title": "Dataset Id",
+            "type": "string"
+          },
+          "observer_height_m": {
+            "default": 1,
+            "maximum": 100.0,
+            "minimum": 0.0,
+            "title": "Observer Height M",
+            "type": "number"
+          }
+        },
+        "required": [
+          "dataset_id",
+          "cell_id",
+          "azimuths_deg"
+        ],
+        "title": "TerrainRequest",
         "type": "object"
       },
       "ThermalResponse": {
@@ -4879,6 +5076,14 @@
           "comparability": {
             "$ref": "#/components/schemas/TerrainEvidence"
           },
+          "evidence_policy": {
+            "enum": [
+              "VERIFIED_NUMERICAL_UNCERTAINTY",
+              "DESCRIPTIVE_SIMILARITY_ONLY"
+            ],
+            "title": "Evidence Policy",
+            "type": "string"
+          },
           "matches": {
             "items": {
               "$ref": "#/components/schemas/SimilarityMatch"
@@ -4899,6 +5104,7 @@
           "reference_cell_id",
           "metric",
           "comparability",
+          "evidence_policy",
           "matches"
         ],
         "title": "SimilarityResponse",
@@ -5563,6 +5769,207 @@
           }
         },
         "summary": "Ephemeris"
+      }
+    },
+    "/api/v1/explorer/delay": {
+      "post": {
+        "operationId": "compare_api_v1_explorer_delay_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DelayRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ReportRef"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Compare",
+        "tags": [
+          "explorer"
+        ]
+      }
+    },
+    "/api/v1/explorer/demo": {
+      "post": {
+        "operationId": "recorded_demo_api_v1_explorer_demo_post",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ReportRef"
+                }
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "summary": "Recorded Demo",
+        "tags": [
+          "explorer"
+        ]
+      }
+    },
+    "/api/v1/explorer/reports/{key}": {
+      "get": {
+        "operationId": "report_api_v1_explorer_reports__key__get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "key",
+            "required": true,
+            "schema": {
+              "title": "Key",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Report",
+        "tags": [
+          "explorer"
+        ]
+      }
+    },
+    "/api/v1/explorer/runtime": {
+      "get": {
+        "operationId": "runtime_api_v1_explorer_runtime_get",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "summary": "Runtime",
+        "tags": [
+          "explorer"
+        ]
+      }
+    },
+    "/api/v1/explorer/surface": {
+      "get": {
+        "description": "Bounded projected mesh of the validated LOLA product; no fake detail.\n\nGrid samples use nearest native pixels. The renderer interpolates triangles,\nwhich is display interpolation, not a new measurement or accuracy claim.",
+        "operationId": "surface_api_v1_explorer_surface_get",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "latitude",
+            "required": false,
+            "schema": {
+              "default": -88,
+              "maximum": 89.5,
+              "minimum": -89.5,
+              "title": "Latitude",
+              "type": "number"
+            }
+          },
+          {
+            "in": "query",
+            "name": "longitude",
+            "required": false,
+            "schema": {
+              "default": 0,
+              "maximum": 360,
+              "minimum": -180,
+              "title": "Longitude",
+              "type": "number"
+            }
+          },
+          {
+            "in": "query",
+            "name": "extent_km",
+            "required": false,
+            "schema": {
+              "default": 450,
+              "maximum": 900,
+              "minimum": 20,
+              "title": "Extent Km",
+              "type": "number"
+            }
+          },
+          {
+            "in": "query",
+            "name": "resolution",
+            "required": false,
+            "schema": {
+              "default": 96,
+              "maximum": 160,
+              "minimum": 16,
+              "title": "Resolution",
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Surface",
+        "tags": [
+          "explorer"
+        ]
       }
     },
     "/api/v1/export/{scenario_id}.csv": {
@@ -6391,6 +6798,16 @@
               "minimum": 1,
               "title": "Limit",
               "type": "integer"
+            }
+          },
+          {
+            "in": "query",
+            "name": "accept_unknown_uncertainty",
+            "required": false,
+            "schema": {
+              "default": false,
+              "title": "Accept Unknown Uncertainty",
+              "type": "boolean"
             }
           }
         ],
@@ -7963,6 +8380,156 @@
         ]
       }
     },
+    "/api/v1/science/global/thermal-observations": {
+      "get": {
+        "operationId": "thermal_observations_api_v1_science_global_thermal_observations_get",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "west",
+            "required": true,
+            "schema": {
+              "exclusiveMaximum": 360,
+              "minimum": 0,
+              "title": "West",
+              "type": "number"
+            }
+          },
+          {
+            "in": "query",
+            "name": "south",
+            "required": true,
+            "schema": {
+              "exclusiveMaximum": -80,
+              "minimum": -90,
+              "title": "South",
+              "type": "number"
+            }
+          },
+          {
+            "in": "query",
+            "name": "east",
+            "required": true,
+            "schema": {
+              "maximum": 360,
+              "minimum": 0,
+              "title": "East",
+              "type": "number"
+            }
+          },
+          {
+            "in": "query",
+            "name": "north",
+            "required": true,
+            "schema": {
+              "maximum": -80,
+              "minimum": -90,
+              "title": "North",
+              "type": "number"
+            }
+          },
+          {
+            "in": "query",
+            "name": "local_time_bin",
+            "required": true,
+            "schema": {
+              "maximum": 95,
+              "minimum": 0,
+              "title": "Local Time Bin",
+              "type": "integer"
+            }
+          },
+          {
+            "in": "query",
+            "name": "channel",
+            "required": false,
+            "schema": {
+              "default": "tbol",
+              "enum": [
+                "t3",
+                "t4",
+                "t5",
+                "t6",
+                "t7",
+                "t8",
+                "t9",
+                "tbol"
+              ],
+              "title": "Channel",
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "limit",
+            "required": false,
+            "schema": {
+              "default": 100,
+              "maximum": 1000,
+              "minimum": 1,
+              "title": "Limit",
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Page"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ScienceError"
+                }
+              }
+            },
+            "description": "Not Found"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ScienceError"
+                }
+              }
+            },
+            "description": "Invalid scientific or schema request"
+          },
+          "429": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ScienceError"
+                }
+              }
+            },
+            "description": "Analysis capacity exceeded"
+          },
+          "503": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ScienceError"
+                }
+              }
+            },
+            "description": "Scientific source unavailable"
+          }
+        },
+        "summary": "Thermal Observations",
+        "tags": [
+          "global-science"
+        ]
+      }
+    },
     "/api/v1/science/global/tiles/{level}/{tile_id}": {
       "get": {
         "operationId": "tile_api_v1_science_global_tiles__level___tile_id__get",
@@ -8105,6 +8672,128 @@
         ]
       }
     },
+    "/api/v1/science/representations/fit": {
+      "post": {
+        "operationId": "fit_representation_api_v1_science_representations_fit_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RepresentationFit"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RepresentationResponse"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ScienceError"
+                }
+              }
+            },
+            "description": "Not Found"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ScienceError"
+                }
+              }
+            },
+            "description": "Invalid scientific or schema request"
+          },
+          "429": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ScienceError"
+                }
+              }
+            },
+            "description": "Analysis capacity exceeded"
+          }
+        },
+        "summary": "Fit Representation",
+        "tags": [
+          "unified-science"
+        ]
+      }
+    },
+    "/api/v1/science/representations/search": {
+      "post": {
+        "operationId": "search_representation_api_v1_science_representations_search_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RepresentationSearch"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RepresentationResponse"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ScienceError"
+                }
+              }
+            },
+            "description": "Not Found"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ScienceError"
+                }
+              }
+            },
+            "description": "Invalid scientific or schema request"
+          },
+          "429": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ScienceError"
+                }
+              }
+            },
+            "description": "Analysis capacity exceeded"
+          }
+        },
+        "summary": "Search Representation",
+        "tags": [
+          "unified-science"
+        ]
+      }
+    },
     "/api/v1/science/scenarios/{scenario_id}": {
       "get": {
         "operationId": "dynamic_vectors_api_v1_science_scenarios__scenario_id__get",
@@ -8162,6 +8851,118 @@
           }
         },
         "summary": "Dynamic Vectors",
+        "tags": [
+          "unified-science"
+        ]
+      }
+    },
+    "/api/v1/science/status": {
+      "get": {
+        "operationId": "backend_status_api_v1_science_status_get",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BackendStatus"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ScienceError"
+                }
+              }
+            },
+            "description": "Not Found"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ScienceError"
+                }
+              }
+            },
+            "description": "Invalid scientific or schema request"
+          },
+          "429": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ScienceError"
+                }
+              }
+            },
+            "description": "Analysis capacity exceeded"
+          }
+        },
+        "summary": "Backend Status",
+        "tags": [
+          "unified-science"
+        ]
+      }
+    },
+    "/api/v1/science/terrain/horizon": {
+      "post": {
+        "operationId": "terrain_diagnostics_api_v1_science_terrain_horizon_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TerrainRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Horizon"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ScienceError"
+                }
+              }
+            },
+            "description": "Not Found"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ScienceError"
+                }
+              }
+            },
+            "description": "Invalid scientific or schema request"
+          },
+          "429": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ScienceError"
+                }
+              }
+            },
+            "description": "Analysis capacity exceeded"
+          }
+        },
+        "summary": "Terrain Diagnostics",
         "tags": [
           "unified-science"
         ]

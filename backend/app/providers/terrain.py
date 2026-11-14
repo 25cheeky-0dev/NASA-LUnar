@@ -3,7 +3,9 @@ import hashlib
 import json
 import math
 import os
+from functools import lru_cache
 from pathlib import Path
+
 from app.catalog import SITES
 from app.metadata import metadata
 from app.science.grid import RADIUS
@@ -91,41 +93,53 @@ def curvature_angle(distance_m, delta_height_m):
     return math.degrees(math.atan2((RADIUS+delta_height_m)*math.cos(theta)-RADIUS, (RADIUS+delta_height_m)*math.sin(theta)))
 
 
-def horizon(site_id, observer_height_m, az_step_deg, *, position=None):
+def horizon(site_id, observer_height_m, az_step_deg, *, position=None, azimuths_deg=None):
+    """Compatible provider entry point, now using the shared full-raster engine.
+
+    Existing callers retain diagnostic angular steps. New callers can request
+    exact azimuths. Use compare_ephemeris for reference-checked target decisions.
+    """
     import numpy as np
-    from pyproj import Geod, CRS, Transformer
+
+    from .terrain_horizon import TerrainHorizonEngine
+
+    if not math.isfinite(az_step_deg) or not 0.018 <= az_step_deg <= 360:
+        raise ValueError('Invalid diagnostic azimuth step')
     raster, manifest, x, y, digest = load(site_id, position=position)
-    with raster:
-        origin = next(raster.sample([(x,y)], masked=True))[0]
-        if np.ma.is_masked(origin) or not np.isfinite(origin):
-            raise TerrainUnavailable('Observer falls on DEM NoData')
-        crs = CRS.from_user_input(raster.crs)
-        transformer = Transformer.from_crs(crs.geodetic_crs, crs, always_xy=True)
-        geod = Geod(a=RADIUS,b=RADIUS)
-        latitude, longitude = position if position is not None else (SITES[site_id]['lat_deg'], SITES[site_id]['lon_east_deg'])
-        spacing = max(10., max(raster.res))
-        max_radius = min(20000., math.hypot(raster.bounds.right-raster.bounds.left, raster.bounds.top-raster.bounds.bottom))
-        distances = np.arange(spacing,max_radius,spacing)
-        samples = []
-        radii = []
-        for az in range(0,360,az_step_deg):
-            lon, lat, _ = geod.fwd(np.full(len(distances),longitude), np.full(len(distances),latitude), np.full(len(distances),az), distances)
-            xs, ys = transformer.transform(lon,lat)
-            vals = list(raster.sample(zip(xs,ys), masked=True))
-            angles, obstructions, supported = [], [], 0.
-            for d, xx, yy, value in zip(distances,xs,ys,vals):
-                if not (raster.bounds.left <= xx < raster.bounds.right and raster.bounds.bottom < yy <= raster.bounds.top) or np.ma.is_masked(value[0]) or not np.isfinite(value[0]):
-                    break
-                angles.append(curvature_angle(float(d), float(value[0])-float(origin)-observer_height_m))
-                obstructions.append((float(d), float(value[0])))
-                supported = float(d)
-            radii.append(supported)
-            samples.append(dict(azimuth_deg=az, terrain_horizon_elevation_deg=max(angles) if angles else None,
-                coverage='PARTIAL' if angles else 'UNKNOWN', uncertainty_deg=None, supported_radius_m=supported,
-                controlling_obstruction_distance_m=obstructions[int(np.argmax(angles))][0] if angles else None,
-                controlling_obstruction_elevation_m=obstructions[int(np.argmax(angles))][1] if angles else None))
-        return dict(observation_position=dict(latitude_deg=latitude, longitude_east_deg=longitude), source_manifest=manifest, raster_sha256=digest, azimuth_samples=samples, max_supported_radius_m=max(radii,default=0), far_field_complete=False,
-            observer_ground_height_m=float(origin), observer_height_m=observer_height_m,
-            **metadata('NASA_LOLA_DEM','TERRAIN_PARTIAL','PARTIAL',limitations=[
-                'Finite local DEM cannot certify clear far-field sectors. No terrain-mode eligibility is inferred.',
-                'Curvature uses a spherical Moon; azimuth rays use geodesic forward coordinates.']))
+    path = raster.name
+    raster.close()
+    latitude, longitude = position if position is not None else (SITES[site_id]['lat_deg'], SITES[site_id]['lon_east_deg'])
+    engine = TerrainHorizonEngine(path, {site_id: dict(latitude_deg=latitude,
+        longitude_east_deg=longitude, x_m=x, y_m=y)}, digest, provenance=manifest)
+    result = engine.compute_horizon(site_id, observer_height_m,
+        np.arange(0, 360, az_step_deg) if azimuths_deg is None else azimuths_deg)
+    if azimuths_deg is None:
+        result.update(angular_resolution_deg=az_step_deg, direction_mode='DIAGNOSTIC_SKYLINE')
+    for ray in result['azimuth_samples']:
+        obstruction = ray.get('obstruction') or {}
+        ray['controlling_obstruction_distance_m'] = obstruction.get('distance_m')
+        ray['controlling_obstruction_elevation_m'] = obstruction.get('source_elevation_m')
+    # Retain provider metadata and original provenance without asserting a datum.
+    base = metadata('NASA_LOLA_DEM', 'TERRAIN_PARTIAL', 'PARTIAL')
+    return dict(base, **result)
+
+
+def compute_horizon(cell_id, observer_height_m, azimuths_deg, *, engine=None):
+    """V3 library entry point; reuse an explicit engine for bounded cached calls."""
+    if engine is None:
+        root = os.getenv('WISPR_TERRAIN_V3_DIR')
+        if not root:
+            raise TerrainUnavailable('Configure WISPR_TERRAIN_V3_DIR or pass a V3 engine')
+        root = Path(root).resolve()
+        files = [root / 'SHA256_MANIFEST.json', root / 'Site04_final_adj_5mpp_surf.tif']
+        generation = tuple((p.stat().st_size, p.stat().st_mtime_ns) for p in files)
+        engine = _configured_v3_engine(str(root), generation)
+    return engine.compute_horizon(cell_id, observer_height_m, azimuths_deg)
+
+
+@lru_cache(maxsize=2)
+def _configured_v3_engine(root, generation):
+    """Bounded process snapshots; changed source/manifest stats trigger revalidation."""
+    from .terrain_horizon import TerrainHorizonEngine
+
+    return TerrainHorizonEngine.from_v3(root)

@@ -62,6 +62,9 @@ class TerrainEvidence(StrictModel):
     coordinate_frame: str
     quality: str
     uncertainty: dict
+    uncertainty_status: Literal[
+        "VERIFIED_NUMERICAL_UNCERTAINTY", "UNCERTAINTY_UNKNOWN", "INCOMPATIBLE_EVIDENCE"
+    ] = "UNCERTAINTY_UNKNOWN"
     coverage_fraction: float | None
     synthetic: bool
 
@@ -104,6 +107,7 @@ class SimilarityResponse(StrictModel):
     reference_cell_id: str
     metric: str
     comparability: TerrainEvidence
+    evidence_policy: Literal["VERIFIED_NUMERICAL_UNCERTAINTY", "DESCRIPTIVE_SIMILARITY_ONLY"]
     matches: list[SimilarityMatch]
 
 
@@ -209,6 +213,7 @@ class Observer(StrictModel):
 
 
 class SkylineSample(StrictModel):
+    model_config = {"extra": "allow", "allow_inf_nan": False}
     azimuth_deg: float
     terrain_horizon_elevation_deg: float | None
     coverage: str

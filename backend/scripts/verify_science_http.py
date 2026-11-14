@@ -257,7 +257,12 @@ def verify():
             outcome=delay["outcome"],
             examples=entries,
         )
-        path = ROOT / "docs/evidence/unified/final_api_examples.json"
+        path = Path(
+            os.getenv(
+                "WISPR_HTTP_EVIDENCE", str(ROOT / "docs/evidence/unified/final_api_examples.json")
+            )
+        )
+        path.parent.mkdir(parents=True, exist_ok=True)
         path.write_text(json.dumps(output, indent=2, allow_nan=False) + "\n", encoding="utf-8")
         print(json.dumps({k: v for k, v in output.items() if k != "examples"}, indent=2))
         print(f"{len(entries)} actual HTTP examples saved")

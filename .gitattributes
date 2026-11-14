@@ -1,0 +1,7 @@
+/backend/tests/fixtures/** -text
+/backend/celestial_engine/fixtures/** -text
+/backend/celestial_engine/outputs/** -text
+/docs/evidence/**/*.json -text
+*.parquet binary
+*.tif binary
+*.glb binary
