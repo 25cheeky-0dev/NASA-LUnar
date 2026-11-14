@@ -7,7 +7,7 @@ from datetime import UTC, datetime
 
 from .data_validation import EphemerisError, angles
 
-PARSER_VERSION = "wispr-observer-csv-1"
+PARSER_VERSION = "wispr-observer-csv-2"
 
 
 def parse_response(raw: bytes, target: int, request):
@@ -72,7 +72,14 @@ def parse_response(raw: bytes, target: int, request):
         for row in csv.reader(table.strip().splitlines()):
             if len(row) != len(labels):
                 raise EphemerisError("CSV row length differs from its column header")
-            stamp = datetime.strptime(row[date].strip(), "%Y-%b-%d %H:%M:%S").replace(tzinfo=UTC)
+            # Horizons sometimes emits whole minutes despite TIME_DIGITS=SECONDS.
+            # Accept only its explicit calendar formats; never infer a timezone.
+            timestamp = row[date].strip()
+            if re.fullmatch(r"\d{4}-[A-Za-z]{3}-\d{2} \d{2}:\d{2}", timestamp):
+                time_format = "%Y-%b-%d %H:%M"
+            else:
+                time_format = "%Y-%b-%d %H:%M:%S"
+            stamp = datetime.strptime(timestamp, time_format).replace(tzinfo=UTC)
             if previous is not None and stamp <= previous:
                 raise EphemerisError("Duplicate or nonmonotonic observation time")
             previous = stamp

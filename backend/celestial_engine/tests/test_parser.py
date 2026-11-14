@@ -102,3 +102,22 @@ def test_malformed_rows(mode, request_model):
         data["error"] = "synthetic test error"
     with pytest.raises(EphemerisError):
         parse_response(json.dumps(data).encode(), 10, request_model)
+
+
+def test_authentic_minute_precision_response():
+    from celestial_engine.schemas import EphemerisRequest
+    request = EphemerisRequest(latitude_deg=17.582776, longitude_east_deg=60.46875,
+        start_utc="2026-11-26T04:04:00Z", end_utc="2026-12-03T04:04:00Z", step_minutes=60)
+    records = parse_response((FIXTURES / "sun_minute_precision.json").read_bytes(), 10, request)
+    assert list(records) == request.timestamps()
+    assert records[request.start_utc] == (266.041833017, 7.404037402)
+
+
+@pytest.mark.parametrize("target,name", [(10, "sun"), (399, "earth")])
+def test_minutes_and_seconds_preserve_same_records(target, name, request_model):
+    import re
+    data = payload(name)
+    original = parse_response(json.dumps(data).encode(), target, request_model)
+    data["result"] = re.sub(r"(\d{4}-[A-Za-z]{3}-\d{2} \d{2}:\d{2}):00", r"\1", data["result"])
+    data["result"] = data["result"].replace("HR:MN:SS", "HR:MN")
+    assert parse_response(json.dumps(data).encode(), target, request_model) == original
