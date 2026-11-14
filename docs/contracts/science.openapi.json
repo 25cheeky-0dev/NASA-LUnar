@@ -45,71 +45,6 @@
         "title": "AnalysisResponse",
         "type": "object"
       },
-      "AnalyzeRequest": {
-        "additionalProperties": false,
-        "properties": {
-          "end_utc": {
-            "format": "date-time",
-            "title": "End Utc",
-            "type": "string"
-          },
-          "horizon_model": {
-            "default": "GEOMETRIC",
-            "enum": [
-              "GEOMETRIC",
-              "LOCAL_TERRAIN"
-            ],
-            "title": "Horizon Model",
-            "type": "string"
-          },
-          "min_continuous_overlap_minutes": {
-            "default": 180,
-            "exclusiveMinimum": 0.0,
-            "maximum": 2880.0,
-            "title": "Min Continuous Overlap Minutes",
-            "type": "number"
-          },
-          "observer_height_m": {
-            "default": 1,
-            "maximum": 100.0,
-            "minimum": 0.0,
-            "title": "Observer Height M",
-            "type": "number"
-          },
-          "site_ids": {
-            "items": {
-              "enum": [
-                "R01",
-                "R04"
-              ],
-              "type": "string"
-            },
-            "maxItems": 2,
-            "minItems": 1,
-            "title": "Site Ids",
-            "type": "array"
-          },
-          "start_utc": {
-            "format": "date-time",
-            "title": "Start Utc",
-            "type": "string"
-          },
-          "step_minutes": {
-            "default": 5,
-            "maximum": 60.0,
-            "minimum": 1.0,
-            "title": "Step Minutes",
-            "type": "integer"
-          }
-        },
-        "required": [
-          "site_ids",
-          "start_utc",
-          "end_utc"
-        ],
-        "title": "AnalyzeRequest",
-        "type": "object"
-      },
       "AnalyzeResponse": {
         "additionalProperties": true,
         "properties": {
@@ -2739,6 +2674,41 @@
         "title": "Metadata",
         "type": "object"
       },
+      "Mission": {
+        "additionalProperties": false,
+        "properties": {
+          "end_utc": {
+            "format": "date-time",
+            "title": "End Utc",
+            "type": "string"
+          },
+          "minimum_shared_minutes": {
+            "default": 60,
+            "maximum": 44640.0,
+            "minimum": 0.0,
+            "title": "Minimum Shared Minutes",
+            "type": "number"
+          },
+          "start_utc": {
+            "format": "date-time",
+            "title": "Start Utc",
+            "type": "string"
+          },
+          "step_minutes": {
+            "default": 60,
+            "maximum": 1440.0,
+            "minimum": 1.0,
+            "title": "Step Minutes",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "start_utc",
+          "end_utc"
+        ],
+        "title": "Mission",
+        "type": "object"
+      },
       "Normalization": {
         "additionalProperties": false,
         "properties": {
@@ -3065,6 +3035,44 @@
           "quality"
         ],
         "title": "PhysicalFeatures",
+        "type": "object"
+      },
+      "PolygonSelection": {
+        "additionalProperties": false,
+        "properties": {
+          "coordinates": {
+            "items": {
+              "items": {
+                "maxItems": 2,
+                "minItems": 2,
+                "prefixItems": [
+                  {
+                    "type": "number"
+                  },
+                  {
+                    "type": "number"
+                  }
+                ],
+                "type": "array"
+              },
+              "type": "array"
+            },
+            "maxItems": 5,
+            "minItems": 1,
+            "title": "Coordinates",
+            "type": "array"
+          },
+          "type": {
+            "const": "Polygon",
+            "default": "Polygon",
+            "title": "Type",
+            "type": "string"
+          }
+        },
+        "required": [
+          "coordinates"
+        ],
+        "title": "PolygonSelection",
         "type": "object"
       },
       "QueryProvenance": {
@@ -3397,6 +3405,95 @@
           "recommended_window"
         ],
         "title": "RecoveryResponse",
+        "type": "object"
+      },
+      "RegionContext": {
+        "additionalProperties": false,
+        "properties": {
+          "available_datasets": {
+            "items": {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            "title": "Available Datasets",
+            "type": "array"
+          },
+          "capabilities": {
+            "additionalProperties": {
+              "type": "boolean"
+            },
+            "title": "Capabilities",
+            "type": "object"
+          },
+          "coordinate_frame": {
+            "title": "Coordinate Frame",
+            "type": "string"
+          },
+          "measurement_support": {
+            "additionalProperties": true,
+            "title": "Measurement Support",
+            "type": "object"
+          },
+          "missing_measurements": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Missing Measurements",
+            "type": "array"
+          },
+          "mission": {
+            "anyOf": [
+              {
+                "additionalProperties": true,
+                "type": "object"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Mission"
+          },
+          "observation_time": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Observation Time"
+          },
+          "quality": {
+            "title": "Quality",
+            "type": "string"
+          },
+          "region": {
+            "additionalProperties": true,
+            "title": "Region",
+            "type": "object"
+          },
+          "source_fingerprint": {
+            "title": "Source Fingerprint",
+            "type": "string"
+          },
+          "tool_version": {
+            "title": "Tool Version",
+            "type": "string"
+          }
+        },
+        "required": [
+          "region",
+          "available_datasets",
+          "measurement_support",
+          "missing_measurements",
+          "quality",
+          "source_fingerprint",
+          "capabilities",
+          "coordinate_frame",
+          "tool_version"
+        ],
+        "title": "RegionContext",
         "type": "object"
       },
       "ReportRef": {
@@ -3826,6 +3923,108 @@
           "missing_fields"
         ],
         "title": "ScienceError",
+        "type": "object"
+      },
+      "Selection": {
+        "additionalProperties": false,
+        "properties": {
+          "cell_id": {
+            "anyOf": [
+              {
+                "maxLength": 150,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Cell Id"
+          },
+          "coordinate_frame": {
+            "const": "MOON_ME_DE421",
+            "default": "MOON_ME_DE421",
+            "title": "Coordinate Frame",
+            "type": "string"
+          },
+          "geometry": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/PolygonSelection"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "latitude": {
+            "anyOf": [
+              {
+                "maximum": 90.0,
+                "minimum": -90.0,
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Latitude"
+          },
+          "local_grid_id": {
+            "anyOf": [
+              {
+                "maxLength": 24,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Local Grid Id"
+          },
+          "longitude": {
+            "anyOf": [
+              {
+                "maximum": 360.0,
+                "minimum": -180.0,
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Longitude"
+          },
+          "mission": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/Mission"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "observation_time": {
+            "anyOf": [
+              {
+                "format": "date-time",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Observation Time"
+          },
+          "target_width_m": {
+            "default": 1000,
+            "maximum": 1000000.0,
+            "minimum": 25.0,
+            "title": "Target Width M",
+            "type": "number"
+          }
+        },
+        "title": "Selection",
         "type": "object"
       },
       "Similarity": {
@@ -5326,6 +5525,113 @@
         "title": "Cell",
         "type": "object"
       },
+      "app__regions__agent__AnalyzeRequest": {
+        "additionalProperties": false,
+        "properties": {
+          "candidate_region_ids": {
+            "items": {
+              "type": "string"
+            },
+            "maxItems": 3,
+            "title": "Candidate Region Ids",
+            "type": "array"
+          },
+          "include_delay": {
+            "default": false,
+            "title": "Include Delay",
+            "type": "boolean"
+          },
+          "max_tools": {
+            "default": 8,
+            "maximum": 13.0,
+            "minimum": 3.0,
+            "title": "Max Tools",
+            "type": "integer"
+          },
+          "mission": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/Mission"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "use_llm": {
+            "default": false,
+            "title": "Use Llm",
+            "type": "boolean"
+          }
+        },
+        "title": "AnalyzeRequest",
+        "type": "object"
+      },
+      "app__schemas__AnalyzeRequest": {
+        "additionalProperties": false,
+        "properties": {
+          "end_utc": {
+            "format": "date-time",
+            "title": "End Utc",
+            "type": "string"
+          },
+          "horizon_model": {
+            "default": "GEOMETRIC",
+            "enum": [
+              "GEOMETRIC",
+              "LOCAL_TERRAIN"
+            ],
+            "title": "Horizon Model",
+            "type": "string"
+          },
+          "min_continuous_overlap_minutes": {
+            "default": 180,
+            "exclusiveMinimum": 0.0,
+            "maximum": 2880.0,
+            "title": "Min Continuous Overlap Minutes",
+            "type": "number"
+          },
+          "observer_height_m": {
+            "default": 1,
+            "maximum": 100.0,
+            "minimum": 0.0,
+            "title": "Observer Height M",
+            "type": "number"
+          },
+          "site_ids": {
+            "items": {
+              "enum": [
+                "R01",
+                "R04"
+              ],
+              "type": "string"
+            },
+            "maxItems": 2,
+            "minItems": 1,
+            "title": "Site Ids",
+            "type": "array"
+          },
+          "start_utc": {
+            "format": "date-time",
+            "title": "Start Utc",
+            "type": "string"
+          },
+          "step_minutes": {
+            "default": 5,
+            "maximum": 60.0,
+            "minimum": 1.0,
+            "title": "Step Minutes",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "site_ids",
+          "start_utc",
+          "end_utc"
+        ],
+        "title": "AnalyzeRequest",
+        "type": "object"
+      },
       "app__schemas__Cell": {
         "properties": {
           "boundary_lonlat_east": {
@@ -5639,7 +5945,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/AnalyzeRequest"
+                "$ref": "#/components/schemas/app__schemas__AnalyzeRequest"
               }
             }
           },
@@ -5928,7 +6234,7 @@
             "schema": {
               "default": 450,
               "maximum": 900,
-              "minimum": 20,
+              "minimum": 0.1,
               "title": "Extent Km",
               "type": "number"
             }
@@ -8669,6 +8975,322 @@
         "summary": "Ranking",
         "tags": [
           "unified-science"
+        ]
+      }
+    },
+    "/api/v1/science/region-jobs/{job_id}": {
+      "get": {
+        "operationId": "job_api_v1_science_region_jobs__job_id__get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "job_id",
+            "required": true,
+            "schema": {
+              "title": "Job Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Job",
+        "tags": [
+          "adaptive-regions"
+        ]
+      }
+    },
+    "/api/v1/science/region-jobs/{job_id}/report": {
+      "get": {
+        "operationId": "report_api_v1_science_region_jobs__job_id__report_get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "job_id",
+            "required": true,
+            "schema": {
+              "title": "Job Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Report",
+        "tags": [
+          "adaptive-regions"
+        ]
+      }
+    },
+    "/api/v1/science/regions/grid/local": {
+      "get": {
+        "operationId": "local_grids_api_v1_science_regions_grid_local_get",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "summary": "Local Grids",
+        "tags": [
+          "adaptive-regions"
+        ]
+      }
+    },
+    "/api/v1/science/regions/preview": {
+      "get": {
+        "operationId": "preview_api_v1_science_regions_preview_get",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "latitude",
+            "required": true,
+            "schema": {
+              "maximum": 90,
+              "minimum": -90,
+              "title": "Latitude",
+              "type": "number"
+            }
+          },
+          {
+            "in": "query",
+            "name": "longitude",
+            "required": true,
+            "schema": {
+              "maximum": 360,
+              "minimum": -180,
+              "title": "Longitude",
+              "type": "number"
+            }
+          },
+          {
+            "in": "query",
+            "name": "target_width_m",
+            "required": false,
+            "schema": {
+              "default": 1000,
+              "maximum": 1000000,
+              "minimum": 25,
+              "title": "Target Width M",
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Preview",
+        "tags": [
+          "adaptive-regions"
+        ]
+      }
+    },
+    "/api/v1/science/regions/select": {
+      "post": {
+        "operationId": "select_api_v1_science_regions_select_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Selection"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RegionContext"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Select",
+        "tags": [
+          "adaptive-regions"
+        ]
+      }
+    },
+    "/api/v1/science/regions/tools/catalog": {
+      "get": {
+        "operationId": "catalog_api_v1_science_regions_tools_catalog_get",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "summary": "Catalog",
+        "tags": [
+          "adaptive-regions"
+        ]
+      }
+    },
+    "/api/v1/science/regions/{region_id}": {
+      "get": {
+        "operationId": "metadata_api_v1_science_regions__region_id__get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "region_id",
+            "required": true,
+            "schema": {
+              "title": "Region Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RegionContext"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Metadata",
+        "tags": [
+          "adaptive-regions"
+        ]
+      }
+    },
+    "/api/v1/science/regions/{region_id}/analyze": {
+      "post": {
+        "operationId": "analyze_api_v1_science_regions__region_id__analyze_post",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "region_id",
+            "required": true,
+            "schema": {
+              "title": "Region Id",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/app__regions__agent__AnalyzeRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "202": {
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Analyze",
+        "tags": [
+          "adaptive-regions"
         ]
       }
     },

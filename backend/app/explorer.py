@@ -70,7 +70,7 @@ def terrain_source(root, image_size, image_mtime):
 @router.get('/surface')
 def surface(latitude: float = Query(-88, ge=-89.5, le=89.5),
             longitude: float = Query(0, ge=-180, le=360),
-            extent_km: float = Query(450, ge=20, le=900),
+            extent_km: float = Query(450, ge=.1, le=900),
             resolution: int = Query(96, ge=16, le=160)):
     """Bounded projected mesh of the validated LOLA product; no fake detail.
 

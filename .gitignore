@@ -16,3 +16,6 @@ backend/data/
 *.tfstate*
 *.tfvars
 !*.tfvars.example
+
+data/
+*.sqlite3
