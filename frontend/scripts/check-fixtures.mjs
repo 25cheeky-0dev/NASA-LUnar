@@ -38,5 +38,11 @@ try {
  const {skyDirection}=await mathServer.ssrLoadModule('/src/skyMath.ts');
  for(const [az,el,expected] of [[0,0,[0,1,0]],[90,0,[0,0,-1]],[0,90,[1,0,0]]])skyDirection(0,0,az,el).forEach((v,i)=>assert(Math.abs(v-expected[i])<1e-12));
  for(const lat of [-90,-45,0,45,90])for(const lon of [0,90,180,270])for(const el of [-30,0,45,90]){const v=skyDirection(lat,lon,37,el),up=moonXYZ(lat,lon);assert(Math.abs(Math.hypot(...v)-1)<1e-12);assert(Math.abs(v.reduce((sum,x,i)=>sum+x*up[i],0)-Math.sin(el*Math.PI/180))<1e-12);}
+ const {closedPolygon}=await mathServer.ssrLoadModule('/src/PolygonEditor.tsx');
+ assert.deepEqual(closedPolygon([[359,-88],[0,-87],[1,-88]]),[[-1,-88],[0,-87],[1,-88],[-1,-88]]);
+ assert.throws(()=>closedPolygon([[0,0],[1,1]]),/three/);
+ assert.throws(()=>closedPolygon([[0,0],[360,0],[1,1]]),/different/);
+ assert.throws(()=>closedPolygon([[0,91],[1,1],[2,2]]),/valid/);
+ console.log('Custom polygon closure, coordinate order, wrapping and invalid-input checks passed');
  console.log('Moon coordinate, wrap, NoData, ENU/Sun direction and horizon invariants passed');
 }finally{await mathServer.close();}
