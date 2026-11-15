@@ -7,6 +7,7 @@ ENV VITE_API_BASE_URL=""
 RUN npm run build
 
 FROM python:3.13-slim
+RUN apt-get update && apt-get install -y --no-install-recommends libexpat1 && rm -rf /var/lib/apt/lists/*
 ENV PYTHONDONTWRITEBYTECODE=1 PYTHONUNBUFFERED=1 PORT=8080
 WORKDIR /wispr
 COPY backend/ ./backend/
