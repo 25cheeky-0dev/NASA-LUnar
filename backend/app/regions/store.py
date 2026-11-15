@@ -1,7 +1,9 @@
-"""Persistent identities/jobs: SQLite locally, PostgreSQL in shared deployments."""
+"""Persistent identities/jobs: SQLite locally, PostgreSQL or private GCS in cloud."""
+import hashlib
 import json
 import os
 from contextlib import contextmanager
+from functools import lru_cache
 from app.persistence import connection as sqlite_connection
 
 
@@ -15,19 +17,52 @@ def database():
             yield db,'%s'
     else:
         if os.getenv('K_SERVICE'):
-            raise RuntimeError('Persistent region jobs on Cloud Run require WISPR_DATABASE_URL; no ephemeral database fallback')
+            raise RuntimeError('Persistent region jobs on Cloud Run require WISPR_DATABASE_URL or WISPR_REGION_BUCKET; no ephemeral database fallback')
         with sqlite_connection() as db:
             db.execute('CREATE TABLE IF NOT EXISTS region_objects (kind TEXT NOT NULL, id TEXT NOT NULL, payload TEXT NOT NULL, PRIMARY KEY(kind,id))')
             yield db,'?'
 
+@lru_cache(maxsize=1)
+def cloud_client():
+    from google.cloud import storage
+    return storage.Client()
+
+
+def cloud_blob(kind, key):
+    # Hash both identity fields; user-supplied IDs cannot escape this prefix.
+    identity = json.dumps([kind, key], separators=(',', ':')).encode()
+    digest = hashlib.sha256(identity).hexdigest()
+    return cloud_client().bucket(os.environ['WISPR_REGION_BUCKET']).blob(
+        f'region-state/{digest}.json')
+
+
+def use_cloud_objects():
+    return not os.getenv('WISPR_DATABASE_URL') and bool(os.getenv('WISPR_REGION_BUCKET'))
 
 def put(kind,key,value):
     payload=json.dumps(value,sort_keys=True,allow_nan=False)
+    if use_cloud_objects():
+        from google.api_core.exceptions import GoogleAPICallError
+        try:
+            cloud_blob(kind, key).upload_from_string(
+                payload, content_type='application/json', timeout=30)
+        except GoogleAPICallError as exc:
+            raise RuntimeError('Persistent region storage is unavailable') from exc
+        return
     with database() as (db,p):
         db.execute(f'INSERT INTO region_objects(kind,id,payload) VALUES ({p},{p},{p}) ON CONFLICT(kind,id) DO UPDATE SET payload=excluded.payload',(kind,key,payload))
 
 
 def get(kind,key):
+    if use_cloud_objects():
+        from google.api_core.exceptions import GoogleAPICallError, NotFound
+        try:
+            data = cloud_blob(kind, key).download_as_bytes(timeout=30)
+        except NotFound as exc:
+            raise KeyError(key) from exc
+        except GoogleAPICallError as exc:
+            raise RuntimeError('Persistent region storage is unavailable') from exc
+        return json.loads(data)
     with database() as (db,p):
         row=db.execute(f'SELECT payload FROM region_objects WHERE kind={p} AND id={p}',(kind,key)).fetchone()
     if not row:raise KeyError(key)
