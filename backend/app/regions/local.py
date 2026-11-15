@@ -65,10 +65,11 @@ def select(grid_id,latitude,longitude,target_width):
 
 
 def window(ctx):
-    region=ctx['region'];source=next(s for s in catalog() if s['grid_id']==region['local_grid_id'])
+    region=ctx['region']; selected=next(s for s in ctx['available_datasets'] if s.get('product_identifier')=='REGISTERED_REGIONAL_DEM'); source=next(s for s in catalog() if s['source_id']==selected['source_id'])
     with rasterio.open(source['path']) as ds:
         crs=CRS.from_user_input(ds.crs);forward=Transformer.from_crs(crs.geodetic_crs,crs,always_xy=True)
-        poly=transform(forward.transform,Polygon(region['geometry']['coordinates'][0]))
+        from .geometry import projected_polygon
+        poly=projected_polygon(region['geometry'],forward)
         win=rasterio.windows.from_bounds(*poly.bounds,ds.transform).round_offsets().round_lengths()
         if win.width*win.height>25000:raise ValueError('DEM window exceeds pixel budget')
         # Include a one-pixel halo; boundary/NoData derivatives remain missing.

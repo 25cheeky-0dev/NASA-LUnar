@@ -12,7 +12,7 @@ from . import store
 from .context import context,TOOL_VERSION
 from .tools import Strict,Mission,Arguments,NAMES,run
 
-VERSION='wispr-region-agent-v1'
+VERSION='wispr-region-agent-v2-research'
 POOL=ThreadPoolExecutor(max_workers=2,thread_name_prefix='wispr-region')
 GATE=threading.BoundedSemaphore(2)
 LOCK=threading.Lock()
@@ -24,6 +24,7 @@ class AnalyzeRequest(Strict):
     candidate_region_ids:list[str]=Field(default_factory=list,max_length=3)
     include_delay:bool=False
     use_llm:bool=False
+    use_report_ai:bool=False
     max_tools:int=Field(default=8,ge=3,le=13)
 
 
@@ -98,7 +99,7 @@ def work(job,request,ctx):
                 event('model_planner','UNAVAILABLE','Model unavailable, invalid, or budget disabled; deterministic plan used.')
         if request.mission and not request.use_llm:
             # Keep all explicitly requested temporal operations within the budget.
-            plan=['get_region_metadata','get_region_sources','load_dem_window','calculate_elevation_statistics','calculate_visibility_windows']+(['calculate_delay_impact'] if request.include_delay else [])
+            plan=['get_region_metadata','calculate_elevation_statistics','calculate_visibility_windows']+(['calculate_delay_impact'] if request.include_delay else [])+['calculate_slope','calculate_roughness','get_region_sources','load_dem_window']
         plan=plan[:request.max_tools];job['plan']=plan;store.put('job',key,job)
         args=Arguments(region_id=ctx['region']['region_id'],region_ids=[ctx['region']['region_id']]+request.candidate_region_ids,mission=request.mission)
         for name in plan:
@@ -119,6 +120,19 @@ def work(job,request,ctx):
                 'evidence_status':'SOURCE_BACKED' if supported else 'INSUFFICIENT_DATA',
                 'limitations':['No landing-safety certification.','Terrain visibility UNKNOWN until datum compatibility and uncertainty are validated.',
                                'Ephemerides represent a declared point, not every point of a polygon.']}
+        from .research_report import build, generate_ai
+        report['research']=build(report)
+        if request.use_report_ai:
+            event('gemini_research_summary','RUNNING')
+            try:
+                report['research']['ai']=generate_ai(report,report['research'])
+                event('gemini_research_summary','COMPLETE')
+            except Exception as exc:
+                import logging
+                logging.getLogger(__name__).warning('Gemini research unavailable: %s HTTP %s reason=%s',type(exc).__name__,getattr(getattr(exc,'response',None),'status_code',None),str(exc) if isinstance(exc,ValueError) else 'provider error')
+                report['research']['ai']={'status':'UNAVAILABLE','text':'','questions':[],
+                    'reason':'Gemini is unavailable, its response failed validation, or the daily report limit was reached. Verified measurements remain available.'}
+                event('gemini_research_summary','UNAVAILABLE')
         digest=hashlib.sha256(json.dumps(report,sort_keys=True,separators=(',',':')).encode()).hexdigest()
         job.update(status='COMPLETE',result=report,result_sha256=digest,completed_utc=timestamp())
         store.put('job',key,job)
@@ -139,7 +153,7 @@ def launch(region_id,request):
     with LOCK:
         try:
             old=store.get('job',key)
-            reusable = old['status']=='COMPLETE' and not any(r['status']=='UNAVAILABLE' for r in old.get('result',{}).get('tools',[])) and old.get('model',{}).get('status')!='UNAVAILABLE'
+            reusable = old['status']=='COMPLETE' and not any(r['status']=='UNAVAILABLE' for r in old.get('result',{}).get('tools',[])) and old.get('model',{}).get('status')!='UNAVAILABLE' and old.get('result',{}).get('research',{}).get('ai',{}).get('status')!='UNAVAILABLE'
             if reusable or old.get('process')==PROCESS and old['status'] in ('QUEUED','RUNNING'):
                 return {**old,'cache_hit':True}
         except KeyError:pass

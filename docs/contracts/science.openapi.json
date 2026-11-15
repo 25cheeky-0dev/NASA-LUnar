@@ -5616,6 +5616,11 @@
             "default": false,
             "title": "Use Llm",
             "type": "boolean"
+          },
+          "use_report_ai": {
+            "default": false,
+            "title": "Use Report Ai",
+            "type": "boolean"
           }
         },
         "title": "AnalyzeRequest",
@@ -9109,6 +9114,126 @@
         "summary": "Report",
         "tags": [
           "adaptive-regions"
+        ]
+      }
+    },
+    "/api/v1/science/region-jobs/{job_id}/research.md": {
+      "get": {
+        "operationId": "download_markdown_api_v1_science_region_jobs__job_id__research_md_get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "job_id",
+            "required": true,
+            "schema": {
+              "title": "Job Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Download Markdown",
+        "tags": [
+          "research-reports"
+        ]
+      }
+    },
+    "/api/v1/science/region-jobs/{job_id}/research.zip": {
+      "get": {
+        "operationId": "download_bundle_api_v1_science_region_jobs__job_id__research_zip_get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "job_id",
+            "required": true,
+            "schema": {
+              "title": "Job Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Download Bundle",
+        "tags": [
+          "research-reports"
+        ]
+      }
+    },
+    "/api/v1/science/region-jobs/{job_id}/summary.svg": {
+      "get": {
+        "operationId": "summary_image_api_v1_science_region_jobs__job_id__summary_svg_get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "job_id",
+            "required": true,
+            "schema": {
+              "title": "Job Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Summary Image",
+        "tags": [
+          "research-reports"
         ]
       }
     },

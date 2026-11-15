@@ -58,7 +58,7 @@ def run(name,args,ctx,memo):
     if name=='get_region_metadata':data=ctx['region']
     elif name=='get_region_sources':data={'sources':ctx['available_datasets'],'support':ctx['measurement_support']}
     elif name in ('load_dem_window','calculate_elevation_statistics','calculate_slope','calculate_roughness'):
-        if 'window' not in memo:memo['window']=(local_window(ctx) if ctx['region']['kind']=='LOCAL_QUADTREE' else dem_window(ctx))
+        if 'window' not in memo:memo['window']=(local_window(ctx) if any(s.get('product_identifier')=='REGISTERED_REGIONAL_DEM' for s in ctx['available_datasets']) else dem_window(ctx))
         window=memo['window']
         if name=='load_dem_window':
             data={k:v for k,v in window.items() if k!='samples'};data['native_pixel_count']=len(window['samples'])
@@ -95,7 +95,7 @@ def run(name,args,ctx,memo):
             for c in contexts:
                 g=c['region'];values={};coverage=0;source={'region':g,'source_fingerprint':c['source_fingerprint']}
                 if c['measurement_support']['detailed_terrain_available']:
-                    window=(local_window(c) if g['kind']=='LOCAL_QUADTREE' else dem_window(c))
+                    window=(local_window(c) if any(s.get('product_identifier')=='REGISTERED_REGIONAL_DEM' for s in c['available_datasets']) else dem_window(c))
                     measurements={field:statistics(window,field) for field in ('elevation_m','slope_deg','roughness_m')}
                     values={field:m.get('area_weighted_mean') for field,m in measurements.items()}
                     coverage=min(m.get('coverage_fraction',0) for m in measurements.values())

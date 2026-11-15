@@ -37,11 +37,10 @@ class RegionName(Strict):
 
 @router.get('/terrain-regions')
 def saved_regions():
-    with store.database() as (db,p):
-        rows=db.execute(f'SELECT id,payload FROM region_objects WHERE kind={p} ORDER BY id LIMIT 200',('region',)).fetchall()
-        names=db.execute(f'SELECT id,payload FROM region_objects WHERE kind={p}',('region-name',)).fetchall()
-    labels={key:json.loads(value)['name'] for key,value in names}
-    return {'regions':[{'region':json.loads(value),'name':labels.get(key,'Research region')} for key,value in rows]}
+    rows=store.records('region')
+    labels={key:value['name'] for key,value in store.records('region-name')}
+    return {'regions':[{'region':value,'name':labels.get(key,'Research region')} for key,value in rows]}
+
 
 
 @router.post('/terrain-regions/name')

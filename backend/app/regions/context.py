@@ -12,7 +12,7 @@ from lunar_global.storage import sha256
 from lunar_global.features import native_terrain
 from .geometry import projection,projected_polygon,GEOD
 
-TOOL_VERSION='region-native-overlap-v3'
+TOOL_VERSION='region-native-overlap-v4'
 
 
 def source_registry():
@@ -32,15 +32,27 @@ def source_registry():
 
 def context(region):
     sources=source_registry()
-    if region['kind']=='LOCAL_QUADTREE':
-        from .local import catalog
-        regional=next((s for s in catalog() if s['grid_id']==region['local_grid_id']),None)
-        if regional:
-            sources.append({k:v for k,v in regional.items() if k!='path'})
-            sources[-1].update(product_identifier='REGISTERED_REGIONAL_DEM',status='VERIFIED',
-                               spatial_resolution_m=regional['resolution_m'],source_checksum=regional['sha256'])
-    dem=next((s for s in sources if s.get('product_identifier')=='LDEM_4' and s.get('status')=='VERIFIED'),None)
-    if region['kind']=='LOCAL_QUADTREE':dem=next((s for s in sources if s.get('product_identifier')=='REGISTERED_REGIONAL_DEM'),None)
+    from .local import catalog
+    import rasterio
+    from pyproj import CRS, Transformer
+    from shapely.geometry import box
+    candidates=[]
+    for regional in catalog():
+        crs=CRS.from_user_input(regional['grid']['crs'])
+        forward=Transformer.from_crs(crs.geodetic_crs,crs,always_xy=True)
+        polygon=projected_polygon(region['geometry'],forward)
+        with rasterio.open(regional['path']) as ds:
+            if not polygon.intersects(box(*ds.bounds)):continue
+        if region['kind']=='LOCAL_QUADTREE' and regional['grid_id']!=region['local_grid_id']:continue
+        candidates.append(regional)
+    if candidates:
+        regional=min(candidates,key=lambda s:s['resolution_m'])
+        source={k:v for k,v in regional.items() if k!='path'}
+        source.update(product_identifier='REGISTERED_REGIONAL_DEM',status='VERIFIED',spatial_resolution_m=regional['resolution_m'],source_checksum=regional['sha256'])
+        sources.append(source)
+    dem=next((s for s in sources if s.get('product_identifier')=='REGISTERED_REGIONAL_DEM'),None)
+    if dem is None and region['kind']!='LOCAL_QUADTREE':
+        dem=next((s for s in sources if s.get('product_identifier')=='LDEM_4' and s.get('status')=='VERIFIED'),None)
     resolution=dem['spatial_resolution_m'] if dem else None
     support_width=region['nominal_width_m']
     if region['kind']=='POLYGON':
@@ -56,7 +68,7 @@ def context(region):
     fingerprint=hashlib.sha256(json.dumps(sources,sort_keys=True,separators=(',',':')).encode()).hexdigest()
     return dict(region=region,available_datasets=sources,measurement_support={
         'selection_width_m':region['nominal_width_m'],'minimum_support_width_m':support_width,'source_resolution_m':resolution,
-        'detailed_terrain_available':supported,'status':'SOURCE_BACKED_OVERVIEW' if supported else 'INSUFFICIENT_DATA',
+        'detailed_terrain_available':supported,'status':('SOURCE_BACKED_REGIONAL' if dem and dem.get('product_identifier')=='REGISTERED_REGIONAL_DEM' else 'SOURCE_BACKED_OVERVIEW') if supported else 'INSUFFICIENT_DATA',
         'minimum_independent_samples_across_region':2,
         'rule':'A target width is geography, not measurement resolution; no coarse-parent value inheritance.'},
         missing_measurements=missing,quality='UNCERTAINTY_UNKNOWN',source_fingerprint=fingerprint,

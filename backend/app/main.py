@@ -34,6 +34,8 @@ from app.explorer import router as explorer_router
 app.include_router(explorer_router)
 from app.regions.api import router as regions_router
 app.include_router(regions_router)
+from app.regions.research_report import router as research_router
+app.include_router(research_router)
 from app.security import ResourceLimits
 if os.getenv('WISPR_RESOURCE_LIMITS', 'true') == 'true':
     app.add_middleware(ResourceLimits)

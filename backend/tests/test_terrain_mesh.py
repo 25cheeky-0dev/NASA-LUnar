@@ -97,3 +97,20 @@ def test_terrain_routes_have_unique_operations():
     assert 'post' in schema['paths'][path]
     ids=[op['operationId'] for methods in schema['paths'].values() for op in methods.values() if isinstance(op,dict) and 'operationId' in op]
     assert len(ids)==len(set(ids))
+
+
+def test_regular_polygon_uses_regional_native_statistics(source, monkeypatch):
+    from app.regions import context as context_module
+    from app.regions import local
+    path,crs=source
+    inverse=Transformer.from_crs(crs,crs.geodetic_crs,always_xy=True)
+    ring=[list(inverse.transform(x,y)) for x,y in [(20,20),(80,20),(80,80),(20,80),(20,20)]]
+    region={'region_id':'analytic','kind':'POLYGON','geometry':{'type':'Polygon','coordinates':[ring]},'nominal_width_m':60,'coordinate_frame':'MOON_ME_DE421'}
+    monkeypatch.setattr(context_module,'source_registry',lambda:[])
+    ctx=context_module.context(region)
+    assert ctx['measurement_support']['source_resolution_m']==5
+    assert ctx['measurement_support']['detailed_terrain_available']
+    window=local.window(ctx)
+    result=context_module.statistics(window,'elevation_m')
+    assert result['area_weighted_mean']==pytest.approx(350,abs=.01)
+    assert result['coverage_fraction']==pytest.approx(1,abs=.001)
