@@ -15,7 +15,10 @@ const vertex=`attribute float elevation;attribute float slope;attribute float ro
 const fragment=`precision highp float;uniform float mode;uniform float compare;uniform float viewportWidth;uniform float lighting;uniform float ready;uniform vec3 sun;uniform vec3 earth;uniform sampler2D imagery;varying vec3 normalWorld;varying vec3 sphereNormal;varying vec2 tex;varying vec3 values;
 vec3 palette(float t){vec3 a=vec3(.06,.16,.42),b=vec3(.05,.57,.68),c=vec3(.28,.77,.67),d=vec3(.68,.82,.44),e=vec3(.95,.81,.37),f=vec3(.76,.32,.12);float s=clamp(t,0.,1.)*5.;if(s<1.)return mix(a,b,s);if(s<2.)return mix(b,c,s-1.);if(s<3.)return mix(c,d,s-2.);if(s<4.)return mix(d,e,s-3.);return mix(e,f,s-4.);}
 void main(){vec3 color;float v=mode<.5?(values.x+8000.)/14000.:mode<1.5?values.y/30.:values.z/1000.;color=palette(v);if((mode>.5&&mode<1.5&&values.y<0.)||(mode>1.5&&mode<2.5&&values.z<0.))color=vec3(.25);if(mode>2.5&&mode<3.5)color=texture2D(imagery,tex).rgb;if(mode>3.5&&mode<4.5)color=vec3(.66);float incidence=dot(normalize(normalWorld),normalize(sun));if(mode>4.5&&mode<5.5){color=ready>.5?mix(vec3(.015,.035,.09),vec3(1.,.83,.38),max(0.,incidence)*step(0.,dot(normalize(sphereNormal),sun))):vec3(.3);}if(mode>5.5){float e=dot(normalize(sphereNormal),earth);color=ready<.5||abs(e)<.015?vec3(.3):e>0.?vec3(.12,.75,.87):vec3(.025,.06,.19);}
-if(gl_FragCoord.x/viewportWidth<compare)color=texture2D(imagery,tex).rgb;float shade=lighting>.5&&ready>.5?.035+1.15*max(0.,incidence)*step(0.,dot(normalize(sphereNormal),sun)):.55+.55*max(0.,dot(normalize(normalWorld),normalize(vec3(2.,3.,4.))));if(mode>4.5)shade=1.;gl_FragColor=vec4(color*shade,1.);}`;
+if(gl_FragCoord.x/viewportWidth<compare)color=texture2D(imagery,tex).rgb;float shade=lighting>.5&&ready>.5?.035+1.15*max(0.,incidence)*step(0.,dot(normalize(sphereNormal),sun)):.55+.55*max(0.,dot(normalize(normalWorld),normalize(vec3(2.,3.,4.))));if(mode>4.5)shade=1.;gl_FragColor=vec4(color*shade,1.);
+#include <tonemapping_fragment>
+#include <colorspace_fragment>
+}`;
 const modes:Record<string,number>={elevation_m:0,slope_deg:1,roughness_m:2,lroc:3,hillshade:4,solar:5,earth:6};
 export function DigitalGlobe(p:Props){
  const host=useRef<HTMLDivElement>(null),latest=useRef(p);latest.current=p;const [data,setData]=useState<Terrain|null>(null),[error,setError]=useState('');
