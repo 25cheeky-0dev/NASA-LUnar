@@ -1543,6 +1543,38 @@
         "title": "ExcludedCell",
         "type": "object"
       },
+      "Extraction": {
+        "additionalProperties": false,
+        "properties": {
+          "allow_coarse_overview": {
+            "default": false,
+            "title": "Allow Coarse Overview",
+            "type": "boolean"
+          },
+          "resolution": {
+            "default": "preview",
+            "enum": [
+              "preview",
+              "balanced",
+              "native"
+            ],
+            "title": "Resolution",
+            "type": "string"
+          },
+          "scope": {
+            "default": "inside",
+            "enum": [
+              "inside",
+              "exclude",
+              "global"
+            ],
+            "title": "Scope",
+            "type": "string"
+          }
+        },
+        "title": "Extraction",
+        "type": "object"
+      },
       "FeatureResponse": {
         "additionalProperties": false,
         "properties": {
@@ -3494,6 +3526,28 @@
           "tool_version"
         ],
         "title": "RegionContext",
+        "type": "object"
+      },
+      "RegionName": {
+        "additionalProperties": false,
+        "properties": {
+          "name": {
+            "maxLength": 80,
+            "minLength": 1,
+            "title": "Name",
+            "type": "string"
+          },
+          "region_id": {
+            "maxLength": 150,
+            "title": "Region Id",
+            "type": "string"
+          }
+        },
+        "required": [
+          "region_id",
+          "name"
+        ],
+        "title": "RegionName",
         "type": "object"
       },
       "ReportRef": {
@@ -9294,6 +9348,56 @@
         ]
       }
     },
+    "/api/v1/science/regions/{region_id}/terrain": {
+      "post": {
+        "operationId": "extract_route_api_v1_science_regions__region_id__terrain_post",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "region_id",
+            "required": true,
+            "schema": {
+              "title": "Region Id",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Extraction"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Extract Route",
+        "tags": [
+          "terrain-laboratory"
+        ]
+      }
+    },
     "/api/v1/science/representations/fit": {
       "post": {
         "operationId": "fit_representation_api_v1_science_representations_fit_post",
@@ -9529,6 +9633,64 @@
         ]
       }
     },
+    "/api/v1/science/terrain-regions": {
+      "get": {
+        "operationId": "saved_regions_api_v1_science_terrain_regions_get",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "summary": "Saved Regions",
+        "tags": [
+          "terrain-laboratory"
+        ]
+      }
+    },
+    "/api/v1/science/terrain-regions/name": {
+      "post": {
+        "operationId": "name_region_api_v1_science_terrain_regions_name_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RegionName"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Name Region",
+        "tags": [
+          "terrain-laboratory"
+        ]
+      }
+    },
     "/api/v1/science/terrain/horizon": {
       "post": {
         "operationId": "terrain_diagnostics_api_v1_science_terrain_horizon_post",
@@ -9587,6 +9749,100 @@
         "summary": "Terrain Diagnostics",
         "tags": [
           "unified-science"
+        ]
+      }
+    },
+    "/api/v1/science/terrain/{mesh_id}": {
+      "get": {
+        "operationId": "retrieve_api_v1_science_terrain__mesh_id__get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "mesh_id",
+            "required": true,
+            "schema": {
+              "title": "Mesh Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Retrieve",
+        "tags": [
+          "terrain-laboratory"
+        ]
+      }
+    },
+    "/api/v1/science/terrain/{mesh_id}/export/{kind}": {
+      "get": {
+        "operationId": "export_api_v1_science_terrain__mesh_id__export__kind__get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "mesh_id",
+            "required": true,
+            "schema": {
+              "title": "Mesh Id",
+              "type": "string"
+            }
+          },
+          {
+            "in": "path",
+            "name": "kind",
+            "required": true,
+            "schema": {
+              "enum": [
+                "obj",
+                "json",
+                "geojson"
+              ],
+              "title": "Kind",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Export",
+        "tags": [
+          "terrain-laboratory"
         ]
       }
     },

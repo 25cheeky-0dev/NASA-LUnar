@@ -1,11 +1,14 @@
 import {useEffect,useRef,useState} from 'react';
 import * as THREE from 'three';
 import {OrbitControls} from 'three/examples/jsm/controls/OrbitControls.js';
+import {api,BASE} from './lib/api';
 import {moonXYZ,moonLatLon,measurementColor} from './moonMath';
+export type GlobalLayerInfo={layer_id:string;minimum:number;maximum:number;units:string;color_legend:string[];native_resolution_m:number;status:string;projection:string;sha256:string};
 export type MoonCell={cell_id:string;latitude_deg:number;longitude_deg:number;boundary_lonlat?:number[][];elevation_m?:number|null;slope_deg?:number|null;roughness_m?:number|null;quality?:string;geometry?:{coordinates:number[][][]};projected_x?:number;projected_y?:number};
-type Props={cells:MoonCell[];selected:MoonCell|null;onPick:(lat:number,lon:number)=>void;layer:string;focus:{lat:number;lon:number;key:number};bars:{cell:MoonCell;fraction:number}[]};
-export function MoonScene({cells,selected,onPick,layer,focus,bars}:Props){
+type Props={cells:MoonCell[];selected:MoonCell|null;onPick:(lat:number,lon:number)=>void;layer:string;focus:{lat:number;lon:number;key:number};bars:{cell:MoonCell;fraction:number}[];outlines?:{points:number[][];color:string}[];onLayerInfo?:(info:GlobalLayerInfo|null)=>void};
+export function MoonScene({cells,selected,onPick,layer,focus,bars,outlines,onLayerInfo}:Props){
  const host=useRef<HTMLDivElement>(null), sceneRef=useRef<{scene:THREE.Scene;camera:THREE.PerspectiveCamera;controls:OrbitControls}|null>(null),pick=useRef(onPick),[error,setError]=useState('');pick.current=onPick;
+ const layerInfo=useRef(onLayerInfo);layerInfo.current=onLayerInfo;const [layerStatus,setLayerStatus]=useState('');
  useEffect(()=>{if(!host.current)return;const div=host.current;let renderer:THREE.WebGLRenderer;
  try{renderer=new THREE.WebGLRenderer({antialias:true,alpha:true});}catch{setError('3D rendering unavailable. Use named-location or coordinate navigation.');return;}
  renderer.setPixelRatio(Math.min(devicePixelRatio,2));div.appendChild(renderer.domElement);
@@ -21,12 +24,31 @@ export function MoonScene({cells,selected,onPick,layer,focus,bars}:Props){
  const resize=new ResizeObserver(()=>{const w=div.clientWidth,h=div.clientHeight;renderer.setSize(w,h);camera.aspect=w/h;camera.updateProjectionMatrix();});resize.observe(div);sceneRef.current={scene,camera,controls};
  let frame=0;const draw=()=>{frame=requestAnimationFrame(draw);controls.update();renderer.render(scene,camera);};draw();
  return()=>{cancelAnimationFrame(frame);resize.disconnect();controls.dispose();texture.dispose();globe.geometry.dispose();(globe.material as THREE.Material).dispose();renderer.dispose();renderer.domElement.remove();sceneRef.current=null;};},[]);
+ useEffect(()=>{
+  const context=sceneRef.current;if(!context)return;let active=true;let overlay:THREE.Mesh|undefined;let loaded:THREE.Texture|undefined;
+  layerInfo.current?.(null);setError('');
+  if(!['elevation_m','slope_deg','roughness_m'].includes(layer)){setLayerStatus('');return;}
+  setLayerStatus('Loading '+layer.replaceAll('_',' ')+'…');
+  api<{records:GlobalLayerInfo[]}>('/api/v1/science/global/layers').then(({records})=>{
+   if(!active)return;const info=records.find(r=>r.layer_id===layer&&r.status==='AVAILABLE');
+   if(!info)throw Error('Global '+layer+' layer is unavailable.');
+   if(info.projection!=='Equirectangular, 0..360 east, 90..-90 latitude')throw Error('Unsupported global layer registration.');
+   new THREE.TextureLoader().load(BASE+'/api/v1/science/global/layer-images/'+encodeURIComponent(layer)+'?v='+encodeURIComponent(info.sha256),texture=>{
+    if(!active){texture.dispose();return;}loaded=texture;texture.colorSpace=THREE.SRGBColorSpace;
+    // SphereGeometry u=.5 is 0E. Source u=0 is 0E, so shift by half a turn.
+    texture.wrapS=THREE.RepeatWrapping;texture.offset.x=.5;texture.minFilter=THREE.NearestFilter;texture.magFilter=THREE.NearestFilter;texture.generateMipmaps=false;
+    overlay=new THREE.Mesh(new THREE.SphereGeometry(1.001,128,64),new THREE.MeshBasicMaterial({map:texture,transparent:true,depthWrite:false,toneMapped:false}));context.scene.add(overlay);layerInfo.current?.(info);setLayerStatus('');
+   },undefined,()=>{if(active){setError('Global '+layer+' image is unavailable or failed integrity validation.');setLayerStatus('');}});
+  }).catch(e=>{if(active){setError(String(e));setLayerStatus('');}});
+  return()=>{active=false;layerInfo.current?.(null);if(overlay){context.scene.remove(overlay);overlay.geometry.dispose();(overlay.material as THREE.Material).dispose();}loaded?.dispose();};
+ },[layer]);
  useEffect(()=>{const context=sceneRef.current;if(!context)return;const group=new THREE.Group();
+ for(const outline of outlines??[]){const pts:THREE.Vector3[]=[];for(let i=0;i<outline.points.length;i++){const [lon,lat]=outline.points[i],v=new THREE.Vector3(...moonXYZ(lat,lon,1.006));if(i){const prev=pts[pts.length-1];const steps=Math.max(1,Math.ceil(prev.angleTo(v)*180/Math.PI));for(let k=1;k<steps;k++)pts.push(prev.clone().lerp(v,k/steps).normalize().multiplyScalar(1.006));}pts.push(v);}group.add(new THREE.Line(new THREE.BufferGeometry().setFromPoints(pts),new THREE.LineBasicMaterial({color:outline.color})));}
  const edges:number[]=[];for(const cell of cells){const ring=cell.boundary_lonlat;if(!ring)continue;for(let i=1;i<ring.length;i++){edges.push(...moonXYZ(ring[i-1][1],ring[i-1][0],1.003),...moonXYZ(ring[i][1],ring[i][0],1.003));}}const geometry=new THREE.BufferGeometry();geometry.setAttribute("position",new THREE.Float32BufferAttribute(edges,3));group.add(new THREE.LineSegments(geometry,new THREE.LineBasicMaterial({color:0x96aebd,transparent:true,opacity:.26})));
  if(selected){const marker=new THREE.Mesh(new THREE.SphereGeometry(.009,12,8),new THREE.MeshBasicMaterial({color:0xffe35b}));marker.position.set(...moonXYZ(selected.latitude_deg,selected.longitude_deg,1.016));group.add(marker);
  if(selected.boundary_lonlat)group.add(new THREE.Line(new THREE.BufferGeometry().setFromPoints(selected.boundary_lonlat.map(([lon,lat])=>new THREE.Vector3(...moonXYZ(lat,lon,1.008)))),new THREE.LineBasicMaterial({color:0xffe35b})));}
  for(const {cell,fraction} of bars){const height=.03+.35*fraction,dir=new THREE.Vector3(...moonXYZ(cell.latitude_deg,cell.longitude_deg));const bar=new THREE.Mesh(new THREE.CylinderGeometry(.008,.008,height,6),new THREE.MeshBasicMaterial({color:measurementColor(fraction,0,1)}));bar.position.copy(dir.multiplyScalar(1+height/2));bar.quaternion.setFromUnitVectors(new THREE.Vector3(0,1,0),bar.position.clone().normalize());group.add(bar);}
- context.scene.add(group);return()=>{context.scene.remove(group);group.traverse(o=>{if(o instanceof THREE.Mesh||o instanceof THREE.Line){o.geometry.dispose();o.material.dispose();}});};},[cells,selected,layer,bars]);
+ context.scene.add(group);return()=>{context.scene.remove(group);group.traverse(o=>{if(o instanceof THREE.Mesh||o instanceof THREE.Line){o.geometry.dispose();o.material.dispose();}});};},[cells,selected,layer,bars,outlines]);
  useEffect(()=>{const c=sceneRef.current;if(c){c.camera.position.set(...moonXYZ(focus.lat,focus.lon,Math.max(3.8,3.2/c.camera.aspect)));c.controls.update();}},[focus]);
- return <><div className="moon-canvas" ref={host} aria-label="Interactive 3D Moon: drag to rotate, scroll to zoom, click to select"/>{error&&<p className="texture-warning" role="alert">{error}</p>}</>;
+ return <><div className="moon-canvas" ref={host} aria-label="Interactive 3D Moon: drag to rotate, scroll to zoom, click to select"/>{layerStatus&&<p className="texture-warning" role="status">{layerStatus}</p>}{error&&<p className="texture-warning" role="alert">{error}</p>}</>;
 }

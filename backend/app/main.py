@@ -187,6 +187,10 @@ async def export(scenario_id: str):
         writer.writerow([r['timestamp_utc']]+[(r[t] or {}).get(k,'') for t in ('sun','earth') for k in ('az_deg','el_deg')]+[r['status']])
     return Response(output.getvalue(),media_type='text/csv',headers={'Content-Disposition':f'attachment; filename="{scenario_id}.csv"'})
 
+
+from app.regions.terrain_mesh import router as terrain_mesh_router
+app.include_router(terrain_mesh_router)
+
 # Optional single-service production package. API routes stay ahead of the SPA.
 if os.getenv('WISPR_STATIC_DIR'):
     from fastapi.staticfiles import StaticFiles

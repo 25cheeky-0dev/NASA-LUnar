@@ -3,3 +3,16 @@
 @media(max-width:1000px){.mission-clock{display:none}.explorer-header{padding:20px;gap:10px}.region-title{left:20px;top:110px}.cell-readout{left:20px;width:210px;top:270px}.explorer-panel{right:15px;width:330px}.surface-legend{left:20px;width:200px}.time-dock{left:20px;right:20px;gap:15px}.sky-status{gap:10px}.time-dock>div:first-child{min-width:150px}}
 @media(max-width:640px){.explorer-header{height:85px;align-items:flex-start}.wordmark{font-size:21px}.wordmark span{font-size:6px;letter-spacing:1px}.explorer-header nav{gap:0}.explorer-header nav button{font-size:10px;padding:7px}.region-title{top:95px}.region-title h1{font-size:25px}.region-title p{max-width:240px;font-size:10px}.cell-readout{top:auto;bottom:160px;width:190px;padding:12px}.cell-readout h2{font-size:17px}.cell-readout dl>div{padding:5px 0}.cell-readout .terrain-unknown,.cell-readout .data-state{display:none}.surface-legend{bottom:145px;left:auto;right:18px;width:125px}.surface-legend small{font-size:8px}.explorer-panel{top:88px;bottom:140px;left:12px;right:12px;width:auto;padding:18px;z-index:10}.time-dock{left:12px;right:12px;bottom:27px;padding:12px;gap:10px;flex-wrap:wrap}.time-dock>div:first-child{min-width:0;width:55%}.time-dock input{order:4;flex-basis:100%}.sky-status{display:none}.time-dock .primary{margin-left:auto;min-width:105px}.interaction-note{left:14px;font-size:7px}.explorer-error{bottom:145px;max-width:90%;width:90%}.region-title>span{font-size:8px}.split-line{bottom:145px}}
 @media(prefers-reduced-motion:reduce){.explorer *{transition:none!important}}
+
+/* WISPR terrain intelligence: supplied Montserrat, restrained scientific palette. */
+@font-face{font-family:Montserrat;src:url('/fonts/Montserrat.ttf') format('truetype');font-weight:100 900;font-display:swap}
+.explorer{font-family:Montserrat,sans-serif;background:#111417;color:#e7e5de}
+.explorer-panel{background:#1b2024f5;border-color:#46545c;border-radius:2px}
+.explorer button.primary,.explorer .primary{background:#72a5a3;color:#111417;border-radius:2px}
+.explorer .region-title h1{font-size:clamp(24px,3vw,42px)}
+.explorer .region-identity,.mission-clock,.time-dock strong{font-family:monospace}
+
+.explorer .wordmark .supplied-logo{display:block;width:108px;height:42px;overflow:hidden;position:relative;background:#000;margin:0}
+.explorer .supplied-logo img{position:absolute;width:324px;max-width:none;height:auto;left:0;top:-71px}
+
+@media(min-width:641px){.cell-readout{bottom:250px;overflow:auto}}
