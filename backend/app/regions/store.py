@@ -2,6 +2,7 @@
 import hashlib
 import json
 import os
+import re
 from contextlib import contextmanager
 from functools import lru_cache
 from app.persistence import connection as sqlite_connection
@@ -76,6 +77,8 @@ def records(kind, limit=200):
     if use_cloud_objects():
         result=[]
         for blob in cloud_client().list_blobs(os.environ['WISPR_REGION_BUCKET'], prefix='region-state/', max_results=1000, timeout=30):
+            if not re.fullmatch(r'region-state/[0-9a-f]{64}\.json',blob.name):
+                continue
             meta=blob.metadata or {}
             if meta.get('kind') and meta['kind'] != kind:
                 continue

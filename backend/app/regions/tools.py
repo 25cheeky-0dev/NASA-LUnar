@@ -10,6 +10,7 @@ from app.science.windows import summarize
 from . import store
 from .context import context,dem_window,statistics
 from .local import window as local_window
+from .global_dem import window as global_window
 
 class Strict(BaseModel):
     model_config=ConfigDict(extra='forbid',allow_inf_nan=False)
@@ -36,7 +37,7 @@ class Arguments(Strict):
 NAMES=('get_region_metadata','get_region_sources','load_dem_window','calculate_elevation_statistics',
        'calculate_slope','calculate_roughness','calculate_horizon_profile','get_sun_ephemeris',
        'get_earth_ephemeris','calculate_visibility_windows','compare_candidate_regions',
-       'calculate_delay_impact','find_similar_regions')
+       'calculate_delay_impact','find_similar_regions','count_catalogued_craters')
 
 
 class ToolResult(Strict):
@@ -58,14 +59,18 @@ def run(name,args,ctx,memo):
     if name=='get_region_metadata':data=ctx['region']
     elif name=='get_region_sources':data={'sources':ctx['available_datasets'],'support':ctx['measurement_support']}
     elif name in ('load_dem_window','calculate_elevation_statistics','calculate_slope','calculate_roughness'):
-        if 'window' not in memo:memo['window']=(local_window(ctx) if any(s.get('product_identifier')=='REGISTERED_REGIONAL_DEM' for s in ctx['available_datasets']) else dem_window(ctx))
+        if 'window' not in memo:memo['window']=(local_window(ctx) if any(s.get('product_identifier')=='REGISTERED_REGIONAL_DEM' for s in ctx['available_datasets']) else global_window(ctx) if any(s.get('product_identifier')=='GLOBAL_LOLA_118M' for s in ctx['available_datasets']) else dem_window(ctx))
         window=memo['window']
         if name=='load_dem_window':
-            data={k:v for k,v in window.items() if k!='samples'};data['native_pixel_count']=len(window['samples'])
+            data={k:v for k,v in window.items() if k!='samples'};data['native_pixel_count']=None if window.get('resampled') else len(window['samples']);data['resampled_grid_count']=len(window['samples']) if window.get('resampled') else None
             data['sample_values_sha256']=__import__('hashlib').sha256(__import__('json').dumps(window['samples'],sort_keys=True).encode()).hexdigest()
         else:data=statistics(window,{'calculate_elevation_statistics':'elevation_m','calculate_slope':'slope_deg','calculate_roughness':'roughness_m'}[name])
         if data.get('status')=='INSUFFICIENT_DATA':status='INSUFFICIENT_DATA'
-        limitations=['No uncertainty raster has been inferred.','Physical resolution remains source-native.']
+        limitations=['No uncertainty raster has been inferred.','Pixel spacing is not independent measurement resolution; global DEM reprojection and analysis grid spacing are disclosed in the method.']
+    elif name=='count_catalogued_craters':
+        from .craters import count
+        data=count(ctx['region']);limitations=data.get('limitations',[])
+        if data.get('status')=='INSUFFICIENT_DATA':status='INSUFFICIENT_DATA'
     elif name=='calculate_horizon_profile':
         data={'terrain_visibility':'UNKNOWN','profile':None,'reason':'No verified datum-compatible region horizon provider is registered.'}
         status='INSUFFICIENT_DATA'
@@ -95,7 +100,7 @@ def run(name,args,ctx,memo):
             for c in contexts:
                 g=c['region'];values={};coverage=0;source={'region':g,'source_fingerprint':c['source_fingerprint']}
                 if c['measurement_support']['detailed_terrain_available']:
-                    window=(local_window(c) if any(s.get('product_identifier')=='REGISTERED_REGIONAL_DEM' for s in c['available_datasets']) else dem_window(c))
+                    window=(local_window(c) if any(s.get('product_identifier')=='REGISTERED_REGIONAL_DEM' for s in c['available_datasets']) else global_window(c) if any(s.get('product_identifier')=='GLOBAL_LOLA_118M' for s in c['available_datasets']) else dem_window(c))
                     measurements={field:statistics(window,field) for field in ('elevation_m','slope_deg','roughness_m')}
                     values={field:m.get('area_weighted_mean') for field,m in measurements.items()}
                     coverage=min(m.get('coverage_fraction',0) for m in measurements.values())

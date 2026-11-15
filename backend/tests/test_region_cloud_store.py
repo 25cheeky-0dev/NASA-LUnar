@@ -81,3 +81,13 @@ def test_legacy_regions_are_listed_without_jobs(cloud_store):
     client.list_blobs.return_value=[job,region]
     client.bucket.return_value.blob.side_effect=lambda name: type('Identity',(),{'name':name})()
     assert store.records('region')==[('r1',{'region_id':'r1','geometry':{}})]
+
+
+def test_scientific_assets_never_downloaded_by_region_listing(cloud_store):
+    assets=[]
+    for name in ['region-state/global-v1/lola118.cog.tif','region-state/craters-v1/craters.sqlite','region-state/global-v1/manifest.json']:
+        asset=Mock();asset.name=name;asset.metadata=None;asset.download_as_bytes.side_effect=AssertionError('Scientific asset must not be read as a region')
+        assets.append(asset)
+    store.cloud_client().list_blobs.return_value=assets
+    assert store.records('region')==[]
+    for asset in assets:asset.download_as_bytes.assert_not_called()

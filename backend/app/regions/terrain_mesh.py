@@ -20,7 +20,7 @@ from . import local, store
 from .geometry import projected_polygon, projection, GEOD
 from .tools import Strict
 
-VERSION = 'polygon-dem-mesh-v1'
+VERSION = 'polygon-dem-mesh-v2-global'
 router = APIRouter(prefix='/api/v1/science', tags=['terrain-laboratory'])
 
 
@@ -134,6 +134,8 @@ def extract(region, resolution, scope='inside', allow_coarse_overview=False):
         with rasterio.open(source['path']) as ds:
             if poly.intersects(box(*ds.bounds)): choices.append((source,poly))
     if not choices:
+        from .global_dem import source as global_source, mesh as global_mesh
+        if global_source():return global_mesh(region,resolution,scope)
         if allow_coarse_overview:
             return overview_mesh(region,resolution,scope)
         raise ValueError('No high-resolution DEM is registered for this selection. Enable coarse LOLA overview to inspect available global terrain (about 7.58 km latitude spacing), or configure a verified regional DEM for detailed extraction.')
@@ -161,7 +163,7 @@ def mesh_result(region,source,poly,vertices,faces,covered,crs_wkt,spacing,stride
         source_id=source['source_id'],source_sha256=source['sha256'],source_url=source.get('source_url',source.get('canonical_url')),
         native_spacing_m=spacing,effective_spacing_m=[s*stride for s in spacing],stride=stride,
         resolution=resolution,scope=scope,scope_domain='Selected source DEM sample-center footprint',triangle_count=len(faces),vertex_count=len(vertices),display_origin_m=origin,
-        projected_region_area_m2=poly.area,covered_area_m2=covered,coverage_fraction=min(1,covered/poly.area),
+        horizontal_extent_m=[poly.bounds[2]-poly.bounds[0],poly.bounds[3]-poly.bounds[1]],projected_region_area_m2=poly.area,covered_area_m2=covered,coverage_fraction=min(1,covered/poly.area),
         elevation_min_m=min(z),elevation_max_m=max(z),relief_m=max(z)-min(z),
         perimeter_m=sum(GEOD.line_length(*zip(*ring)) for ring in region['geometry']['coordinates']),
         interpolation='piecewise planar between DEM pixel centers; exact planar triangle clipping',

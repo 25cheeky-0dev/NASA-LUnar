@@ -12,7 +12,7 @@ from lunar_global.storage import sha256
 from lunar_global.features import native_terrain
 from .geometry import projection,projected_polygon,GEOD
 
-TOOL_VERSION='region-native-overlap-v4'
+TOOL_VERSION='region-global-catalog-v6'
 
 
 def source_registry():
@@ -32,6 +32,9 @@ def source_registry():
 
 def context(region):
     sources=source_registry()
+    from .craters import source as crater_source
+    crater_catalog=crater_source()
+    if crater_catalog:sources.append({k:v for k,v in crater_catalog.items() if k!='path'})
     from .local import catalog
     import rasterio
     from pyproj import CRS, Transformer
@@ -53,6 +56,11 @@ def context(region):
     dem=next((s for s in sources if s.get('product_identifier')=='REGISTERED_REGIONAL_DEM'),None)
     if dem is None and region['kind']!='LOCAL_QUADTREE':
         dem=next((s for s in sources if s.get('product_identifier')=='LDEM_4' and s.get('status')=='VERIFIED'),None)
+    if dem is None or dem.get('product_identifier')=='LDEM_4':
+        from .global_dem import source
+        global_dem=source()
+        if global_dem:
+            dem={k:v for k,v in global_dem.items() if k!='path'};sources.append(dem)
     resolution=dem['spatial_resolution_m'] if dem else None
     support_width=region['nominal_width_m']
     if region['kind']=='POLYGON':
@@ -68,7 +76,7 @@ def context(region):
     fingerprint=hashlib.sha256(json.dumps(sources,sort_keys=True,separators=(',',':')).encode()).hexdigest()
     return dict(region=region,available_datasets=sources,measurement_support={
         'selection_width_m':region['nominal_width_m'],'minimum_support_width_m':support_width,'source_resolution_m':resolution,
-        'detailed_terrain_available':supported,'status':('SOURCE_BACKED_REGIONAL' if dem and dem.get('product_identifier')=='REGISTERED_REGIONAL_DEM' else 'SOURCE_BACKED_OVERVIEW') if supported else 'INSUFFICIENT_DATA',
+        'detailed_terrain_available':supported,'status':('SOURCE_BACKED_REGIONAL' if dem and dem.get('product_identifier')=='REGISTERED_REGIONAL_DEM' else 'SOURCE_BACKED_GLOBAL' if dem and dem.get('product_identifier')=='GLOBAL_LOLA_118M' else 'SOURCE_BACKED_OVERVIEW') if supported else 'INSUFFICIENT_DATA',
         'minimum_independent_samples_across_region':2,
         'rule':'A target width is geography, not measurement resolution; no coarse-parent value inheritance.'},
         missing_measurements=missing,quality='UNCERTAINTY_UNKNOWN',source_fingerprint=fingerprint,
@@ -133,7 +141,7 @@ def statistics(window,field):
     if not area:return {'status':'INSUFFICIENT_DATA','value':None,'coverage_fraction':0,'reason':'DEM_NODATA'}
     mean=sum(s[field]*s['intersection_area_m2'] for s in valid)/area
     return {'status':'SOURCE_BACKED_OVERVIEW','area_weighted_mean':mean,'minimum':min(s[field] for s in valid),
-            'maximum':max(s[field] for s in valid),'coverage_fraction':coverage,'native_pixel_count':len(valid),
+            'maximum':max(s[field] for s in valid),'coverage_fraction':coverage,'native_pixel_count':None if window.get('resampled') else len(valid),'resampled_grid_count':len(valid) if window.get('resampled') else None,'sample_grid_spacing_m':window.get('sample_grid_spacing_m'),
             'unit':'degree' if field=='slope_deg' else 'm','uncertainty':None,
             'source_id':window['source']['source_id'],'source_sha256':window['source']['source_checksum'],
-            'method':window['method'],'definition':'native 3x3 elevation standard deviation' if field=='roughness_m' else 'native source elevation/central-gradient slope'}
+            'method':window['method'],'definition':('resampled local-grid 3x3 elevation standard deviation' if field=='roughness_m' else 'resampled DEM elevation/projected central-gradient slope') if window.get('resampled') else ('native 3x3 elevation standard deviation' if field=='roughness_m' else 'native source elevation/central-gradient slope')}

@@ -12,7 +12,7 @@ from . import store
 from .context import context,TOOL_VERSION
 from .tools import Strict,Mission,Arguments,NAMES,run
 
-VERSION='wispr-region-agent-v2-research'
+VERSION='wispr-region-agent-v3-catalog'
 POOL=ThreadPoolExecutor(max_workers=2,thread_name_prefix='wispr-region')
 GATE=threading.BoundedSemaphore(2)
 LOCK=threading.Lock()
@@ -83,7 +83,7 @@ def work(job,request,ctx):
         store.put('job',key,job)
     try:
         job['status']='RUNNING';store.put('job',key,job)
-        plan=['get_region_metadata','get_region_sources','load_dem_window','calculate_elevation_statistics','calculate_slope','calculate_roughness']
+        plan=['get_region_metadata','get_region_sources','load_dem_window','calculate_elevation_statistics','calculate_slope','calculate_roughness','count_catalogued_craters']
         if request.mission:
             plan+=['get_sun_ephemeris','get_earth_ephemeris','calculate_visibility_windows']
             if request.include_delay:plan+=['calculate_delay_impact']
@@ -99,7 +99,7 @@ def work(job,request,ctx):
                 event('model_planner','UNAVAILABLE','Model unavailable, invalid, or budget disabled; deterministic plan used.')
         if request.mission and not request.use_llm:
             # Keep all explicitly requested temporal operations within the budget.
-            plan=['get_region_metadata','calculate_elevation_statistics','calculate_visibility_windows']+(['calculate_delay_impact'] if request.include_delay else [])+['calculate_slope','calculate_roughness','get_region_sources','load_dem_window']
+            plan=['get_region_metadata','calculate_elevation_statistics','calculate_visibility_windows']+(['calculate_delay_impact'] if request.include_delay else [])+['calculate_slope','calculate_roughness','count_catalogued_craters','get_region_sources','load_dem_window']
         plan=plan[:request.max_tools];job['plan']=plan;store.put('job',key,job)
         args=Arguments(region_id=ctx['region']['region_id'],region_ids=[ctx['region']['region_id']]+request.candidate_region_ids,mission=request.mission)
         for name in plan:
@@ -113,7 +113,7 @@ def work(job,request,ctx):
                         'provenance':{'tool_version':TOOL_VERSION,'source_fingerprint':ctx['source_fingerprint']},
                         'limitations':['Scientific operation unavailable; no substitute numerical values.']}
             results.append(result);event(name,result['status'])
-        supported=any(r['status']=='COMPLETE' and r['tool'] in ('calculate_elevation_statistics','calculate_visibility_windows','calculate_delay_impact') and r['data'].get('status')!='INSUFFICIENT_DATA' for r in results)
+        supported=any(r['status']=='COMPLETE' and r['tool'] in ('calculate_elevation_statistics','calculate_visibility_windows','calculate_delay_impact','count_catalogued_craters') and r['data'].get('status')!='INSUFFICIENT_DATA' for r in results)
         report={'region':ctx['region'],'context':ctx,'input':request.model_dump(mode='json'),'tools':results,
                 'agent_version':VERSION,'model':job.get('model',{'provider':'deterministic','calls':0}),
                 'summary':('Source-backed operations completed. Inspect the tool results and their spatial support.' if supported else 'Insufficient resolved scientific evidence for this selection. Geographic identity remains valid.'),
