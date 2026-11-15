@@ -67,7 +67,8 @@ def artifacts():
         for method, operation in operations.items():
             if method not in ("get", "post"):
                 continue
-            content = operation["responses"]["200"].get("content", {})
+            success = next((r for code, r in operation["responses"].items() if code.startswith("2")), {})
+            content = success.get("content", {})
             if "application/json" not in content:
                 continue  # Binary visualization response; no JSON TypeScript model.
             response = content["application/json"]["schema"]

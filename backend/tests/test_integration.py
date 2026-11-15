@@ -25,7 +25,7 @@ def payload():
             latitude_type="planetodetic",
             longitude_convention="east_positive_-180_180",
             elevation_datum="synthetic",
-            source={"kind": "SYNTHETIC_FIXTURE_NOT_NASA"},
+            source={"kind": "SYNTHETIC_FIXTURE_NOT_NASA", "source_id": "synthetic-source"},
             terrain_definition="synthetic standard deviation",
             resolution_m=5,
             region="Site04",
@@ -45,7 +45,20 @@ def payload():
                 valid=True,
                 coverage_fraction=1.0,
                 quality="VERIFIED",
-                uncertainty={"kind": "SYNTHETIC"},
+                uncertainty={
+                    "schema": "measurement-standard-uncertainty-v1",
+                    "source_id": "synthetic-source",
+                    "terrain_definition": "synthetic standard deviation",
+                    "citation": "Synthetic test fixture only",
+                    "measurements": {
+                        name: {"unit": unit, "standard_uncertainty": 1.0}
+                        for name, unit in [
+                            ("elevation_m", "m"),
+                            ("slope_deg", "degree"),
+                            ("roughness_m", "m"),
+                        ]
+                    },
+                },
                 neighbors=[],
                 geometry={"type": "Point", "coordinates": [-45.0 + i, -89.0]},
             )
@@ -202,7 +215,14 @@ def test_horizon_partial_never_clear():
     horizon = dict(
         model="TERRAIN_PARTIAL",
         far_field_complete=False,
-        azimuth_samples=[dict(azimuth_deg=10, terrain_horizon_elevation_deg=5)],
+        observer_reference_compatible=True,
+        azimuth_samples=[
+            dict(
+                azimuth_deg=10,
+                terrain_horizon_elevation_deg=5,
+                verified_obstruction_lower_bound_deg=5,
+            )
+        ],
     )
     assert visibility(10, 4, horizon)["state"] == "TERRAIN_OBSTRUCTED"
     assert visibility(10, 6, horizon)["modeled_visible"] is None
@@ -429,3 +449,13 @@ def test_missing_static_evidence_delay_is_insufficient(dataset):
         engine(dataset).delay(request(dataset), dataset.cells[0].cell_id)["outcome"]
         == "INSUFFICIENT DATA"
     )
+
+
+@pytest.mark.parametrize(
+    "uncertainty",
+    [{"sigma_m": None}, {"sigma_m": float("nan")}, {"sigma_m": True}, {"kind": "descriptive"}],
+)
+def test_null_or_untyped_uncertainty_never_qualifies(dataset, uncertainty):
+    dataset.cells[0].uncertainty = uncertainty
+    with pytest.raises(ValueError, match="uncertainty"):
+        dataset.similarity(dataset.cells[0].cell_id)

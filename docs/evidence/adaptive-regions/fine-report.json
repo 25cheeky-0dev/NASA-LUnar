@@ -1,0 +1,1447 @@
+{
+  "agent_version": "wispr-region-agent-v1",
+  "context": {
+    "available_datasets": [
+      {
+        "access_conditions": "Public NASA PDS archive; retain source attribution",
+        "access_method": "PDS3 detached label and little-endian int16 IMG",
+        "canonical_url": "https://pds-geosciences.wustl.edu/lro/lro-l-lola-3-rdr-v1/lrolol_1xxx/data/lola_gdr/cylindrical/img/ldem_4.img",
+        "citation": "LRO-L-LOLA-4-GDR-V1.0; DOI 10.17189/1520642",
+        "coordinate_frame": "MOON_ME_DE421",
+        "download_timestamp": "2026-11-14T14:24:28.810386+00:00",
+        "footprint": {
+          "east": 360,
+          "north": 90,
+          "south": -90,
+          "west": 0
+        },
+        "instrument": "LOLA",
+        "label_checksum": "b5a197b4d417e3b5e0e84f8fe15f9a1d2203b8eb5d7213236c0ffbc86e940cc6",
+        "latitude_type": "planetocentric_spherical",
+        "limitations": [
+          "Interpolated shape map, not independent shots at every pixel",
+          "Possible 45-degree band artifacts",
+          "7.58 km nominal latitude spacing is not elevation accuracy",
+          "Not local landing terrain or geoid height"
+        ],
+        "longitude_convention": "east_positive_0_360",
+        "mission": "LRO",
+        "nodata": "No special missing constant declared; reject samples outside label MINIMUM/MAXIMUM",
+        "organization": "NASA GSFC / PDS Geosciences",
+        "processing_level": "GDR derived",
+        "product_identifier": "LDEM_4",
+        "product_name": "Global lunar shape map",
+        "product_type": "terrain",
+        "projection": "SIMPLE CYLINDRICAL",
+        "quality": "INTERPOLATED_ALTIMETRY_UNCERTAINTY_UNKNOWN",
+        "reference_radius_m": 1737400.0,
+        "source_checksum": "c04632eba6449af49e3108ed7c25b3b1c450600abd3690df4fc815853a1af476",
+        "source_id": "LOLA:LDEM_4:V3.0:c04632eba6449af4",
+        "spatial_resolution_m": 7580.84,
+        "status": "VERIFIED",
+        "temporal_coverage": {
+          "start": "2009-07-13T17:33:17",
+          "stop": "2016-11-29T05:48:19"
+        },
+        "uncertainty": null,
+        "units": "m",
+        "version": "V3.0",
+        "vertical_reference": "Height above 1737400 m reference sphere"
+      },
+      {
+        "access_conditions": "Public NASA PDS archive; retain LROC attribution",
+        "access_method": "PDS attached label IMG via migrated official archive",
+        "canonical_url": "https://pds.mcp.nasa.gov/data/store/img/lunar_reconnaissance_orbiter/pds4/lroc/lro-l-lroc-5-rdr/LROLRC_2001/DATA/BDR/WAC_GLOBAL/WAC_GLOBAL_E000N1800_004P.IMG",
+        "citation": "Speyerer et al. 2011, LPSC abstract 2387; WAC_GLOBAL v1.3",
+        "coordinate_frame": "MOON_ME_DE421",
+        "download_timestamp": "2026-11-14T14:29:13.969645+00:00",
+        "footprint": {
+          "east": 360,
+          "north": 90,
+          "south": -90,
+          "west": 0
+        },
+        "instrument": "LROC WAC",
+        "label_checksum": "f4d9bb673f8df67f8c34e256aa1a5e8a3ef511b1f517a48ccec456e71a2178a4",
+        "latitude_type": "planetocentric_spherical",
+        "limitations": [
+          "Visual context only; not terrain or hazard evidence",
+          "Multiple historical illumination conditions",
+          "Frame mapping follows NASA LRO mission-wide ME/DE421 convention: https://svs.gsfc.nasa.gov/4969/",
+          "No per-pixel positional uncertainty supplied"
+        ],
+        "longitude_convention": "east_positive_0_360",
+        "mission": "LRO",
+        "nodata": "PDS CORE_* special float bit patterns FF7FFFFB through FF7FFFFF",
+        "organization": "NASA / Arizona State University / PDS Imaging",
+        "processing_level": "RDR",
+        "product_identifier": "WAC_GLOBAL_E000N1800_004P",
+        "product_name": "WAC Global Morphologic Map",
+        "product_type": "imagery",
+        "projection": "EQUIRECTANGULAR",
+        "quality": "PHOTOMETRIC_MOSAIC_VISUAL_CONTEXT",
+        "reference_radius_m": 1737400.0,
+        "source_checksum": "edc6f137499e8c11761669d4ddcbe4117c14d683a53d3ab12f96d9644555b580",
+        "source_id": "LROC:WAC_GLOBAL_E000N1800_004P:v1.3:edc6f137499e8c11",
+        "spatial_resolution_m": 7580.837606037399,
+        "status": "VERIFIED",
+        "temporal_coverage": {
+          "simultaneous": false,
+          "start": "2009-11-07T03:02:36",
+          "stop": "2011-01-31T18:06:02"
+        },
+        "uncertainty": null,
+        "units": "stored image DN; radiometric unit not declared in this label",
+        "version": "v1.3",
+        "vertical_reference": "Not applicable to image DN"
+      },
+      {
+        "access_conditions": "Public NASA PDS; retain attribution",
+        "access_method": "PDS fixed ASCII table with DLRE_GCP.FMT",
+        "canonical_url": "https://pds-geosciences.wustl.edu/lro/urn-nasa-pds-lro_diviner_derived1/data_derived_gcp/global_cumul_avg_cyl_90s80s_002.tab",
+        "citation": "Williams et al. 2017, Icarus 283, 300\u2013325; LRO-L-DLRE-5-GCP-V1.0",
+        "coordinate_frame": "MOON_ME_DE421",
+        "download_timestamp": "2026-11-14T14:37:07.981511+00:00",
+        "footprint": {
+          "east": 360,
+          "north": -80,
+          "south": -90,
+          "west": 0
+        },
+        "instrument": "Diviner",
+        "label_checksum": "dd7e531771b1257a021feb864d09452e17aa3c5c8018230992b89f69df8bf36f",
+        "latitude_type": "planetocentric_spherical",
+        "limitations": [
+          "2009\u20132015 observations; not a prediction for a mission date",
+          "Negative temperatures indicate below-sensitivity radiance; retained with quality flag",
+          "0.5 degree native support; not 100 m thermal terrain",
+          "Local-time centers are rounded in source table",
+          "LRO ME/DE421 mission convention: https://svs.gsfc.nasa.gov/4969/"
+        ],
+        "longitude_convention": "east_positive_0_360",
+        "mission": "LRO",
+        "nodata": "-9999 unknown; -9998 invalid",
+        "organization": "NASA / UCLA / PDS Geosciences",
+        "processing_level": "GCP derived; calibration software 4.0",
+        "product_identifier": "GLOBAL_CUMUL_AVG_CYL_90S80S_002.TAB",
+        "product_name": "South polar cumulative brightness temperatures",
+        "product_type": "thermal",
+        "projection": "Cylindrical 0.5 degree spatial bins; input longitude [-180,180], normalized by modulo 360",
+        "quality": "HISTORICAL_LOCAL_TIME_BIN_AVERAGE",
+        "reference_radius_m": 1737400.0,
+        "source_checksum": "4bc7093fe5bf08ca7fd0c7ddaf94f7c452b27f705fe975a73c8614d8d41e28b6",
+        "source_id": "DIVINER:GCP:90S80S:v1:4bc7093fe5bf08ca",
+        "spatial_resolution_m": 15161.67521207474,
+        "status": "VERIFIED",
+        "temporal_coverage": {
+          "local_time_bin_hours": 0.25,
+          "simultaneous": false,
+          "start": "2009-07-05T16:50:26.195",
+          "stop": "2015-04-01T00:00:00.000"
+        },
+        "uncertainty": null,
+        "units": "K",
+        "version": "1",
+        "vertical_reference": "Not applicable to brightness temperature"
+      }
+    ],
+    "capabilities": {
+      "delay_comparison": true,
+      "geometric_ephemeris_at_representative_point": true,
+      "native_dem_window": true,
+      "polygon_wide_visibility": false,
+      "static_terrain": false,
+      "verified_terrain_occlusion": false
+    },
+    "coordinate_frame": "MOON_ME_DE421",
+    "measurement_support": {
+      "detailed_terrain_available": false,
+      "minimum_independent_samples_across_region": 2,
+      "minimum_support_width_m": 54.25805122028287,
+      "rule": "A target width is geography, not measurement resolution; no coarse-parent value inheritance.",
+      "selection_width_m": 54.25805122028287,
+      "source_resolution_m": 7580.84,
+      "status": "INSUFFICIENT_DATA"
+    },
+    "missing_measurements": [
+      "SELECTION_FINER_THAN_SCIENTIFIC_SUPPORT",
+      "TERRAIN_DATUM_UNVERIFIED",
+      "TERRAIN_UNCERTAINTY_UNKNOWN",
+      "MISSION_DATE_NOT_SUPPLIED"
+    ],
+    "quality": "UNCERTAINTY_UNKNOWN",
+    "region": {
+      "area_m2": 2943.9361222228395,
+      "boundary_method": "Samples of analytic HEALPix edges; not WGS84 GeoJSON",
+      "children": [],
+      "coordinate_frame": "MOON_ME_DE421",
+      "geometry": {
+        "coordinates": [
+          [
+            [
+              0.06419400855920115,
+              -87.9983083937646
+            ],
+            [
+              0.060184566002407375,
+              -87.99839763659679
+            ],
+            [
+              0.056174765938475264,
+              -87.99848687942773
+            ],
+            [
+              0.05216460831958625,
+              -87.9985761222575
+            ],
+            [
+              0.048154093097913325,
+              -87.99866536508604
+            ],
+            [
+              0.0441432202256209,
+              -87.99875460791337
+            ],
+            [
+              0.040131989654864884,
+              -87.99884385073948
+            ],
+            [
+              0.036120401337792644,
+              -87.99893309356436
+            ],
+            [
+              0.032108455226542994,
+              -87.99902233638805
+            ],
+            [
+              0.02809615127324622,
+              -87.99911157921052
+            ],
+            [
+              0.024083489430024082,
+              -87.99920082203178
+            ],
+            [
+              0.020070469648989786,
+              -87.99929006485183
+            ],
+            [
+              0.016057091882247992,
+              -87.99937930767064
+            ],
+            [
+              0.012043356081894822,
+              -87.99946855048827
+            ],
+            [
+              0.008029262200017843,
+              -87.99955779330466
+            ],
+            [
+              0.0040148101886960785,
+              -87.99964703611985
+            ],
+            [
+              0.0,
+              -87.99973627893382
+            ],
+            [
+              0.0,
+              -87.99982552174657
+            ],
+            [
+              0.0,
+              -87.99991476455813
+            ],
+            [
+              0.0,
+              -88.00000400736846
+            ],
+            [
+              0.0,
+              -88.0000932501776
+            ],
+            [
+              0.0,
+              -88.0001824929855
+            ],
+            [
+              0.0,
+              -88.0002717357922
+            ],
+            [
+              0.0,
+              -88.0003609785977
+            ],
+            [
+              0.0,
+              -88.00045022140195
+            ],
+            [
+              0.0,
+              -88.000539464205
+            ],
+            [
+              0.0,
+              -88.00062870700685
+            ],
+            [
+              0.0,
+              -88.00071794980748
+            ],
+            [
+              0.0,
+              -88.0008071926069
+            ],
+            [
+              0.0,
+              -88.00089643540511
+            ],
+            [
+              0.0,
+              -88.00098567820208
+            ],
+            [
+              0.0,
+              -88.00107492099787
+            ],
+            [
+              0.0,
+              -88.00116416379245
+            ],
+            [
+              0.004017677782241864,
+              -88.00107492099787
+            ],
+            [
+              0.008034996875278992,
+              -88.00098567820208
+            ],
+            [
+              0.012051957327143686,
+              -88.00089643540511
+            ],
+            [
+              0.01606855918585967,
+              -88.0008071926069
+            ],
+            [
+              0.020084802499442087,
+              -88.00071794980748
+            ],
+            [
+              0.02410068731589753,
+              -88.00062870700685
+            ],
+            [
+              0.028116213683223985,
+              -88.000539464205
+            ],
+            [
+              0.03213138164941093,
+              -88.00045022140195
+            ],
+            [
+              0.03614619126243921,
+              -88.0003609785977
+            ],
+            [
+              0.04016064257028113,
+              -88.0002717357922
+            ],
+            [
+              0.04417473562090045,
+              -88.0001824929855
+            ],
+            [
+              0.04818847046225236,
+              -88.0000932501776
+            ],
+            [
+              0.0522018471422835,
+              -88.00000400736846
+            ],
+            [
+              0.056214865708931916,
+              -87.99991476455813
+            ],
+            [
+              0.06022752621012715,
+              -87.99982552174657
+            ],
+            [
+              0.06423982869379015,
+              -87.99973627893382
+            ],
+            [
+              0.06423696301913727,
+              -87.99964703611985
+            ],
+            [
+              0.06423409760014274,
+              -87.99955779330466
+            ],
+            [
+              0.06423123243677238,
+              -87.99946855048827
+            ],
+            [
+              0.06422836752899196,
+              -87.99937930767064
+            ],
+            [
+              0.06422550287676733,
+              -87.99929006485183
+            ],
+            [
+              0.06422263848006424,
+              -87.99920082203178
+            ],
+            [
+              0.06421977433884851,
+              -87.99911157921052
+            ],
+            [
+              0.06421691045308597,
+              -87.99902233638805
+            ],
+            [
+              0.06421404682274248,
+              -87.99893309356436
+            ],
+            [
+              0.06421118344778383,
+              -87.99884385073948
+            ],
+            [
+              0.06420832032817586,
+              -87.99875460791337
+            ],
+            [
+              0.06420545746388442,
+              -87.99866536508604
+            ],
+            [
+              0.06420259485487537,
+              -87.9985761222575
+            ],
+            [
+              0.06419973250111459,
+              -87.99848687942773
+            ],
+            [
+              0.06419687040256787,
+              -87.99839763659679
+            ],
+            [
+              0.06419400855920115,
+              -87.9983083937646
+            ]
+          ]
+        ],
+        "type": "Polygon"
+      },
+      "geometry_version": "moon-hpx-nested-v1",
+      "grid_version": "moon-hpx-nested-v1",
+      "intersections": [],
+      "kind": "HEALPIX",
+      "latitude_deg": -87.99973627893382,
+      "longitude_deg": 0.03211991434689507,
+      "neighbors": [
+        "MOON:HPX:NESTED:32768:11812279616",
+        "MOON:HPX:NESTED:32768:11812279617",
+        "MOON:HPX:NESTED:32768:8592173698",
+        "MOON:HPX:NESTED:32768:8592173699",
+        "MOON:HPX:NESTED:32768:8592173697",
+        "MOON:HPX:NESTED:32768:8592173611",
+        "MOON:HPX:NESTED:32768:8592173610",
+        "MOON:HPX:NESTED:32768:11812279573"
+      ],
+      "nominal_width_m": 54.25805122028287,
+      "parent_id": "MOON:HPX:NESTED:16384:2148043424",
+      "reference_radius_m": 1737400.0,
+      "region_id": "MOON:HPX:NESTED:32768:8592173696"
+    },
+    "source_fingerprint": "5c30a8fd9481786f04930c2cdcc366cdcbc8870963bcf8984c35d1fa00c7f3d8",
+    "tool_version": "region-native-overlap-v3"
+  },
+  "evidence_status": "INSUFFICIENT_DATA",
+  "input": {
+    "candidate_region_ids": [],
+    "include_delay": false,
+    "max_tools": 8,
+    "mission": null,
+    "use_llm": false
+  },
+  "limitations": [
+    "No landing-safety certification.",
+    "Terrain visibility UNKNOWN until datum compatibility and uncertainty are validated.",
+    "Ephemerides represent a declared point, not every point of a polygon."
+  ],
+  "model": {
+    "calls": 0,
+    "provider": "deterministic"
+  },
+  "region": {
+    "area_m2": 2943.9361222228395,
+    "boundary_method": "Samples of analytic HEALPix edges; not WGS84 GeoJSON",
+    "children": [],
+    "coordinate_frame": "MOON_ME_DE421",
+    "geometry": {
+      "coordinates": [
+        [
+          [
+            0.06419400855920115,
+            -87.9983083937646
+          ],
+          [
+            0.060184566002407375,
+            -87.99839763659679
+          ],
+          [
+            0.056174765938475264,
+            -87.99848687942773
+          ],
+          [
+            0.05216460831958625,
+            -87.9985761222575
+          ],
+          [
+            0.048154093097913325,
+            -87.99866536508604
+          ],
+          [
+            0.0441432202256209,
+            -87.99875460791337
+          ],
+          [
+            0.040131989654864884,
+            -87.99884385073948
+          ],
+          [
+            0.036120401337792644,
+            -87.99893309356436
+          ],
+          [
+            0.032108455226542994,
+            -87.99902233638805
+          ],
+          [
+            0.02809615127324622,
+            -87.99911157921052
+          ],
+          [
+            0.024083489430024082,
+            -87.99920082203178
+          ],
+          [
+            0.020070469648989786,
+            -87.99929006485183
+          ],
+          [
+            0.016057091882247992,
+            -87.99937930767064
+          ],
+          [
+            0.012043356081894822,
+            -87.99946855048827
+          ],
+          [
+            0.008029262200017843,
+            -87.99955779330466
+          ],
+          [
+            0.0040148101886960785,
+            -87.99964703611985
+          ],
+          [
+            0.0,
+            -87.99973627893382
+          ],
+          [
+            0.0,
+            -87.99982552174657
+          ],
+          [
+            0.0,
+            -87.99991476455813
+          ],
+          [
+            0.0,
+            -88.00000400736846
+          ],
+          [
+            0.0,
+            -88.0000932501776
+          ],
+          [
+            0.0,
+            -88.0001824929855
+          ],
+          [
+            0.0,
+            -88.0002717357922
+          ],
+          [
+            0.0,
+            -88.0003609785977
+          ],
+          [
+            0.0,
+            -88.00045022140195
+          ],
+          [
+            0.0,
+            -88.000539464205
+          ],
+          [
+            0.0,
+            -88.00062870700685
+          ],
+          [
+            0.0,
+            -88.00071794980748
+          ],
+          [
+            0.0,
+            -88.0008071926069
+          ],
+          [
+            0.0,
+            -88.00089643540511
+          ],
+          [
+            0.0,
+            -88.00098567820208
+          ],
+          [
+            0.0,
+            -88.00107492099787
+          ],
+          [
+            0.0,
+            -88.00116416379245
+          ],
+          [
+            0.004017677782241864,
+            -88.00107492099787
+          ],
+          [
+            0.008034996875278992,
+            -88.00098567820208
+          ],
+          [
+            0.012051957327143686,
+            -88.00089643540511
+          ],
+          [
+            0.01606855918585967,
+            -88.0008071926069
+          ],
+          [
+            0.020084802499442087,
+            -88.00071794980748
+          ],
+          [
+            0.02410068731589753,
+            -88.00062870700685
+          ],
+          [
+            0.028116213683223985,
+            -88.000539464205
+          ],
+          [
+            0.03213138164941093,
+            -88.00045022140195
+          ],
+          [
+            0.03614619126243921,
+            -88.0003609785977
+          ],
+          [
+            0.04016064257028113,
+            -88.0002717357922
+          ],
+          [
+            0.04417473562090045,
+            -88.0001824929855
+          ],
+          [
+            0.04818847046225236,
+            -88.0000932501776
+          ],
+          [
+            0.0522018471422835,
+            -88.00000400736846
+          ],
+          [
+            0.056214865708931916,
+            -87.99991476455813
+          ],
+          [
+            0.06022752621012715,
+            -87.99982552174657
+          ],
+          [
+            0.06423982869379015,
+            -87.99973627893382
+          ],
+          [
+            0.06423696301913727,
+            -87.99964703611985
+          ],
+          [
+            0.06423409760014274,
+            -87.99955779330466
+          ],
+          [
+            0.06423123243677238,
+            -87.99946855048827
+          ],
+          [
+            0.06422836752899196,
+            -87.99937930767064
+          ],
+          [
+            0.06422550287676733,
+            -87.99929006485183
+          ],
+          [
+            0.06422263848006424,
+            -87.99920082203178
+          ],
+          [
+            0.06421977433884851,
+            -87.99911157921052
+          ],
+          [
+            0.06421691045308597,
+            -87.99902233638805
+          ],
+          [
+            0.06421404682274248,
+            -87.99893309356436
+          ],
+          [
+            0.06421118344778383,
+            -87.99884385073948
+          ],
+          [
+            0.06420832032817586,
+            -87.99875460791337
+          ],
+          [
+            0.06420545746388442,
+            -87.99866536508604
+          ],
+          [
+            0.06420259485487537,
+            -87.9985761222575
+          ],
+          [
+            0.06419973250111459,
+            -87.99848687942773
+          ],
+          [
+            0.06419687040256787,
+            -87.99839763659679
+          ],
+          [
+            0.06419400855920115,
+            -87.9983083937646
+          ]
+        ]
+      ],
+      "type": "Polygon"
+    },
+    "geometry_version": "moon-hpx-nested-v1",
+    "grid_version": "moon-hpx-nested-v1",
+    "intersections": [],
+    "kind": "HEALPIX",
+    "latitude_deg": -87.99973627893382,
+    "longitude_deg": 0.03211991434689507,
+    "neighbors": [
+      "MOON:HPX:NESTED:32768:11812279616",
+      "MOON:HPX:NESTED:32768:11812279617",
+      "MOON:HPX:NESTED:32768:8592173698",
+      "MOON:HPX:NESTED:32768:8592173699",
+      "MOON:HPX:NESTED:32768:8592173697",
+      "MOON:HPX:NESTED:32768:8592173611",
+      "MOON:HPX:NESTED:32768:8592173610",
+      "MOON:HPX:NESTED:32768:11812279573"
+    ],
+    "nominal_width_m": 54.25805122028287,
+    "parent_id": "MOON:HPX:NESTED:16384:2148043424",
+    "reference_radius_m": 1737400.0,
+    "region_id": "MOON:HPX:NESTED:32768:8592173696"
+  },
+  "summary": "Insufficient resolved scientific evidence for this selection. Geographic identity remains valid.",
+  "tools": [
+    {
+      "data": {
+        "area_m2": 2943.9361222228395,
+        "boundary_method": "Samples of analytic HEALPix edges; not WGS84 GeoJSON",
+        "children": [],
+        "coordinate_frame": "MOON_ME_DE421",
+        "geometry": {
+          "coordinates": [
+            [
+              [
+                0.06419400855920115,
+                -87.9983083937646
+              ],
+              [
+                0.060184566002407375,
+                -87.99839763659679
+              ],
+              [
+                0.056174765938475264,
+                -87.99848687942773
+              ],
+              [
+                0.05216460831958625,
+                -87.9985761222575
+              ],
+              [
+                0.048154093097913325,
+                -87.99866536508604
+              ],
+              [
+                0.0441432202256209,
+                -87.99875460791337
+              ],
+              [
+                0.040131989654864884,
+                -87.99884385073948
+              ],
+              [
+                0.036120401337792644,
+                -87.99893309356436
+              ],
+              [
+                0.032108455226542994,
+                -87.99902233638805
+              ],
+              [
+                0.02809615127324622,
+                -87.99911157921052
+              ],
+              [
+                0.024083489430024082,
+                -87.99920082203178
+              ],
+              [
+                0.020070469648989786,
+                -87.99929006485183
+              ],
+              [
+                0.016057091882247992,
+                -87.99937930767064
+              ],
+              [
+                0.012043356081894822,
+                -87.99946855048827
+              ],
+              [
+                0.008029262200017843,
+                -87.99955779330466
+              ],
+              [
+                0.0040148101886960785,
+                -87.99964703611985
+              ],
+              [
+                0.0,
+                -87.99973627893382
+              ],
+              [
+                0.0,
+                -87.99982552174657
+              ],
+              [
+                0.0,
+                -87.99991476455813
+              ],
+              [
+                0.0,
+                -88.00000400736846
+              ],
+              [
+                0.0,
+                -88.0000932501776
+              ],
+              [
+                0.0,
+                -88.0001824929855
+              ],
+              [
+                0.0,
+                -88.0002717357922
+              ],
+              [
+                0.0,
+                -88.0003609785977
+              ],
+              [
+                0.0,
+                -88.00045022140195
+              ],
+              [
+                0.0,
+                -88.000539464205
+              ],
+              [
+                0.0,
+                -88.00062870700685
+              ],
+              [
+                0.0,
+                -88.00071794980748
+              ],
+              [
+                0.0,
+                -88.0008071926069
+              ],
+              [
+                0.0,
+                -88.00089643540511
+              ],
+              [
+                0.0,
+                -88.00098567820208
+              ],
+              [
+                0.0,
+                -88.00107492099787
+              ],
+              [
+                0.0,
+                -88.00116416379245
+              ],
+              [
+                0.004017677782241864,
+                -88.00107492099787
+              ],
+              [
+                0.008034996875278992,
+                -88.00098567820208
+              ],
+              [
+                0.012051957327143686,
+                -88.00089643540511
+              ],
+              [
+                0.01606855918585967,
+                -88.0008071926069
+              ],
+              [
+                0.020084802499442087,
+                -88.00071794980748
+              ],
+              [
+                0.02410068731589753,
+                -88.00062870700685
+              ],
+              [
+                0.028116213683223985,
+                -88.000539464205
+              ],
+              [
+                0.03213138164941093,
+                -88.00045022140195
+              ],
+              [
+                0.03614619126243921,
+                -88.0003609785977
+              ],
+              [
+                0.04016064257028113,
+                -88.0002717357922
+              ],
+              [
+                0.04417473562090045,
+                -88.0001824929855
+              ],
+              [
+                0.04818847046225236,
+                -88.0000932501776
+              ],
+              [
+                0.0522018471422835,
+                -88.00000400736846
+              ],
+              [
+                0.056214865708931916,
+                -87.99991476455813
+              ],
+              [
+                0.06022752621012715,
+                -87.99982552174657
+              ],
+              [
+                0.06423982869379015,
+                -87.99973627893382
+              ],
+              [
+                0.06423696301913727,
+                -87.99964703611985
+              ],
+              [
+                0.06423409760014274,
+                -87.99955779330466
+              ],
+              [
+                0.06423123243677238,
+                -87.99946855048827
+              ],
+              [
+                0.06422836752899196,
+                -87.99937930767064
+              ],
+              [
+                0.06422550287676733,
+                -87.99929006485183
+              ],
+              [
+                0.06422263848006424,
+                -87.99920082203178
+              ],
+              [
+                0.06421977433884851,
+                -87.99911157921052
+              ],
+              [
+                0.06421691045308597,
+                -87.99902233638805
+              ],
+              [
+                0.06421404682274248,
+                -87.99893309356436
+              ],
+              [
+                0.06421118344778383,
+                -87.99884385073948
+              ],
+              [
+                0.06420832032817586,
+                -87.99875460791337
+              ],
+              [
+                0.06420545746388442,
+                -87.99866536508604
+              ],
+              [
+                0.06420259485487537,
+                -87.9985761222575
+              ],
+              [
+                0.06419973250111459,
+                -87.99848687942773
+              ],
+              [
+                0.06419687040256787,
+                -87.99839763659679
+              ],
+              [
+                0.06419400855920115,
+                -87.9983083937646
+              ]
+            ]
+          ],
+          "type": "Polygon"
+        },
+        "geometry_version": "moon-hpx-nested-v1",
+        "grid_version": "moon-hpx-nested-v1",
+        "intersections": [],
+        "kind": "HEALPIX",
+        "latitude_deg": -87.99973627893382,
+        "longitude_deg": 0.03211991434689507,
+        "neighbors": [
+          "MOON:HPX:NESTED:32768:11812279616",
+          "MOON:HPX:NESTED:32768:11812279617",
+          "MOON:HPX:NESTED:32768:8592173698",
+          "MOON:HPX:NESTED:32768:8592173699",
+          "MOON:HPX:NESTED:32768:8592173697",
+          "MOON:HPX:NESTED:32768:8592173611",
+          "MOON:HPX:NESTED:32768:8592173610",
+          "MOON:HPX:NESTED:32768:11812279573"
+        ],
+        "nominal_width_m": 54.25805122028287,
+        "parent_id": "MOON:HPX:NESTED:16384:2148043424",
+        "reference_radius_m": 1737400.0,
+        "region_id": "MOON:HPX:NESTED:32768:8592173696"
+      },
+      "limitations": [],
+      "provenance": {
+        "coordinate_frame": "MOON_ME_DE421",
+        "exact_arguments": {
+          "limit": 5,
+          "mission": null,
+          "observer_height_m": 1.0,
+          "region_id": "MOON:HPX:NESTED:32768:8592173696",
+          "region_ids": [
+            "MOON:HPX:NESTED:32768:8592173696"
+          ]
+        },
+        "source_fingerprint": "5c30a8fd9481786f04930c2cdcc366cdcbc8870963bcf8984c35d1fa00c7f3d8",
+        "tool_version": "region-native-overlap-v3"
+      },
+      "region_id": "MOON:HPX:NESTED:32768:8592173696",
+      "status": "COMPLETE",
+      "tool": "get_region_metadata"
+    },
+    {
+      "data": {
+        "sources": [
+          {
+            "access_conditions": "Public NASA PDS archive; retain source attribution",
+            "access_method": "PDS3 detached label and little-endian int16 IMG",
+            "canonical_url": "https://pds-geosciences.wustl.edu/lro/lro-l-lola-3-rdr-v1/lrolol_1xxx/data/lola_gdr/cylindrical/img/ldem_4.img",
+            "citation": "LRO-L-LOLA-4-GDR-V1.0; DOI 10.17189/1520642",
+            "coordinate_frame": "MOON_ME_DE421",
+            "download_timestamp": "2026-11-14T14:24:28.810386+00:00",
+            "footprint": {
+              "east": 360,
+              "north": 90,
+              "south": -90,
+              "west": 0
+            },
+            "instrument": "LOLA",
+            "label_checksum": "b5a197b4d417e3b5e0e84f8fe15f9a1d2203b8eb5d7213236c0ffbc86e940cc6",
+            "latitude_type": "planetocentric_spherical",
+            "limitations": [
+              "Interpolated shape map, not independent shots at every pixel",
+              "Possible 45-degree band artifacts",
+              "7.58 km nominal latitude spacing is not elevation accuracy",
+              "Not local landing terrain or geoid height"
+            ],
+            "longitude_convention": "east_positive_0_360",
+            "mission": "LRO",
+            "nodata": "No special missing constant declared; reject samples outside label MINIMUM/MAXIMUM",
+            "organization": "NASA GSFC / PDS Geosciences",
+            "processing_level": "GDR derived",
+            "product_identifier": "LDEM_4",
+            "product_name": "Global lunar shape map",
+            "product_type": "terrain",
+            "projection": "SIMPLE CYLINDRICAL",
+            "quality": "INTERPOLATED_ALTIMETRY_UNCERTAINTY_UNKNOWN",
+            "reference_radius_m": 1737400.0,
+            "source_checksum": "c04632eba6449af49e3108ed7c25b3b1c450600abd3690df4fc815853a1af476",
+            "source_id": "LOLA:LDEM_4:V3.0:c04632eba6449af4",
+            "spatial_resolution_m": 7580.84,
+            "status": "VERIFIED",
+            "temporal_coverage": {
+              "start": "2009-07-13T17:33:17",
+              "stop": "2016-11-29T05:48:19"
+            },
+            "uncertainty": null,
+            "units": "m",
+            "version": "V3.0",
+            "vertical_reference": "Height above 1737400 m reference sphere"
+          },
+          {
+            "access_conditions": "Public NASA PDS archive; retain LROC attribution",
+            "access_method": "PDS attached label IMG via migrated official archive",
+            "canonical_url": "https://pds.mcp.nasa.gov/data/store/img/lunar_reconnaissance_orbiter/pds4/lroc/lro-l-lroc-5-rdr/LROLRC_2001/DATA/BDR/WAC_GLOBAL/WAC_GLOBAL_E000N1800_004P.IMG",
+            "citation": "Speyerer et al. 2011, LPSC abstract 2387; WAC_GLOBAL v1.3",
+            "coordinate_frame": "MOON_ME_DE421",
+            "download_timestamp": "2026-11-14T14:29:13.969645+00:00",
+            "footprint": {
+              "east": 360,
+              "north": 90,
+              "south": -90,
+              "west": 0
+            },
+            "instrument": "LROC WAC",
+            "label_checksum": "f4d9bb673f8df67f8c34e256aa1a5e8a3ef511b1f517a48ccec456e71a2178a4",
+            "latitude_type": "planetocentric_spherical",
+            "limitations": [
+              "Visual context only; not terrain or hazard evidence",
+              "Multiple historical illumination conditions",
+              "Frame mapping follows NASA LRO mission-wide ME/DE421 convention: https://svs.gsfc.nasa.gov/4969/",
+              "No per-pixel positional uncertainty supplied"
+            ],
+            "longitude_convention": "east_positive_0_360",
+            "mission": "LRO",
+            "nodata": "PDS CORE_* special float bit patterns FF7FFFFB through FF7FFFFF",
+            "organization": "NASA / Arizona State University / PDS Imaging",
+            "processing_level": "RDR",
+            "product_identifier": "WAC_GLOBAL_E000N1800_004P",
+            "product_name": "WAC Global Morphologic Map",
+            "product_type": "imagery",
+            "projection": "EQUIRECTANGULAR",
+            "quality": "PHOTOMETRIC_MOSAIC_VISUAL_CONTEXT",
+            "reference_radius_m": 1737400.0,
+            "source_checksum": "edc6f137499e8c11761669d4ddcbe4117c14d683a53d3ab12f96d9644555b580",
+            "source_id": "LROC:WAC_GLOBAL_E000N1800_004P:v1.3:edc6f137499e8c11",
+            "spatial_resolution_m": 7580.837606037399,
+            "status": "VERIFIED",
+            "temporal_coverage": {
+              "simultaneous": false,
+              "start": "2009-11-07T03:02:36",
+              "stop": "2011-01-31T18:06:02"
+            },
+            "uncertainty": null,
+            "units": "stored image DN; radiometric unit not declared in this label",
+            "version": "v1.3",
+            "vertical_reference": "Not applicable to image DN"
+          },
+          {
+            "access_conditions": "Public NASA PDS; retain attribution",
+            "access_method": "PDS fixed ASCII table with DLRE_GCP.FMT",
+            "canonical_url": "https://pds-geosciences.wustl.edu/lro/urn-nasa-pds-lro_diviner_derived1/data_derived_gcp/global_cumul_avg_cyl_90s80s_002.tab",
+            "citation": "Williams et al. 2017, Icarus 283, 300\u2013325; LRO-L-DLRE-5-GCP-V1.0",
+            "coordinate_frame": "MOON_ME_DE421",
+            "download_timestamp": "2026-11-14T14:37:07.981511+00:00",
+            "footprint": {
+              "east": 360,
+              "north": -80,
+              "south": -90,
+              "west": 0
+            },
+            "instrument": "Diviner",
+            "label_checksum": "dd7e531771b1257a021feb864d09452e17aa3c5c8018230992b89f69df8bf36f",
+            "latitude_type": "planetocentric_spherical",
+            "limitations": [
+              "2009\u20132015 observations; not a prediction for a mission date",
+              "Negative temperatures indicate below-sensitivity radiance; retained with quality flag",
+              "0.5 degree native support; not 100 m thermal terrain",
+              "Local-time centers are rounded in source table",
+              "LRO ME/DE421 mission convention: https://svs.gsfc.nasa.gov/4969/"
+            ],
+            "longitude_convention": "east_positive_0_360",
+            "mission": "LRO",
+            "nodata": "-9999 unknown; -9998 invalid",
+            "organization": "NASA / UCLA / PDS Geosciences",
+            "processing_level": "GCP derived; calibration software 4.0",
+            "product_identifier": "GLOBAL_CUMUL_AVG_CYL_90S80S_002.TAB",
+            "product_name": "South polar cumulative brightness temperatures",
+            "product_type": "thermal",
+            "projection": "Cylindrical 0.5 degree spatial bins; input longitude [-180,180], normalized by modulo 360",
+            "quality": "HISTORICAL_LOCAL_TIME_BIN_AVERAGE",
+            "reference_radius_m": 1737400.0,
+            "source_checksum": "4bc7093fe5bf08ca7fd0c7ddaf94f7c452b27f705fe975a73c8614d8d41e28b6",
+            "source_id": "DIVINER:GCP:90S80S:v1:4bc7093fe5bf08ca",
+            "spatial_resolution_m": 15161.67521207474,
+            "status": "VERIFIED",
+            "temporal_coverage": {
+              "local_time_bin_hours": 0.25,
+              "simultaneous": false,
+              "start": "2009-07-05T16:50:26.195",
+              "stop": "2015-04-01T00:00:00.000"
+            },
+            "uncertainty": null,
+            "units": "K",
+            "version": "1",
+            "vertical_reference": "Not applicable to brightness temperature"
+          }
+        ],
+        "support": {
+          "detailed_terrain_available": false,
+          "minimum_independent_samples_across_region": 2,
+          "minimum_support_width_m": 54.25805122028287,
+          "rule": "A target width is geography, not measurement resolution; no coarse-parent value inheritance.",
+          "selection_width_m": 54.25805122028287,
+          "source_resolution_m": 7580.84,
+          "status": "INSUFFICIENT_DATA"
+        }
+      },
+      "limitations": [],
+      "provenance": {
+        "coordinate_frame": "MOON_ME_DE421",
+        "exact_arguments": {
+          "limit": 5,
+          "mission": null,
+          "observer_height_m": 1.0,
+          "region_id": "MOON:HPX:NESTED:32768:8592173696",
+          "region_ids": [
+            "MOON:HPX:NESTED:32768:8592173696"
+          ]
+        },
+        "source_fingerprint": "5c30a8fd9481786f04930c2cdcc366cdcbc8870963bcf8984c35d1fa00c7f3d8",
+        "tool_version": "region-native-overlap-v3"
+      },
+      "region_id": "MOON:HPX:NESTED:32768:8592173696",
+      "status": "COMPLETE",
+      "tool": "get_region_sources"
+    },
+    {
+      "data": {
+        "covered_area_m2": 2943.9361234277294,
+        "method": "Native source-pixel intersection weights in lunar LAEA; no resampling of physical derivatives",
+        "native_pixel_count": 4,
+        "region_area_m2": 2943.9361234277285,
+        "sample_values_sha256": "fc9a00a37ee05160e2dd77941ee1dfab9c09a798f373c088f35971138d46a550",
+        "source": {
+          "access_conditions": "Public NASA PDS archive; retain source attribution",
+          "access_method": "PDS3 detached label and little-endian int16 IMG",
+          "canonical_url": "https://pds-geosciences.wustl.edu/lro/lro-l-lola-3-rdr-v1/lrolol_1xxx/data/lola_gdr/cylindrical/img/ldem_4.img",
+          "citation": "LRO-L-LOLA-4-GDR-V1.0; DOI 10.17189/1520642",
+          "coordinate_frame": "MOON_ME_DE421",
+          "download_timestamp": "2026-11-14T14:24:28.810386+00:00",
+          "footprint": {
+            "east": 360,
+            "north": 90,
+            "south": -90,
+            "west": 0
+          },
+          "instrument": "LOLA",
+          "label_checksum": "b5a197b4d417e3b5e0e84f8fe15f9a1d2203b8eb5d7213236c0ffbc86e940cc6",
+          "latitude_type": "planetocentric_spherical",
+          "limitations": [
+            "Interpolated shape map, not independent shots at every pixel",
+            "Possible 45-degree band artifacts",
+            "7.58 km nominal latitude spacing is not elevation accuracy",
+            "Not local landing terrain or geoid height"
+          ],
+          "longitude_convention": "east_positive_0_360",
+          "mission": "LRO",
+          "nodata": "No special missing constant declared; reject samples outside label MINIMUM/MAXIMUM",
+          "organization": "NASA GSFC / PDS Geosciences",
+          "processing_level": "GDR derived",
+          "product_identifier": "LDEM_4",
+          "product_name": "Global lunar shape map",
+          "product_type": "terrain",
+          "projection": "SIMPLE CYLINDRICAL",
+          "quality": "INTERPOLATED_ALTIMETRY_UNCERTAINTY_UNKNOWN",
+          "reference_radius_m": 1737400.0,
+          "source_checksum": "c04632eba6449af49e3108ed7c25b3b1c450600abd3690df4fc815853a1af476",
+          "source_id": "LOLA:LDEM_4:V3.0:c04632eba6449af4",
+          "spatial_resolution_m": 7580.84,
+          "status": "VERIFIED",
+          "temporal_coverage": {
+            "start": "2009-07-13T17:33:17",
+            "stop": "2016-11-29T05:48:19"
+          },
+          "uncertainty": null,
+          "units": "m",
+          "version": "V3.0",
+          "vertical_reference": "Height above 1737400 m reference sphere"
+        },
+        "status": "SOURCE_PIXEL_WINDOW",
+        "support": {
+          "detailed_terrain_available": false,
+          "minimum_independent_samples_across_region": 2,
+          "minimum_support_width_m": 54.25805122028287,
+          "rule": "A target width is geography, not measurement resolution; no coarse-parent value inheritance.",
+          "selection_width_m": 54.25805122028287,
+          "source_resolution_m": 7580.84,
+          "status": "INSUFFICIENT_DATA"
+        },
+        "tool_version": "region-native-overlap-v3"
+      },
+      "limitations": [
+        "No uncertainty raster has been inferred.",
+        "Physical resolution remains source-native."
+      ],
+      "provenance": {
+        "coordinate_frame": "MOON_ME_DE421",
+        "exact_arguments": {
+          "limit": 5,
+          "mission": null,
+          "observer_height_m": 1.0,
+          "region_id": "MOON:HPX:NESTED:32768:8592173696",
+          "region_ids": [
+            "MOON:HPX:NESTED:32768:8592173696"
+          ]
+        },
+        "source_fingerprint": "5c30a8fd9481786f04930c2cdcc366cdcbc8870963bcf8984c35d1fa00c7f3d8",
+        "tool_version": "region-native-overlap-v3"
+      },
+      "region_id": "MOON:HPX:NESTED:32768:8592173696",
+      "status": "COMPLETE",
+      "tool": "load_dem_window"
+    },
+    {
+      "data": {
+        "reason": "Fine geometry does not resolve coarse DEM measurements",
+        "source_resolution_m": 7580.84,
+        "status": "INSUFFICIENT_DATA",
+        "unit": "m",
+        "value": null
+      },
+      "limitations": [
+        "No uncertainty raster has been inferred.",
+        "Physical resolution remains source-native."
+      ],
+      "provenance": {
+        "coordinate_frame": "MOON_ME_DE421",
+        "exact_arguments": {
+          "limit": 5,
+          "mission": null,
+          "observer_height_m": 1.0,
+          "region_id": "MOON:HPX:NESTED:32768:8592173696",
+          "region_ids": [
+            "MOON:HPX:NESTED:32768:8592173696"
+          ]
+        },
+        "source_fingerprint": "5c30a8fd9481786f04930c2cdcc366cdcbc8870963bcf8984c35d1fa00c7f3d8",
+        "tool_version": "region-native-overlap-v3"
+      },
+      "region_id": "MOON:HPX:NESTED:32768:8592173696",
+      "status": "INSUFFICIENT_DATA",
+      "tool": "calculate_elevation_statistics"
+    },
+    {
+      "data": {
+        "reason": "Fine geometry does not resolve coarse DEM measurements",
+        "source_resolution_m": 7580.84,
+        "status": "INSUFFICIENT_DATA",
+        "unit": "degree",
+        "value": null
+      },
+      "limitations": [
+        "No uncertainty raster has been inferred.",
+        "Physical resolution remains source-native."
+      ],
+      "provenance": {
+        "coordinate_frame": "MOON_ME_DE421",
+        "exact_arguments": {
+          "limit": 5,
+          "mission": null,
+          "observer_height_m": 1.0,
+          "region_id": "MOON:HPX:NESTED:32768:8592173696",
+          "region_ids": [
+            "MOON:HPX:NESTED:32768:8592173696"
+          ]
+        },
+        "source_fingerprint": "5c30a8fd9481786f04930c2cdcc366cdcbc8870963bcf8984c35d1fa00c7f3d8",
+        "tool_version": "region-native-overlap-v3"
+      },
+      "region_id": "MOON:HPX:NESTED:32768:8592173696",
+      "status": "INSUFFICIENT_DATA",
+      "tool": "calculate_slope"
+    },
+    {
+      "data": {
+        "reason": "Fine geometry does not resolve coarse DEM measurements",
+        "source_resolution_m": 7580.84,
+        "status": "INSUFFICIENT_DATA",
+        "unit": "m",
+        "value": null
+      },
+      "limitations": [
+        "No uncertainty raster has been inferred.",
+        "Physical resolution remains source-native."
+      ],
+      "provenance": {
+        "coordinate_frame": "MOON_ME_DE421",
+        "exact_arguments": {
+          "limit": 5,
+          "mission": null,
+          "observer_height_m": 1.0,
+          "region_id": "MOON:HPX:NESTED:32768:8592173696",
+          "region_ids": [
+            "MOON:HPX:NESTED:32768:8592173696"
+          ]
+        },
+        "source_fingerprint": "5c30a8fd9481786f04930c2cdcc366cdcbc8870963bcf8984c35d1fa00c7f3d8",
+        "tool_version": "region-native-overlap-v3"
+      },
+      "region_id": "MOON:HPX:NESTED:32768:8592173696",
+      "status": "INSUFFICIENT_DATA",
+      "tool": "calculate_roughness"
+    }
+  ]
+}

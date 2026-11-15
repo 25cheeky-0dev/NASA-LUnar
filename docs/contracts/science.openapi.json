@@ -45,71 +45,6 @@
         "title": "AnalysisResponse",
         "type": "object"
       },
-      "AnalyzeRequest": {
-        "additionalProperties": false,
-        "properties": {
-          "end_utc": {
-            "format": "date-time",
-            "title": "End Utc",
-            "type": "string"
-          },
-          "horizon_model": {
-            "default": "GEOMETRIC",
-            "enum": [
-              "GEOMETRIC",
-              "LOCAL_TERRAIN"
-            ],
-            "title": "Horizon Model",
-            "type": "string"
-          },
-          "min_continuous_overlap_minutes": {
-            "default": 180,
-            "exclusiveMinimum": 0.0,
-            "maximum": 2880.0,
-            "title": "Min Continuous Overlap Minutes",
-            "type": "number"
-          },
-          "observer_height_m": {
-            "default": 1,
-            "maximum": 100.0,
-            "minimum": 0.0,
-            "title": "Observer Height M",
-            "type": "number"
-          },
-          "site_ids": {
-            "items": {
-              "enum": [
-                "R01",
-                "R04"
-              ],
-              "type": "string"
-            },
-            "maxItems": 2,
-            "minItems": 1,
-            "title": "Site Ids",
-            "type": "array"
-          },
-          "start_utc": {
-            "format": "date-time",
-            "title": "Start Utc",
-            "type": "string"
-          },
-          "step_minutes": {
-            "default": 5,
-            "maximum": 60.0,
-            "minimum": 1.0,
-            "title": "Step Minutes",
-            "type": "integer"
-          }
-        },
-        "required": [
-          "site_ids",
-          "start_utc",
-          "end_utc"
-        ],
-        "title": "AnalyzeRequest",
-        "type": "object"
-      },
       "AnalyzeResponse": {
         "additionalProperties": true,
         "properties": {
@@ -169,6 +104,54 @@
           "scenarios"
         ],
         "title": "AnalyzeResponse",
+        "type": "object"
+      },
+      "BackendStatus": {
+        "additionalProperties": false,
+        "properties": {
+          "authoritative_modules": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Authoritative Modules",
+            "type": "array"
+          },
+          "datasets": {
+            "items": {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            "title": "Datasets",
+            "type": "array"
+          },
+          "limitations": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Limitations",
+            "type": "array"
+          },
+          "sources": {
+            "items": {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            "title": "Sources",
+            "type": "array"
+          },
+          "status": {
+            "title": "Status",
+            "type": "string"
+          }
+        },
+        "required": [
+          "status",
+          "authoritative_modules",
+          "datasets",
+          "sources",
+          "limitations"
+        ],
+        "title": "BackendStatus",
         "type": "object"
       },
       "CandidateResponse": {
@@ -1560,6 +1543,38 @@
         "title": "ExcludedCell",
         "type": "object"
       },
+      "Extraction": {
+        "additionalProperties": false,
+        "properties": {
+          "allow_coarse_overview": {
+            "default": false,
+            "title": "Allow Coarse Overview",
+            "type": "boolean"
+          },
+          "resolution": {
+            "default": "preview",
+            "enum": [
+              "preview",
+              "balanced",
+              "native"
+            ],
+            "title": "Resolution",
+            "type": "string"
+          },
+          "scope": {
+            "default": "inside",
+            "enum": [
+              "inside",
+              "exclude",
+              "global"
+            ],
+            "title": "Scope",
+            "type": "string"
+          }
+        },
+        "title": "Extraction",
+        "type": "object"
+      },
       "FeatureResponse": {
         "additionalProperties": false,
         "properties": {
@@ -2461,6 +2476,7 @@
             "enum": [
               "groq",
               "nvidia",
+              "gemini",
               "auto",
               "manual"
             ],
@@ -2688,6 +2704,41 @@
           "terrain_definition"
         ],
         "title": "Metadata",
+        "type": "object"
+      },
+      "Mission": {
+        "additionalProperties": false,
+        "properties": {
+          "end_utc": {
+            "format": "date-time",
+            "title": "End Utc",
+            "type": "string"
+          },
+          "minimum_shared_minutes": {
+            "default": 60,
+            "maximum": 44640.0,
+            "minimum": 0.0,
+            "title": "Minimum Shared Minutes",
+            "type": "number"
+          },
+          "start_utc": {
+            "format": "date-time",
+            "title": "Start Utc",
+            "type": "string"
+          },
+          "step_minutes": {
+            "default": 60,
+            "maximum": 1440.0,
+            "minimum": 1.0,
+            "title": "Step Minutes",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "start_utc",
+          "end_utc"
+        ],
+        "title": "Mission",
         "type": "object"
       },
       "Normalization": {
@@ -3016,6 +3067,44 @@
           "quality"
         ],
         "title": "PhysicalFeatures",
+        "type": "object"
+      },
+      "PolygonSelection": {
+        "additionalProperties": false,
+        "properties": {
+          "coordinates": {
+            "items": {
+              "items": {
+                "maxItems": 2,
+                "minItems": 2,
+                "prefixItems": [
+                  {
+                    "type": "number"
+                  },
+                  {
+                    "type": "number"
+                  }
+                ],
+                "type": "array"
+              },
+              "type": "array"
+            },
+            "maxItems": 5,
+            "minItems": 1,
+            "title": "Coordinates",
+            "type": "array"
+          },
+          "type": {
+            "const": "Polygon",
+            "default": "Polygon",
+            "title": "Type",
+            "type": "string"
+          }
+        },
+        "required": [
+          "coordinates"
+        ],
+        "title": "PolygonSelection",
         "type": "object"
       },
       "QueryProvenance": {
@@ -3350,6 +3439,219 @@
         "title": "RecoveryResponse",
         "type": "object"
       },
+      "RegionContext": {
+        "additionalProperties": false,
+        "properties": {
+          "available_datasets": {
+            "items": {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            "title": "Available Datasets",
+            "type": "array"
+          },
+          "capabilities": {
+            "additionalProperties": {
+              "type": "boolean"
+            },
+            "title": "Capabilities",
+            "type": "object"
+          },
+          "coordinate_frame": {
+            "title": "Coordinate Frame",
+            "type": "string"
+          },
+          "measurement_support": {
+            "additionalProperties": true,
+            "title": "Measurement Support",
+            "type": "object"
+          },
+          "missing_measurements": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Missing Measurements",
+            "type": "array"
+          },
+          "mission": {
+            "anyOf": [
+              {
+                "additionalProperties": true,
+                "type": "object"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Mission"
+          },
+          "observation_time": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Observation Time"
+          },
+          "quality": {
+            "title": "Quality",
+            "type": "string"
+          },
+          "region": {
+            "additionalProperties": true,
+            "title": "Region",
+            "type": "object"
+          },
+          "source_fingerprint": {
+            "title": "Source Fingerprint",
+            "type": "string"
+          },
+          "tool_version": {
+            "title": "Tool Version",
+            "type": "string"
+          }
+        },
+        "required": [
+          "region",
+          "available_datasets",
+          "measurement_support",
+          "missing_measurements",
+          "quality",
+          "source_fingerprint",
+          "capabilities",
+          "coordinate_frame",
+          "tool_version"
+        ],
+        "title": "RegionContext",
+        "type": "object"
+      },
+      "RegionName": {
+        "additionalProperties": false,
+        "properties": {
+          "name": {
+            "maxLength": 80,
+            "minLength": 1,
+            "title": "Name",
+            "type": "string"
+          },
+          "region_id": {
+            "maxLength": 150,
+            "title": "Region Id",
+            "type": "string"
+          }
+        },
+        "required": [
+          "region_id",
+          "name"
+        ],
+        "title": "RegionName",
+        "type": "object"
+      },
+      "ReportRef": {
+        "additionalProperties": false,
+        "properties": {
+          "report_id": {
+            "title": "Report Id",
+            "type": "string"
+          },
+          "report_url": {
+            "title": "Report Url",
+            "type": "string"
+          },
+          "result": {
+            "additionalProperties": true,
+            "title": "Result",
+            "type": "object"
+          }
+        },
+        "required": [
+          "report_id",
+          "result",
+          "report_url"
+        ],
+        "title": "ReportRef",
+        "type": "object"
+      },
+      "RepresentationFit": {
+        "additionalProperties": false,
+        "properties": {
+          "dataset_id": {
+            "title": "Dataset Id",
+            "type": "string"
+          },
+          "dimensions": {
+            "default": 2,
+            "maximum": 3.0,
+            "minimum": 1.0,
+            "title": "Dimensions",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "dataset_id"
+        ],
+        "title": "RepresentationFit",
+        "type": "object"
+      },
+      "RepresentationResponse": {
+        "additionalProperties": false,
+        "properties": {
+          "metadata": {
+            "additionalProperties": true,
+            "title": "Metadata",
+            "type": "object"
+          }
+        },
+        "required": [
+          "metadata"
+        ],
+        "title": "RepresentationResponse",
+        "type": "object"
+      },
+      "RepresentationSearch": {
+        "additionalProperties": false,
+        "properties": {
+          "accept_descriptive_similarity": {
+            "default": false,
+            "title": "Accept Descriptive Similarity",
+            "type": "boolean"
+          },
+          "cell_id": {
+            "title": "Cell Id",
+            "type": "string"
+          },
+          "dataset_id": {
+            "title": "Dataset Id",
+            "type": "string"
+          },
+          "limit": {
+            "default": 20,
+            "maximum": 1000.0,
+            "minimum": 1.0,
+            "title": "Limit",
+            "type": "integer"
+          },
+          "model_id": {
+            "title": "Model Id",
+            "type": "string"
+          },
+          "space": {
+            "default": "physical-scales-v1",
+            "title": "Space",
+            "type": "string"
+          }
+        },
+        "required": [
+          "dataset_id",
+          "model_id",
+          "cell_id"
+        ],
+        "title": "RepresentationSearch",
+        "type": "object"
+      },
       "Retrieval": {
         "additionalProperties": false,
         "properties": {
@@ -3677,6 +3979,108 @@
         "title": "ScienceError",
         "type": "object"
       },
+      "Selection": {
+        "additionalProperties": false,
+        "properties": {
+          "cell_id": {
+            "anyOf": [
+              {
+                "maxLength": 150,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Cell Id"
+          },
+          "coordinate_frame": {
+            "const": "MOON_ME_DE421",
+            "default": "MOON_ME_DE421",
+            "title": "Coordinate Frame",
+            "type": "string"
+          },
+          "geometry": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/PolygonSelection"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "latitude": {
+            "anyOf": [
+              {
+                "maximum": 90.0,
+                "minimum": -90.0,
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Latitude"
+          },
+          "local_grid_id": {
+            "anyOf": [
+              {
+                "maxLength": 24,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Local Grid Id"
+          },
+          "longitude": {
+            "anyOf": [
+              {
+                "maximum": 360.0,
+                "minimum": -180.0,
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Longitude"
+          },
+          "mission": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/Mission"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "observation_time": {
+            "anyOf": [
+              {
+                "format": "date-time",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Observation Time"
+          },
+          "target_width_m": {
+            "default": 1000,
+            "maximum": 1000000.0,
+            "minimum": 25.0,
+            "title": "Target Width M",
+            "type": "number"
+          }
+        },
+        "title": "Selection",
+        "type": "object"
+      },
       "Similarity": {
         "additionalProperties": false,
         "properties": {
@@ -3917,7 +4321,7 @@
         "type": "object"
       },
       "SkylineSample": {
-        "additionalProperties": false,
+        "additionalProperties": true,
         "properties": {
           "azimuth_deg": {
             "title": "Azimuth Deg",
@@ -4261,6 +4665,16 @@
             "additionalProperties": true,
             "title": "Uncertainty",
             "type": "object"
+          },
+          "uncertainty_status": {
+            "default": "UNCERTAINTY_UNKNOWN",
+            "enum": [
+              "VERIFIED_NUMERICAL_UNCERTAINTY",
+              "UNCERTAINTY_UNKNOWN",
+              "INCOMPATIBLE_EVIDENCE"
+            ],
+            "title": "Uncertainty Status",
+            "type": "string"
           }
         },
         "required": [
@@ -4519,6 +4933,42 @@
           "scope"
         ],
         "title": "TerrainPage",
+        "type": "object"
+      },
+      "TerrainRequest": {
+        "additionalProperties": false,
+        "properties": {
+          "azimuths_deg": {
+            "items": {
+              "type": "number"
+            },
+            "maxItems": 360,
+            "minItems": 1,
+            "title": "Azimuths Deg",
+            "type": "array"
+          },
+          "cell_id": {
+            "title": "Cell Id",
+            "type": "string"
+          },
+          "dataset_id": {
+            "title": "Dataset Id",
+            "type": "string"
+          },
+          "observer_height_m": {
+            "default": 1,
+            "maximum": 100.0,
+            "minimum": 0.0,
+            "title": "Observer Height M",
+            "type": "number"
+          }
+        },
+        "required": [
+          "dataset_id",
+          "cell_id",
+          "azimuths_deg"
+        ],
+        "title": "TerrainRequest",
         "type": "object"
       },
       "ThermalResponse": {
@@ -4879,6 +5329,14 @@
           "comparability": {
             "$ref": "#/components/schemas/TerrainEvidence"
           },
+          "evidence_policy": {
+            "enum": [
+              "VERIFIED_NUMERICAL_UNCERTAINTY",
+              "DESCRIPTIVE_SIMILARITY_ONLY"
+            ],
+            "title": "Evidence Policy",
+            "type": "string"
+          },
           "matches": {
             "items": {
               "$ref": "#/components/schemas/SimilarityMatch"
@@ -4899,6 +5357,7 @@
           "reference_cell_id",
           "metric",
           "comparability",
+          "evidence_policy",
           "matches"
         ],
         "title": "SimilarityResponse",
@@ -5118,6 +5577,118 @@
           "valid"
         ],
         "title": "Cell",
+        "type": "object"
+      },
+      "app__regions__agent__AnalyzeRequest": {
+        "additionalProperties": false,
+        "properties": {
+          "candidate_region_ids": {
+            "items": {
+              "type": "string"
+            },
+            "maxItems": 3,
+            "title": "Candidate Region Ids",
+            "type": "array"
+          },
+          "include_delay": {
+            "default": false,
+            "title": "Include Delay",
+            "type": "boolean"
+          },
+          "max_tools": {
+            "default": 8,
+            "maximum": 13.0,
+            "minimum": 3.0,
+            "title": "Max Tools",
+            "type": "integer"
+          },
+          "mission": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/Mission"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "use_llm": {
+            "default": false,
+            "title": "Use Llm",
+            "type": "boolean"
+          },
+          "use_report_ai": {
+            "default": false,
+            "title": "Use Report Ai",
+            "type": "boolean"
+          }
+        },
+        "title": "AnalyzeRequest",
+        "type": "object"
+      },
+      "app__schemas__AnalyzeRequest": {
+        "additionalProperties": false,
+        "properties": {
+          "end_utc": {
+            "format": "date-time",
+            "title": "End Utc",
+            "type": "string"
+          },
+          "horizon_model": {
+            "default": "GEOMETRIC",
+            "enum": [
+              "GEOMETRIC",
+              "LOCAL_TERRAIN"
+            ],
+            "title": "Horizon Model",
+            "type": "string"
+          },
+          "min_continuous_overlap_minutes": {
+            "default": 180,
+            "exclusiveMinimum": 0.0,
+            "maximum": 2880.0,
+            "title": "Min Continuous Overlap Minutes",
+            "type": "number"
+          },
+          "observer_height_m": {
+            "default": 1,
+            "maximum": 100.0,
+            "minimum": 0.0,
+            "title": "Observer Height M",
+            "type": "number"
+          },
+          "site_ids": {
+            "items": {
+              "enum": [
+                "R01",
+                "R04"
+              ],
+              "type": "string"
+            },
+            "maxItems": 2,
+            "minItems": 1,
+            "title": "Site Ids",
+            "type": "array"
+          },
+          "start_utc": {
+            "format": "date-time",
+            "title": "Start Utc",
+            "type": "string"
+          },
+          "step_minutes": {
+            "default": 5,
+            "maximum": 60.0,
+            "minimum": 1.0,
+            "title": "Step Minutes",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "site_ids",
+          "start_utc",
+          "end_utc"
+        ],
+        "title": "AnalyzeRequest",
         "type": "object"
       },
       "app__schemas__Cell": {
@@ -5433,7 +6004,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/AnalyzeRequest"
+                "$ref": "#/components/schemas/app__schemas__AnalyzeRequest"
               }
             }
           },
@@ -5563,6 +6134,207 @@
           }
         },
         "summary": "Ephemeris"
+      }
+    },
+    "/api/v1/explorer/delay": {
+      "post": {
+        "operationId": "compare_api_v1_explorer_delay_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DelayRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ReportRef"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Compare",
+        "tags": [
+          "explorer"
+        ]
+      }
+    },
+    "/api/v1/explorer/demo": {
+      "post": {
+        "operationId": "recorded_demo_api_v1_explorer_demo_post",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ReportRef"
+                }
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "summary": "Recorded Demo",
+        "tags": [
+          "explorer"
+        ]
+      }
+    },
+    "/api/v1/explorer/reports/{key}": {
+      "get": {
+        "operationId": "report_api_v1_explorer_reports__key__get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "key",
+            "required": true,
+            "schema": {
+              "title": "Key",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Report",
+        "tags": [
+          "explorer"
+        ]
+      }
+    },
+    "/api/v1/explorer/runtime": {
+      "get": {
+        "operationId": "runtime_api_v1_explorer_runtime_get",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "summary": "Runtime",
+        "tags": [
+          "explorer"
+        ]
+      }
+    },
+    "/api/v1/explorer/surface": {
+      "get": {
+        "description": "Bounded projected mesh of the validated LOLA product; no fake detail.\n\nGrid samples use nearest native pixels. The renderer interpolates triangles,\nwhich is display interpolation, not a new measurement or accuracy claim.",
+        "operationId": "surface_api_v1_explorer_surface_get",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "latitude",
+            "required": false,
+            "schema": {
+              "default": -88,
+              "maximum": 89.5,
+              "minimum": -89.5,
+              "title": "Latitude",
+              "type": "number"
+            }
+          },
+          {
+            "in": "query",
+            "name": "longitude",
+            "required": false,
+            "schema": {
+              "default": 0,
+              "maximum": 360,
+              "minimum": -180,
+              "title": "Longitude",
+              "type": "number"
+            }
+          },
+          {
+            "in": "query",
+            "name": "extent_km",
+            "required": false,
+            "schema": {
+              "default": 450,
+              "maximum": 900,
+              "minimum": 0.1,
+              "title": "Extent Km",
+              "type": "number"
+            }
+          },
+          {
+            "in": "query",
+            "name": "resolution",
+            "required": false,
+            "schema": {
+              "default": 96,
+              "maximum": 160,
+              "minimum": 16,
+              "title": "Resolution",
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Surface",
+        "tags": [
+          "explorer"
+        ]
       }
     },
     "/api/v1/export/{scenario_id}.csv": {
@@ -6391,6 +7163,16 @@
               "minimum": 1,
               "title": "Limit",
               "type": "integer"
+            }
+          },
+          {
+            "in": "query",
+            "name": "accept_unknown_uncertainty",
+            "required": false,
+            "schema": {
+              "default": false,
+              "title": "Accept Unknown Uncertainty",
+              "type": "boolean"
             }
           }
         ],
@@ -7963,6 +8745,156 @@
         ]
       }
     },
+    "/api/v1/science/global/thermal-observations": {
+      "get": {
+        "operationId": "thermal_observations_api_v1_science_global_thermal_observations_get",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "west",
+            "required": true,
+            "schema": {
+              "exclusiveMaximum": 360,
+              "minimum": 0,
+              "title": "West",
+              "type": "number"
+            }
+          },
+          {
+            "in": "query",
+            "name": "south",
+            "required": true,
+            "schema": {
+              "exclusiveMaximum": -80,
+              "minimum": -90,
+              "title": "South",
+              "type": "number"
+            }
+          },
+          {
+            "in": "query",
+            "name": "east",
+            "required": true,
+            "schema": {
+              "maximum": 360,
+              "minimum": 0,
+              "title": "East",
+              "type": "number"
+            }
+          },
+          {
+            "in": "query",
+            "name": "north",
+            "required": true,
+            "schema": {
+              "maximum": -80,
+              "minimum": -90,
+              "title": "North",
+              "type": "number"
+            }
+          },
+          {
+            "in": "query",
+            "name": "local_time_bin",
+            "required": true,
+            "schema": {
+              "maximum": 95,
+              "minimum": 0,
+              "title": "Local Time Bin",
+              "type": "integer"
+            }
+          },
+          {
+            "in": "query",
+            "name": "channel",
+            "required": false,
+            "schema": {
+              "default": "tbol",
+              "enum": [
+                "t3",
+                "t4",
+                "t5",
+                "t6",
+                "t7",
+                "t8",
+                "t9",
+                "tbol"
+              ],
+              "title": "Channel",
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "limit",
+            "required": false,
+            "schema": {
+              "default": 100,
+              "maximum": 1000,
+              "minimum": 1,
+              "title": "Limit",
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Page"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ScienceError"
+                }
+              }
+            },
+            "description": "Not Found"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ScienceError"
+                }
+              }
+            },
+            "description": "Invalid scientific or schema request"
+          },
+          "429": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ScienceError"
+                }
+              }
+            },
+            "description": "Analysis capacity exceeded"
+          },
+          "503": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ScienceError"
+                }
+              }
+            },
+            "description": "Scientific source unavailable"
+          }
+        },
+        "summary": "Thermal Observations",
+        "tags": [
+          "global-science"
+        ]
+      }
+    },
     "/api/v1/science/global/tiles/{level}/{tile_id}": {
       "get": {
         "operationId": "tile_api_v1_science_global_tiles__level___tile_id__get",
@@ -8105,6 +9037,614 @@
         ]
       }
     },
+    "/api/v1/science/region-jobs/{job_id}": {
+      "get": {
+        "operationId": "job_api_v1_science_region_jobs__job_id__get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "job_id",
+            "required": true,
+            "schema": {
+              "title": "Job Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Job",
+        "tags": [
+          "adaptive-regions"
+        ]
+      }
+    },
+    "/api/v1/science/region-jobs/{job_id}/report": {
+      "get": {
+        "operationId": "report_api_v1_science_region_jobs__job_id__report_get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "job_id",
+            "required": true,
+            "schema": {
+              "title": "Job Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Report",
+        "tags": [
+          "adaptive-regions"
+        ]
+      }
+    },
+    "/api/v1/science/region-jobs/{job_id}/research.md": {
+      "get": {
+        "operationId": "download_markdown_api_v1_science_region_jobs__job_id__research_md_get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "job_id",
+            "required": true,
+            "schema": {
+              "title": "Job Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Download Markdown",
+        "tags": [
+          "research-reports"
+        ]
+      }
+    },
+    "/api/v1/science/region-jobs/{job_id}/research.zip": {
+      "get": {
+        "operationId": "download_bundle_api_v1_science_region_jobs__job_id__research_zip_get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "job_id",
+            "required": true,
+            "schema": {
+              "title": "Job Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Download Bundle",
+        "tags": [
+          "research-reports"
+        ]
+      }
+    },
+    "/api/v1/science/region-jobs/{job_id}/summary.svg": {
+      "get": {
+        "operationId": "summary_image_api_v1_science_region_jobs__job_id__summary_svg_get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "job_id",
+            "required": true,
+            "schema": {
+              "title": "Job Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Summary Image",
+        "tags": [
+          "research-reports"
+        ]
+      }
+    },
+    "/api/v1/science/regions/grid/local": {
+      "get": {
+        "operationId": "local_grids_api_v1_science_regions_grid_local_get",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "summary": "Local Grids",
+        "tags": [
+          "adaptive-regions"
+        ]
+      }
+    },
+    "/api/v1/science/regions/preview": {
+      "get": {
+        "operationId": "preview_api_v1_science_regions_preview_get",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "latitude",
+            "required": true,
+            "schema": {
+              "maximum": 90,
+              "minimum": -90,
+              "title": "Latitude",
+              "type": "number"
+            }
+          },
+          {
+            "in": "query",
+            "name": "longitude",
+            "required": true,
+            "schema": {
+              "maximum": 360,
+              "minimum": -180,
+              "title": "Longitude",
+              "type": "number"
+            }
+          },
+          {
+            "in": "query",
+            "name": "target_width_m",
+            "required": false,
+            "schema": {
+              "default": 1000,
+              "maximum": 1000000,
+              "minimum": 25,
+              "title": "Target Width M",
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Preview",
+        "tags": [
+          "adaptive-regions"
+        ]
+      }
+    },
+    "/api/v1/science/regions/select": {
+      "post": {
+        "operationId": "select_api_v1_science_regions_select_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Selection"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RegionContext"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Select",
+        "tags": [
+          "adaptive-regions"
+        ]
+      }
+    },
+    "/api/v1/science/regions/tools/catalog": {
+      "get": {
+        "operationId": "catalog_api_v1_science_regions_tools_catalog_get",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "summary": "Catalog",
+        "tags": [
+          "adaptive-regions"
+        ]
+      }
+    },
+    "/api/v1/science/regions/{region_id}": {
+      "get": {
+        "operationId": "metadata_api_v1_science_regions__region_id__get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "region_id",
+            "required": true,
+            "schema": {
+              "title": "Region Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RegionContext"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Metadata",
+        "tags": [
+          "adaptive-regions"
+        ]
+      }
+    },
+    "/api/v1/science/regions/{region_id}/analyze": {
+      "post": {
+        "operationId": "analyze_api_v1_science_regions__region_id__analyze_post",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "region_id",
+            "required": true,
+            "schema": {
+              "title": "Region Id",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/app__regions__agent__AnalyzeRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "202": {
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Analyze",
+        "tags": [
+          "adaptive-regions"
+        ]
+      }
+    },
+    "/api/v1/science/regions/{region_id}/terrain": {
+      "post": {
+        "operationId": "extract_route_api_v1_science_regions__region_id__terrain_post",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "region_id",
+            "required": true,
+            "schema": {
+              "title": "Region Id",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Extraction"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Extract Route",
+        "tags": [
+          "terrain-laboratory"
+        ]
+      }
+    },
+    "/api/v1/science/representations/fit": {
+      "post": {
+        "operationId": "fit_representation_api_v1_science_representations_fit_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RepresentationFit"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RepresentationResponse"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ScienceError"
+                }
+              }
+            },
+            "description": "Not Found"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ScienceError"
+                }
+              }
+            },
+            "description": "Invalid scientific or schema request"
+          },
+          "429": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ScienceError"
+                }
+              }
+            },
+            "description": "Analysis capacity exceeded"
+          }
+        },
+        "summary": "Fit Representation",
+        "tags": [
+          "unified-science"
+        ]
+      }
+    },
+    "/api/v1/science/representations/search": {
+      "post": {
+        "operationId": "search_representation_api_v1_science_representations_search_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RepresentationSearch"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RepresentationResponse"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ScienceError"
+                }
+              }
+            },
+            "description": "Not Found"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ScienceError"
+                }
+              }
+            },
+            "description": "Invalid scientific or schema request"
+          },
+          "429": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ScienceError"
+                }
+              }
+            },
+            "description": "Analysis capacity exceeded"
+          }
+        },
+        "summary": "Search Representation",
+        "tags": [
+          "unified-science"
+        ]
+      }
+    },
     "/api/v1/science/scenarios/{scenario_id}": {
       "get": {
         "operationId": "dynamic_vectors_api_v1_science_scenarios__scenario_id__get",
@@ -8164,6 +9704,270 @@
         "summary": "Dynamic Vectors",
         "tags": [
           "unified-science"
+        ]
+      }
+    },
+    "/api/v1/science/status": {
+      "get": {
+        "operationId": "backend_status_api_v1_science_status_get",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BackendStatus"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ScienceError"
+                }
+              }
+            },
+            "description": "Not Found"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ScienceError"
+                }
+              }
+            },
+            "description": "Invalid scientific or schema request"
+          },
+          "429": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ScienceError"
+                }
+              }
+            },
+            "description": "Analysis capacity exceeded"
+          }
+        },
+        "summary": "Backend Status",
+        "tags": [
+          "unified-science"
+        ]
+      }
+    },
+    "/api/v1/science/terrain-regions": {
+      "get": {
+        "operationId": "saved_regions_api_v1_science_terrain_regions_get",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "summary": "Saved Regions",
+        "tags": [
+          "terrain-laboratory"
+        ]
+      }
+    },
+    "/api/v1/science/terrain-regions/name": {
+      "post": {
+        "operationId": "name_region_api_v1_science_terrain_regions_name_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RegionName"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Name Region",
+        "tags": [
+          "terrain-laboratory"
+        ]
+      }
+    },
+    "/api/v1/science/terrain/horizon": {
+      "post": {
+        "operationId": "terrain_diagnostics_api_v1_science_terrain_horizon_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TerrainRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Horizon"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ScienceError"
+                }
+              }
+            },
+            "description": "Not Found"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ScienceError"
+                }
+              }
+            },
+            "description": "Invalid scientific or schema request"
+          },
+          "429": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ScienceError"
+                }
+              }
+            },
+            "description": "Analysis capacity exceeded"
+          }
+        },
+        "summary": "Terrain Diagnostics",
+        "tags": [
+          "unified-science"
+        ]
+      }
+    },
+    "/api/v1/science/terrain/{mesh_id}": {
+      "get": {
+        "operationId": "retrieve_api_v1_science_terrain__mesh_id__get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "mesh_id",
+            "required": true,
+            "schema": {
+              "title": "Mesh Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Retrieve",
+        "tags": [
+          "terrain-laboratory"
+        ]
+      }
+    },
+    "/api/v1/science/terrain/{mesh_id}/export/{kind}": {
+      "get": {
+        "operationId": "export_api_v1_science_terrain__mesh_id__export__kind__get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "mesh_id",
+            "required": true,
+            "schema": {
+              "title": "Mesh Id",
+              "type": "string"
+            }
+          },
+          {
+            "in": "path",
+            "name": "kind",
+            "required": true,
+            "schema": {
+              "enum": [
+                "obj",
+                "json",
+                "geojson"
+              ],
+              "title": "Kind",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Export",
+        "tags": [
+          "terrain-laboratory"
         ]
       }
     },

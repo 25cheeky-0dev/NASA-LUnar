@@ -2,6 +2,7 @@
 
 import json
 import re
+import uuid
 from datetime import UTC, datetime
 from pathlib import Path
 from typing import Literal
@@ -72,7 +73,14 @@ class SourceProduct(BaseModel):
 
 def download(url, directory, maximum_bytes=64 * 1024 * 1024):
     parsed = urlparse(url)
-    if parsed.scheme != "https" or parsed.hostname not in OFFICIAL_HOSTS:
+    if (
+        parsed.scheme != "https"
+        or parsed.hostname not in OFFICIAL_HOSTS
+        or parsed.username
+        or parsed.password
+        or parsed.port not in (None, 443)
+        or not Path(parsed.path).name
+    ):
         raise ValueError("Source download requires an approved official HTTPS archive")
     target = Path(directory) / Path(parsed.path).name
     target.parent.mkdir(parents=True, exist_ok=True)
@@ -82,7 +90,7 @@ def download(url, directory, maximum_bytes=64 * 1024 * 1024):
         if existing["url"] != url or sha256(target) != existing["sha256"]:
             raise ValueError("Cached source checksum mismatch")
         return target, existing
-    temporary = target.with_suffix(target.suffix + ".partial")
+    temporary = target.with_suffix(target.suffix + "." + uuid.uuid4().hex + ".partial")
     count = 0
     import ssl
 

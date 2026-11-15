@@ -1,0 +1,28 @@
+name: Celestial Engine
+on:
+  pull_request:
+    paths: ['backend/**', 'docs/**', '.gitattributes', '.github/workflows/celestial-engine.yml']
+  push:
+    branches: ['feature/celestial-engine', 'feature/global-lunar-fusion-v1', 'feature/wispr-final-backend']
+    paths: ['backend/**', 'docs/**', '.gitattributes', '.github/workflows/celestial-engine.yml']
+jobs:
+  offline:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python: ['3.12', '3.13']
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '${{ matrix.python }}'
+      - run: python -m pip install uv
+      - run: uv sync --project backend --locked --extra celestial --extra test --extra lint --extra global --extra terrain
+      - run: uv run --project backend --no-sync ruff check backend/lunar_global backend/scripts/build_global.py
+      - run: uv run --project backend --no-sync ruff check backend/celestial_engine backend/app/integration backend/scripts/export_science_contract.py backend/scripts/verify_science_http.py backend/tests/test_science_contract.py
+      - run: uv run --project backend --no-sync ruff format --check backend/celestial_engine backend/app/integration backend/scripts/export_science_contract.py backend/scripts/verify_science_http.py backend/tests/test_science_contract.py
+      - run: uv run --no-sync python -m pytest -q -m 'not live'
+        working-directory: backend
+      - run: uv run --no-sync python -m scripts.export_science_contract --check
+        working-directory: backend

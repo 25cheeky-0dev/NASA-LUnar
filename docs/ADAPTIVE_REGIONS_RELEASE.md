@@ -1,0 +1,29 @@
+# Adaptive regions: implementation and verification
+
+Branch: feature/adaptive-regions-agent, based on release/wispr-cloud-gemini.
+
+## Consolidation audit
+NASA-LUnar main was a copied snapshot. The historical branches and PRs #2–6 are in 25cheeky-0dev/LUNA---MOON---NASA-HACKATHON. Their refs were imported without rewriting branches. Canonical final backend 096b876 supplies validated scientific contracts, PCA, terrain and recovery logic; global branch 3cabab1 supplies global source products and HEALPix. Existing main navigation, mission interpretation, and React components were retained. PR #3's overlapping alternative backend was not blindly merged. Source bytes with altered line endings in the snapshot were restored from legacy/main only after matching their original recorded hashes. Generated dependencies were untracked, not deleted locally.
+
+## Working local flow
+Run scripts/run-local.ps1 from PowerShell; open http://127.0.0.1:8010. The built frontend is served by FastAPI. In Regions choose the 30 km overview, click the terrain, then Analyze terrain. 50 m selection resolves a persistent cell but explicitly reports insufficient scientific resolution. Draw polygon records georeferenced vertices and actual cell intersections. Reports download as JSON with a SHA-256 response header. Region identities and job results persist in backend/data/wispr.sqlite3.
+
+Verified HTTP example: -85 degrees latitude, 20 degrees east, 30 km target resolves MOON:HPX:NESTED:64:32803. LOLA LDEM_4 native samples produce an area-weighted elevation of 2387.3705144545524 m over 208 pixels. Native nominal resolution is 7580.84 m. LDEM SHA-256: c04632eba6449af49e3108ed7c25b3b1c450600abd3690df4fc815853a1af476. This is an overview measurement, not high-resolution landing terrain. A dated test uses 2026-11-15 00:00–03:00 UTC at 60-minute cadence, with a delayed interval exactly 168 hours later.
+
+## Identity and computation
+HEALPix NESTED IDs remain MOON:HPX:NESTED:<nside>:<pixel>. Analytic support reaches NSIDE 32768; global batch materialization above 512 is rejected. A 50 m target resolves a nominal 54.258 m cell. ROI IDs hash canonical ring orientation/start, lunar frame, and geometry algorithm; datasets and selection grid resolution are excluded. Rings preserve holes and longitude wrap; local lunar equal-area intersections provide bounded overlap geometry. Maximum 512 intersecting cells and 25,000 source pixels per investigation.
+
+Optional WISPR_REGIONAL_CATALOG registers checksum-verified metre-valued DEMs with explicit lunar projected CRS and vertical reference. MOON:LOCAL:<grid-definition-hash>:<level>:<ix>:<iy> identifies the fixed CRS/origin/root-width quadtree independently of data version. Native pixels and a one-pixel derivative halo are used, with NoData retained. The local pipeline is tested with explicitly synthetic fixtures; no high-resolution regional product is installed. The deleted Site04 archive is not used.
+
+The 13-tool registry validates arguments server-side. Jobs have actual timestamped tool events, bounded concurrency of two, persisted inputs/source fingerprints/tool versions/report hashes, and cache reuse. Transient unavailable tools are retried. No mission date is invented. All numerical values come from deterministic modules. Gemini can optionally select tools; unconfigured or budget-disabled calls explicitly fall back to the deterministic plan. Retrieved metadata is untrusted evidence.
+
+## Scientific limits
+Terrain datum compatibility and uncertainty remain unresolved. Terrain visibility is UNKNOWN. Ephemerides and delay decisions represent the declared region center, not polygon-wide visibility or landing safety. Fine geographic selections never inherit coarse parent measurements. No synthetic test fixture is presented as NASA evidence. Existing recorded Site04 evidence is separately labeled and retained; the absent original 400-cell DEM package cannot be reconstructed or verified here. Arbitrary-region horizon tools return insufficient data until a validated datum-compatible source is registered. Similarity is supported only for compatible NSIDE128 vectors.
+
+## Cloud and model status
+No cloud deployment or live Gemini call is claimed. The Google Cloud CLI has no authenticated account or selected project. Required next action: run gcloud auth login and select the intended billed project locally. Do not paste credentials into chat. The approved infrastructure envelope remains $25/month; reported AI credit is not treated as authorization. Gemini agent daily spend defaults to zero and requires explicit model, replacement API key via secure prompt/Secret Manager, price bounds and daily/per-analysis limits. The previously exposed key must not be reused.
+
+Cloud Run requires WISPR_DATABASE_URL to a persistent PostgreSQL service and refuses ephemeral SQLite. Existing Terraform prepares private Cloud Run, object storage, Artifact Registry, Secret Manager and budget alerts. It has not been applied or provider-validated; no Cloud SQL or processing jobs have been provisioned. Database spatial indexing and distributed worker coordination remain deployment follow-up work. The current executor is intentionally one process/one Cloud Run instance. Budget alerts are not hard spending caps. Secrets must remain out of Git. Local reports persist across restart; cloud persistence has not been exercised.
+
+## Verification evidence
+See docs/evidence/adaptive-regions for actual HTTP requests, native measurements, report exports and dated job output. Full offline suite and frontend build/test outputs are recorded in verification.txt. Skips correspond to external data/live requirements. Browser verification exercises cell selection, actual scientific tool events, and polygon drawing. Deployment and high-resolution terrain remain explicitly blocked, so the complete cloud/high-resolution definition of done is not claimed.

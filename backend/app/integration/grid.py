@@ -10,16 +10,8 @@ from pydantic import Field, StrictStr, model_validator
 
 from celestial_engine.schemas import StrictModel
 
-FEATURES = ["elevation_m", "slope_deg", "roughness_m"]
-UNITS = dict(zip(FEATURES, ["m", "degree", "m"]))
-# Fixed physical scales, not a safety score or dataset-dependent fitted statistics.
-NORMALIZATION = dict(
-    version="physical-scales-v1",
-    strategy="x / scale; no clipping or imputation",
-    offsets=[0.0, 0.0, 0.0],
-    scales=[1000.0, 10.0, 10.0],
-    units=UNITS,
-)
+from .uncertainty import descriptive_source_supported, uncertainty_status
+from .vector_contract import FEATURES, NORMALIZATION, UNITS
 
 
 class Metadata(StrictModel):
@@ -153,6 +145,7 @@ class Dataset:
             coordinate_frame=self.metadata.coordinate_frame,
             quality=cell.quality,
             uncertainty=cell.uncertainty,
+            uncertainty_status=uncertainty_status(cell, self.metadata),
             coverage_fraction=cell.coverage_fraction,
             synthetic=self.metadata.synthetic,
         )
@@ -223,15 +216,26 @@ class Dataset:
             limit=filters.limit,
         ), reasons
 
-    def similarity(self, cell_id, limit=20):
+    def similarity(self, cell_id, limit=20, *, accept_unknown_uncertainty=False):
         cell = self.cell(cell_id)
         if not cell.valid or not np.isfinite(self.normalized[self.by_id[cell_id]]).all():
             raise ValueError("Complete valid terrain required")
         evidence = self.evidence(cell)
         if (
             evidence["resolution_m"] is None
-            or cell.quality != "VERIFIED"
-            or not cell.uncertainty
+            or (
+                cell.quality != "VERIFIED"
+                and not (
+                    accept_unknown_uncertainty and descriptive_source_supported(cell, self.metadata)
+                )
+            )
+            or (
+                evidence["uncertainty_status"] != "VERIFIED_NUMERICAL_UNCERTAINTY"
+                and not (
+                    accept_unknown_uncertainty
+                    and evidence["uncertainty_status"] == "UNCERTAINTY_UNKNOWN"
+                )
+            )
             or cell.coverage_fraction != 1
         ):
             raise ValueError(
@@ -255,6 +259,11 @@ class Dataset:
             reference_cell_id=cell_id,
             metric="Euclidean physical-scales-v1; descriptive, not safety",
             comparability=evidence,
+            evidence_policy=(
+                "VERIFIED_NUMERICAL_UNCERTAINTY"
+                if evidence["uncertainty_status"] == "VERIFIED_NUMERICAL_UNCERTAINTY"
+                else "DESCRIPTIVE_SIMILARITY_ONLY"
+            ),
             matches=sorted(
                 matches, key=lambda x: (x["normalized_euclidean_distance"], x["cell_id"])
             )[:limit],

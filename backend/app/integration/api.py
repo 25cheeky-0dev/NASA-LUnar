@@ -109,9 +109,16 @@ def vector(dataset_id: str, cell_id: str):
     response_model=contract.SimilarityResponse,
     response_model_exclude_unset=True,
 )
-def similarity(dataset_id: str, cell_id: str, limit: int = Query(20, ge=1, le=1000)):
+def similarity(
+    dataset_id: str,
+    cell_id: str,
+    limit: int = Query(20, ge=1, le=1000),
+    accept_unknown_uncertainty: bool = False,
+):
     try:
-        return dataset(dataset_id).similarity(cell_id, limit)
+        return dataset(dataset_id).similarity(
+            cell_id, limit, accept_unknown_uncertainty=accept_unknown_uncertainty
+        )
     except KeyError as exc:
         raise HTTPException(404, "Unknown cell ID") from exc
     except ValueError as exc:
@@ -233,3 +240,194 @@ def delay(request: DelayRequest):
         raise HTTPException(422, str(exc)) from exc
     finally:
         _gate.release()
+
+
+class TerrainRequest(contract.StrictModel):
+    dataset_id: str
+    cell_id: str
+    observer_height_m: float = Field(default=1, ge=0, le=100)
+    azimuths_deg: list[float] = Field(min_length=1, max_length=360)
+
+
+@router.post("/terrain/horizon", response_model=contract.Horizon, response_model_exclude_unset=True)
+def terrain_diagnostics(request: TerrainRequest):
+    from app.providers import terrain
+
+    d = dataset(request.dataset_id)
+    try:
+        c = d.cell(request.cell_id)
+        if not d.metadata.source.get("original_metadata"):
+            raise ValueError("Native V3 terrain required")
+        if not _gate.acquire(blocking=False):
+            raise HTTPException(429, "Scientific analysis capacity reached")
+        try:
+            result = terrain.compute_horizon(
+                c.cell_id, request.observer_height_m, request.azimuths_deg
+            )
+            if result["source_provenance"].get("dataset_id") != d.metadata.dataset_id:
+                raise ValueError("Terrain dataset mismatch")
+            return dict(result, model="TERRAIN_PARTIAL", observer_reference_compatible=False)
+        finally:
+            _gate.release()
+    except (ValueError, terrain.TerrainUnavailable, OSError) as exc:
+        raise HTTPException(422, str(exc)) from exc
+    except KeyError as exc:
+        raise HTTPException(404, "Unknown original cell") from exc
+
+
+class RepresentationFit(contract.StrictModel):
+    dataset_id: str
+    dimensions: int = Field(default=2, ge=1, le=3)
+
+
+class RepresentationResponse(contract.StrictModel):
+    metadata: dict
+
+
+class RepresentationSearch(contract.StrictModel):
+    dataset_id: str
+    model_id: str
+    cell_id: str
+    space: str = "physical-scales-v1"
+    limit: int = Field(default=20, ge=1, le=1000)
+    accept_descriptive_similarity: bool = False
+
+
+def model_root():
+    return os.getenv("WISPR_MODEL_DIR", "data/models")
+
+
+@router.post("/representations/fit", response_model=RepresentationResponse)
+def fit_representation(request: RepresentationFit):
+    from . import representations as rep
+
+    if not _gate.acquire(blocking=False):
+        raise HTTPException(429, "Scientific analysis capacity reached")
+    try:
+        model = rep.fit(dataset(request.dataset_id), request.dimensions)
+        rep.save(model, model_root())
+        return {"metadata": model}
+    except ValueError as exc:
+        raise HTTPException(422, str(exc)) from exc
+    finally:
+        _gate.release()
+
+
+@router.post("/representations/search", response_model=RepresentationResponse)
+def search_representation(request: RepresentationSearch):
+    from . import representations as rep
+
+    if not request.accept_descriptive_similarity:
+        raise HTTPException(422, "Explicit descriptive similarity acceptance required")
+    if not _gate.acquire(blocking=False):
+        raise HTTPException(429, "Scientific analysis capacity reached")
+    try:
+        d = dataset(request.dataset_id)
+        model = rep.load(request.model_id, model_root(), d)
+        return {"metadata": rep.retrieve(d, model, request.cell_id, request.space, request.limit)}
+    except FileNotFoundError as exc:
+        raise HTTPException(404, "Representation model unavailable") from exc
+    except (ValueError, KeyError) as exc:
+        raise HTTPException(422, str(exc)) from exc
+    finally:
+        _gate.release()
+
+
+class BackendStatus(contract.StrictModel):
+    status: str
+    authoritative_modules: list[str]
+    datasets: list[dict]
+    sources: list[dict]
+    limitations: list[str]
+
+
+@router.get("/status", response_model=BackendStatus)
+def backend_status():
+    from lunar_global.api import store
+    from lunar_global.sources import SourceProduct
+    from lunar_global.storage import sha256
+
+    records = []
+    root = store().root
+    for name, raw_file in (
+        ("lola", "ldem_4.img"),
+        ("lroc", "WAC_GLOBAL_E000N1800_004P.IMG"),
+        ("diviner", "global_cumul_avg_cyl_90s80s_002.tab"),
+    ):
+        folder = root / "source_products" / name
+        try:
+            source = SourceProduct.model_validate_json((folder / "source.json").read_text())
+            source.validate_alignment()
+            if sha256(folder / raw_file) != source.source_checksum:
+                raise ValueError("Source hash mismatch")
+            if name == "lola":
+                paths, manifest = store().feature_files(128)
+                if not paths or manifest["source"]["source_checksum"] != source.source_checksum:
+                    raise ValueError("LOLA snapshot unavailable or incompatible")
+            elif name == "diviner":
+                from lunar_global.thermal import thermal_context
+
+                if not thermal_context(root, -89, 45, 0)["source"]:
+                    raise ValueError("Thermal snapshot unavailable")
+            else:
+                from lunar_global.imagery import context
+
+                context(root, 0, 0)
+            records.append(
+                dict(source=name, status="INGESTED_AND_VERIFIED", registration=source.model_dump())
+            )
+        except FileNotFoundError:
+            records.append(dict(source=name, status="SOURCE_UNAVAILABLE"))
+        except (ValueError, OSError) as exc:
+            records.append(dict(source=name, status="FAILED_VALIDATION", reason=str(exc)))
+    records.extend(
+        [
+            dict(
+                source="M3",
+                status="REGISTERED_ONLY",
+                reason="No verified L2 observation imported; metadata/band guard only",
+            ),
+            dict(
+                source="Moon Trek",
+                status="REGISTERED_ONLY",
+                reason="WMTS documentation reviewed; no scientific measurements imported",
+            ),
+            dict(
+                source="QuickMap",
+                status="REGISTERED_ONLY",
+                reason="No validated scientific adapter configured",
+            ),
+            dict(
+                source="JPL SBDB",
+                status="NOT_APPLICABLE",
+                reason="Small-body database is not lunar Sun/Earth geometry",
+            ),
+            dict(
+                source="JPL Horizons",
+                status="ON_DEMAND",
+                reason="Existing validated celestial engine; per-response LIVE or VERIFIED_CACHE provenance",
+            ),
+        ]
+    )
+    registry = engine().registry
+    return dict(
+        status="READY"
+        if registry.datasets and all(r["status"] == "INGESTED_AND_VERIFIED" for r in records[:3])
+        else "DEGRADED",
+        authoritative_modules=[
+            "app.integration",
+            "lunar_global",
+            "celestial_engine",
+            "app.providers.terrain",
+        ],
+        datasets=[
+            dict(dataset_id=d.metadata.dataset_id, sha256=d.digest, cells=len(d.cells))
+            for d in registry.datasets.values()
+        ],
+        sources=records,
+        limitations=[
+            "Readiness verifies configured raw-source hashes, not NASA network availability",
+            "Terrain physical visibility remains UNKNOWN without verified references and error bounds",
+            "Local prototype: no public deployment or authentication",
+        ],
+    )

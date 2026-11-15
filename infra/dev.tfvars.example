@@ -1,0 +1,9 @@
+# Use the project discovered from YOUR authenticated Google Cloud account.
+project_id = "REQUIRED"
+billing_account = "REQUIRED"
+invoker_email = "REQUIRED"
+environment = "dev"
+region = "us-central1"
+image = "REQUIRED_IMAGE_DIGEST"
+monthly_budget_usd = 25
+# No Cloud SQL, GPU, minimum instances, or public invoker in this budget profile.

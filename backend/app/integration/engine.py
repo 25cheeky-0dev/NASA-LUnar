@@ -46,15 +46,30 @@ def horizon_at(dataset, cell, request):
             limitations=["Ideal local normal plane; no terrain obstruction modeled"],
         )
     try:
-        result = terrain.horizon(
-            request.terrain_site_id,
-            request.observer_height_m,
-            5,
-            position=(cell.latitude_deg, dataset.east_longitude(cell)),
-        )
+        if dataset.metadata.source.get("original_metadata"):
+            result = terrain.compute_horizon(
+                cell.cell_id, request.observer_height_m, list(range(0, 360, 5))
+            )
+            if result["source_provenance"].get("dataset_id") != dataset.metadata.dataset_id:
+                raise terrain.TerrainUnavailable("Terrain dataset differs from selected dataset")
+            pos = result["observation_position"]
+            if (
+                abs(pos["latitude_deg"] - cell.latitude_deg) > 1e-10
+                or abs((pos["longitude_east_deg"] - dataset.east_longitude(cell) + 180) % 360 - 180)
+                > 1e-10
+            ):
+                raise terrain.TerrainUnavailable("Terrain observer differs from selected cell")
+        else:
+            result = terrain.horizon(
+                request.terrain_site_id,
+                request.observer_height_m,
+                5,
+                position=(cell.latitude_deg, dataset.east_longitude(cell)),
+            )
         manifest = result.get("source_manifest", {})
         compatible = (
-            manifest.get("vertical_reference") == "horizons_lunar_reference"
+            result.get("vertical_reference_verified") is True
+            and manifest.get("vertical_reference") == "horizons_lunar_reference"
             and abs(
                 (result["observer_ground_height_m"] + request.observer_height_m) / 1000
                 - request.altitude_km
@@ -62,7 +77,7 @@ def horizon_at(dataset, cell, request):
             < 1e-9
         )
         return dict(result, model="TERRAIN_PARTIAL", observer_reference_compatible=compatible)
-    except (terrain.TerrainUnavailable, ImportError, KeyError) as exc:
+    except (terrain.TerrainUnavailable, ImportError, KeyError, OSError, ValueError) as exc:
         return dict(
             model="TERRAIN_PARTIAL",
             far_field_complete=False,
@@ -85,7 +100,7 @@ def visibility(az, elevation, horizon):
             modeled_visible=geometric,
             clearance_deg=elevation,
         )
-    if horizon.get("observer_reference_compatible") is False:
+    if horizon.get("observer_reference_compatible") is not True:
         return dict(
             state="UNKNOWN_OBSERVER_REFERENCE",
             geometric_visible=geometric,
@@ -105,7 +120,8 @@ def visibility(az, elevation, horizon):
     )
     height = ray.get("terrain_horizon_elevation_deg") if ray else None
     clearance = elevation - height if height is not None else None
-    blocked = clearance is not None and clearance <= 0
+    lower = ray.get("verified_obstruction_lower_bound_deg") if ray else None
+    blocked = lower is not None and elevation < lower
     return dict(
         state="TERRAIN_OBSTRUCTED" if blocked else "INCOMPLETE_HORIZON_COVERAGE",
         geometric_visible=geometric,

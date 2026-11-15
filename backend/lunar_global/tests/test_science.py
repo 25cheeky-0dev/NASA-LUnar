@@ -18,7 +18,7 @@ from lunar_global.service import GlobalStore
 from lunar_global.sources import SourceProduct
 from lunar_global.storage import build_grid, verified_files, write_json
 
-ROOT = Path("data/lunar-v1")
+ROOT = Path(os.getenv("WISPR_GLOBAL_ROOT", "data/lunar-v1"))
 
 
 def test_serialization_failure_does_not_create_manifest(tmp_path):

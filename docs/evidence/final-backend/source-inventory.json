@@ -1,0 +1,181 @@
+[
+  {
+    "source": "lola",
+    "status": "INGESTED_AND_VERIFIED",
+    "registration": {
+      "source_id": "LOLA:LDEM_4:V3.0:c04632eba6449af4",
+      "organization": "NASA GSFC / PDS Geosciences",
+      "mission": "LRO",
+      "instrument": "LOLA",
+      "product_name": "Global lunar shape map",
+      "product_identifier": "LDEM_4",
+      "version": "V3.0",
+      "canonical_url": "https://pds-geosciences.wustl.edu/lro/lro-l-lola-3-rdr-v1/lrolol_1xxx/data/lola_gdr/cylindrical/img/ldem_4.img",
+      "access_method": "PDS3 detached label and little-endian int16 IMG",
+      "product_type": "terrain",
+      "coordinate_frame": "MOON_ME_DE421",
+      "latitude_type": "planetocentric_spherical",
+      "longitude_convention": "east_positive_0_360",
+      "projection": "SIMPLE CYLINDRICAL",
+      "vertical_reference": "Height above 1737400 m reference sphere",
+      "reference_radius_m": 1737400.0,
+      "spatial_resolution_m": 7580.84,
+      "temporal_coverage": {
+        "start": "2009-07-13T17:33:17",
+        "stop": "2016-11-29T05:48:19"
+      },
+      "footprint": {
+        "east": 360,
+        "north": 90,
+        "south": -90,
+        "west": 0
+      },
+      "units": "m",
+      "nodata": "No special missing constant declared; reject samples outside label MINIMUM/MAXIMUM",
+      "quality": "INTERPOLATED_ALTIMETRY_UNCERTAINTY_UNKNOWN",
+      "uncertainty": null,
+      "processing_level": "GDR derived",
+      "download_timestamp": "2026-11-14T14:24:28.810386+00:00",
+      "source_checksum": "c04632eba6449af49e3108ed7c25b3b1c450600abd3690df4fc815853a1af476",
+      "label_checksum": "b5a197b4d417e3b5e0e84f8fe15f9a1d2203b8eb5d7213236c0ffbc86e940cc6",
+      "citation": "LRO-L-LOLA-4-GDR-V1.0; DOI 10.17189/1520642",
+      "access_conditions": "Public NASA PDS archive; retain source attribution",
+      "limitations": [
+        "Interpolated shape map, not independent shots at every pixel",
+        "Possible 45-degree band artifacts",
+        "7.58 km nominal latitude spacing is not elevation accuracy",
+        "Not local landing terrain or geoid height"
+      ],
+      "status": "VERIFIED"
+    }
+  },
+  {
+    "source": "lroc",
+    "status": "INGESTED_AND_VERIFIED",
+    "registration": {
+      "source_id": "LROC:WAC_GLOBAL_E000N1800_004P:v1.3:edc6f137499e8c11",
+      "organization": "NASA / Arizona State University / PDS Imaging",
+      "mission": "LRO",
+      "instrument": "LROC WAC",
+      "product_name": "WAC Global Morphologic Map",
+      "product_identifier": "WAC_GLOBAL_E000N1800_004P",
+      "version": "v1.3",
+      "canonical_url": "https://pds.mcp.nasa.gov/data/store/img/lunar_reconnaissance_orbiter/pds4/lroc/lro-l-lroc-5-rdr/LROLRC_2001/DATA/BDR/WAC_GLOBAL/WAC_GLOBAL_E000N1800_004P.IMG",
+      "access_method": "PDS attached label IMG via migrated official archive",
+      "product_type": "imagery",
+      "coordinate_frame": "MOON_ME_DE421",
+      "latitude_type": "planetocentric_spherical",
+      "longitude_convention": "east_positive_0_360",
+      "projection": "EQUIRECTANGULAR",
+      "vertical_reference": "Not applicable to image DN",
+      "reference_radius_m": 1737400.0,
+      "spatial_resolution_m": 7580.837606037399,
+      "temporal_coverage": {
+        "simultaneous": false,
+        "start": "2009-11-07T03:02:36",
+        "stop": "2011-01-31T18:06:02"
+      },
+      "footprint": {
+        "east": 360,
+        "north": 90,
+        "south": -90,
+        "west": 0
+      },
+      "units": "stored image DN; radiometric unit not declared in this label",
+      "nodata": "PDS CORE_* special float bit patterns FF7FFFFB through FF7FFFFF",
+      "quality": "PHOTOMETRIC_MOSAIC_VISUAL_CONTEXT",
+      "uncertainty": null,
+      "processing_level": "RDR",
+      "download_timestamp": "2026-11-14T14:29:13.969645+00:00",
+      "source_checksum": "edc6f137499e8c11761669d4ddcbe4117c14d683a53d3ab12f96d9644555b580",
+      "label_checksum": "f4d9bb673f8df67f8c34e256aa1a5e8a3ef511b1f517a48ccec456e71a2178a4",
+      "citation": "Speyerer et al. 2011, LPSC abstract 2387; WAC_GLOBAL v1.3",
+      "access_conditions": "Public NASA PDS archive; retain LROC attribution",
+      "limitations": [
+        "Visual context only; not terrain or hazard evidence",
+        "Multiple historical illumination conditions",
+        "Frame mapping follows NASA LRO mission-wide ME/DE421 convention: https://svs.gsfc.nasa.gov/4969/",
+        "No per-pixel positional uncertainty supplied"
+      ],
+      "status": "VERIFIED"
+    }
+  },
+  {
+    "source": "diviner",
+    "status": "INGESTED_AND_VERIFIED",
+    "registration": {
+      "source_id": "DIVINER:GCP:90S80S:v1:4bc7093fe5bf08ca",
+      "organization": "NASA / UCLA / PDS Geosciences",
+      "mission": "LRO",
+      "instrument": "Diviner",
+      "product_name": "South polar cumulative brightness temperatures",
+      "product_identifier": "GLOBAL_CUMUL_AVG_CYL_90S80S_002.TAB",
+      "version": "1",
+      "canonical_url": "https://pds-geosciences.wustl.edu/lro/urn-nasa-pds-lro_diviner_derived1/data_derived_gcp/global_cumul_avg_cyl_90s80s_002.tab",
+      "access_method": "PDS fixed ASCII table with DLRE_GCP.FMT",
+      "product_type": "thermal",
+      "coordinate_frame": "MOON_ME_DE421",
+      "latitude_type": "planetocentric_spherical",
+      "longitude_convention": "east_positive_0_360",
+      "projection": "Cylindrical 0.5 degree spatial bins; input longitude [-180,180], normalized by modulo 360",
+      "vertical_reference": "Not applicable to brightness temperature",
+      "reference_radius_m": 1737400.0,
+      "spatial_resolution_m": 15161.67521207474,
+      "temporal_coverage": {
+        "local_time_bin_hours": 0.25,
+        "simultaneous": false,
+        "start": "2009-07-05T16:50:26.195",
+        "stop": "2015-04-01T00:00:00.000"
+      },
+      "footprint": {
+        "east": 360,
+        "north": -80,
+        "south": -90,
+        "west": 0
+      },
+      "units": "K",
+      "nodata": "-9999 unknown; -9998 invalid",
+      "quality": "HISTORICAL_LOCAL_TIME_BIN_AVERAGE",
+      "uncertainty": null,
+      "processing_level": "GCP derived; calibration software 4.0",
+      "download_timestamp": "2026-11-14T14:37:07.981511+00:00",
+      "source_checksum": "4bc7093fe5bf08ca7fd0c7ddaf94f7c452b27f705fe975a73c8614d8d41e28b6",
+      "label_checksum": "dd7e531771b1257a021feb864d09452e17aa3c5c8018230992b89f69df8bf36f",
+      "citation": "Williams et al. 2017, Icarus 283, 300\u2013325; LRO-L-DLRE-5-GCP-V1.0",
+      "access_conditions": "Public NASA PDS; retain attribution",
+      "limitations": [
+        "2009\u20132015 observations; not a prediction for a mission date",
+        "Negative temperatures indicate below-sensitivity radiance; retained with quality flag",
+        "0.5 degree native support; not 100 m thermal terrain",
+        "Local-time centers are rounded in source table",
+        "LRO ME/DE421 mission convention: https://svs.gsfc.nasa.gov/4969/"
+      ],
+      "status": "VERIFIED"
+    }
+  },
+  {
+    "source": "M3",
+    "status": "REGISTERED_ONLY",
+    "reason": "No verified L2 observation imported; metadata/band guard only"
+  },
+  {
+    "source": "Moon Trek",
+    "status": "REGISTERED_ONLY",
+    "reason": "WMTS documentation reviewed; no scientific measurements imported"
+  },
+  {
+    "source": "QuickMap",
+    "status": "REGISTERED_ONLY",
+    "reason": "No validated scientific adapter configured"
+  },
+  {
+    "source": "JPL SBDB",
+    "status": "NOT_APPLICABLE",
+    "reason": "Small-body database is not lunar Sun/Earth geometry"
+  },
+  {
+    "source": "JPL Horizons",
+    "status": "ON_DEMAND",
+    "reason": "Existing validated celestial engine; per-response LIVE or VERIFIED_CACHE provenance"
+  }
+]

@@ -19,8 +19,8 @@ LEVELS = (64, 128, 256, 512)
 
 @lru_cache(maxsize=10)
 def hpx(nside):
-    if type(nside) is not int or nside < 1 or nside > 512 or nside & (nside - 1):
-        raise ValueError("NSIDE must be a power of two from 1 through 512")
+    if type(nside) is not int or nside < 1 or nside > 32768 or nside & (nside - 1):
+        raise ValueError("NSIDE must be a power of two from 1 through 32768")
     return HEALPix(nside=nside, order="nested")
 
 
@@ -74,7 +74,7 @@ def describe(value, step=16):
         latitude_deg=float(lat.to_value(u.deg)),
         longitude_deg=float(lon.to_value(u.deg)),
         parent_id=cell_id(nside // 2, pixel // 4) if nside > 1 else None,
-        children=[cell_id(nside * 2, pixel * 4 + i) for i in range(4)] if nside < 512 else [],
+        children=[cell_id(nside * 2, pixel * 4 + i) for i in range(4)] if nside < 32768 else [],
         neighbors=[cell_id(nside, int(i)) for i in adjacent if i >= 0],
         area_m2=4 * math.pi * RADIUS_M**2 / hp.npix,
         boundary_lonlat=boundary(nside, pixel, step),
@@ -89,6 +89,8 @@ def describe(value, step=16):
 
 
 def batches(nside, size=4096):
+    if nside > 512:
+        raise ValueError("Fine grids are analytic only; whole-Moon materialization is prohibited")
     if not 1 <= size <= 16384:
         raise ValueError("Batch size outside budget")
     hp = hpx(nside)

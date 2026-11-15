@@ -24,7 +24,7 @@ def test_generated_contracts_are_current_and_science_routes_typed():
     for path, methods in app.openapi()["paths"].items():
         if not path.startswith("/api/v1/science/"):
             continue
-        if path.startswith("/api/v1/science/global/"):
+        if path.startswith(("/api/v1/science/global/", "/api/v1/science/regions", "/api/v1/science/region-jobs/", "/api/v1/science/terrain/{mesh_id}", "/api/v1/science/terrain-regions")):
             continue  # Additive global routes have their own contract assertions.
         for method, operation in methods.items():
             if method not in ("get", "post"):
@@ -35,7 +35,7 @@ def test_generated_contracts_are_current_and_science_routes_typed():
                 assert operation["responses"][code]["content"]["application/json"]["schema"][
                     "$ref"
                 ].endswith("/ScienceError")
-    assert count == 11
+    assert count == 15
 
 
 def payload(d):

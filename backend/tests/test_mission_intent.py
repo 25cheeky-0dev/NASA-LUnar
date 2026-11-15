@@ -22,7 +22,7 @@ def test_critical_fields_require_literal_user_evidence():
 
 
 def test_no_key_preserves_manual_workflow(monkeypatch):
-    for provider in ('GROQ','NVIDIA'):
+    for provider in ('GROQ','NVIDIA','GEMINI'):
         monkeypatch.delenv(provider+'_API_KEY',raising=False)
     result=asyncio.run(interpret_mission(InterpretRequest(text='find safe landings')))
     assert result['status']=='LLM_UNAVAILABLE'

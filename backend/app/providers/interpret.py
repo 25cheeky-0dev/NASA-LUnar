@@ -13,7 +13,7 @@ from typing import Literal
 
 class InterpretRequest(Strict):
     text: str = Field(min_length=1,max_length=4000)
-    provider_preference: Literal['groq','nvidia','auto','manual'] = 'auto'
+    provider_preference: Literal['groq','nvidia','gemini','auto','manual'] = 'auto'
 
 
 async def interpret(request):

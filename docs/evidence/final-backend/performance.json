@@ -1,0 +1,134 @@
+[
+  {
+    "name": "status",
+    "elapsed_seconds": 2.2443101999997452,
+    "server_rss_bytes": 200400896,
+    "status": 200
+  },
+  {
+    "name": "thermal-region",
+    "elapsed_seconds": 0.22594190000017988,
+    "server_rss_bytes": 203243520,
+    "status": 200
+  },
+  {
+    "name": "levels",
+    "elapsed_seconds": 0.00500359999932698,
+    "server_rss_bytes": 203268096,
+    "status": 200
+  },
+  {
+    "name": "lookup",
+    "elapsed_seconds": 0.10513749999881838,
+    "server_rss_bytes": 200957952,
+    "status": 200
+  },
+  {
+    "name": "terrain",
+    "elapsed_seconds": 0.03892409999934898,
+    "server_rss_bytes": 203075584,
+    "status": 200
+  },
+  {
+    "name": "physical-vector",
+    "elapsed_seconds": 0.029811000000336207,
+    "server_rss_bytes": 203112448,
+    "status": 200
+  },
+  {
+    "name": "similarity",
+    "elapsed_seconds": 0.4330744000017148,
+    "server_rss_bytes": 203739136,
+    "status": 200
+  },
+  {
+    "name": "sources",
+    "elapsed_seconds": 0.04364979999991192,
+    "server_rss_bytes": 204800000,
+    "status": 200
+  },
+  {
+    "name": "thermal",
+    "elapsed_seconds": 0.2451699000012013,
+    "server_rss_bytes": 205021184,
+    "status": 200
+  },
+  {
+    "name": "crosswalk",
+    "elapsed_seconds": 0.050728200001685764,
+    "server_rss_bytes": 205733888,
+    "status": 200
+  },
+  {
+    "name": "datasets",
+    "elapsed_seconds": 0.006426599999031168,
+    "server_rss_bytes": 205778944,
+    "status": 200
+  },
+  {
+    "name": "native",
+    "elapsed_seconds": 0.004347100000813953,
+    "server_rss_bytes": 205783040,
+    "status": 200
+  },
+  {
+    "name": "fit",
+    "elapsed_seconds": 0.08859990000019025,
+    "server_rss_bytes": 206213120,
+    "status": 200
+  },
+  {
+    "name": "physical-scales-v1",
+    "elapsed_seconds": 0.03167840000060096,
+    "server_rss_bytes": 206213120,
+    "status": 200
+  },
+  {
+    "name": "terrain-population-zscore-v1",
+    "elapsed_seconds": 0.009304499999416294,
+    "server_rss_bytes": 206213120,
+    "status": 200
+  },
+  {
+    "name": "PCA_FEATURE_EMBEDDING",
+    "elapsed_seconds": 0.01729689999956463,
+    "server_rss_bytes": 206225408,
+    "status": 200
+  },
+  {
+    "name": "strict-uncertainty",
+    "elapsed_seconds": 0.003403299999263254,
+    "server_rss_bytes": 206229504,
+    "status": 422
+  },
+  {
+    "name": "descriptive",
+    "elapsed_seconds": 0.008968500000264612,
+    "server_rss_bytes": 206241792,
+    "status": 200
+  },
+  {
+    "name": "horizon",
+    "elapsed_seconds": 0.6056745999994746,
+    "server_rss_bytes": 305205248,
+    "status": 200
+  },
+  {
+    "name": "analysis",
+    "elapsed_seconds": 0.10274090000166325,
+    "server_rss_bytes": 305401856,
+    "status": 200
+  },
+  {
+    "name": "delay",
+    "elapsed_seconds": 0.17087100000026112,
+    "server_rss_bytes": 306737152,
+    "status": 200
+  },
+  {
+    "name": "terrain-analysis",
+    "elapsed_seconds": 1.0479864000008092,
+    "server_rss_bytes": 307408896,
+    "status": 200
+  }
+]

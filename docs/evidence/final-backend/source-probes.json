@@ -1,0 +1,39 @@
+[
+  {
+    "source": "Site04 supplemental",
+    "url": "https://pgda.gsfc.nasa.gov/products/78",
+    "status": "SOURCE_UNAVAILABLE",
+    "reason": "[WinError 10060] A connection attempt failed because the connected party did not properly respond after a period of time, or established connection failed because connected host has failed to respond"
+  },
+  {
+    "source": "M3",
+    "url": "https://pds.nasa.gov/ds-view/pds/viewProfile.jsp?dsid=CH1-ORB-L-M3-4-L2-REFLECTANCE-V1.0",
+    "status": 200,
+    "bytes": 21147,
+    "links": [
+      "http://pds-imaging.jpl.nasa.gov/volumes/m3.html"
+    ]
+  },
+  {
+    "source": "Moon Trek",
+    "url": "https://trek.nasa.gov/tiles/apidoc/",
+    "status": 200,
+    "bytes": 1551,
+    "links": [
+      "trekAPI.html?body=moon",
+      "trekAPI.html?body=mars",
+      "trekAPI.html?body=titan",
+      "trekAPI.html?body=vesta",
+      "trekAPI.html?body=ceres",
+      "trekAPI.html?body=mercury",
+      "trekAPI.html?body=icyMoon"
+    ]
+  },
+  {
+    "source": "QuickMap",
+    "url": "https://quickmap.lroc.asu.edu/",
+    "status": 200,
+    "bytes": 8160,
+    "links": []
+  }
+]

@@ -1,0 +1,45 @@
+name: WISPR release verification
+on: [push, pull_request]
+permissions:
+  contents: read
+jobs:
+  scientific:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python: ['3.12', '3.13']
+    env:
+      WISPR_RESOURCE_LIMITS: 'false'
+      PYTHONDONTWRITEBYTECODE: '1'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '${{ matrix.python }}'
+      - run: pip install uv
+      - run: uv sync --project backend --locked --extra test
+      - run: uv run --project backend --no-sync python -m pytest backend -q -m 'not live'
+      - run: uv run --no-sync python -m scripts.export_science_contract --check
+        working-directory: backend
+  frontend:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: npm ci
+        working-directory: frontend
+      - run: npm run build && npm test
+        working-directory: frontend
+  container:
+    runs-on: ubuntu-latest
+    needs: [scientific, frontend]
+    steps:
+      - uses: actions/checkout@v4
+      - run: docker build -t wispr:test .
+      - run: |
+          docker run -d --name wispr -p 8080:8080 wispr:test
+          for n in $(seq 1 30); do curl -fsS localhost:8080/health && break || sleep 2; done
+          curl -fsS -X POST localhost:8080/api/v1/explorer/demo > demo.json
+          python -c "import json; assert json.load(open('demo.json'))['result']['outcome']=='KEEP'"

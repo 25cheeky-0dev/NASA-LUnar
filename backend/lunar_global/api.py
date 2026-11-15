@@ -446,3 +446,55 @@ def layer_image(layer_id: str):
     if sha256(path) != row["sha256"]:
         raise HTTPException(503, "Layer checksum mismatch")
     return FileResponse(path, media_type="image/png")
+
+
+@router.get("/thermal-observations", response_model=Page)
+def thermal_observations(
+    west: float = Query(ge=0, lt=360),
+    south: float = Query(ge=-90, lt=-80),
+    east: float = Query(ge=0, le=360),
+    north: float = Query(ge=-90, le=-80),
+    local_time_bin: int = Query(ge=0, le=95),
+    channel: Literal["t3", "t4", "t5", "t6", "t7", "t8", "t9", "tbol"] = "tbol",
+    limit: int = Query(100, ge=1, le=1000),
+):
+    from .storage import verified_files
+
+    if west > east or south > north:
+        raise HTTPException(422, "Ordered bbox required; split antimeridian queries")
+    manifests = list((store().root / "thermal_snapshots").glob("*/manifest.json"))
+    if len(manifests) != 1:
+        raise HTTPException(404, "Single thermal snapshot unavailable")
+    files, manifest = call(verified_files, manifests[0].parent)
+    rows = call(
+        query,
+        files,
+        "longitude_deg BETWEEN ? AND ? AND latitude_deg BETWEEN ? AND ? AND local_time_bin = ?",
+        [west, east, south, north, local_time_bin],
+        limit=limit,
+        order="latitude_deg, longitude_deg",
+    )
+    records = [
+        dict(
+            latitude_deg=r["latitude_deg"],
+            longitude_deg=r["longitude_deg"],
+            channel=channel,
+            temperature_k=r[channel],
+            quality="MISSING"
+            if r[channel] is None
+            else "BELOW_SENSITIVITY"
+            if r[channel] < 0
+            else "OBSERVED_BIN_MEAN",
+            local_time_hours=r["local_time_hours"],
+            support={k: r[k] for k in ("west", "east", "south", "north")},
+            source_id=r["source_id"],
+            acquisition=manifest["source"]["temporal_coverage"],
+        )
+        for r in rows
+    ]
+    return dict(
+        records=records,
+        offset=0,
+        limit=limit,
+        scope="Historical native pixel centers in bbox; one channel/local-time bin; not a mission temperature prediction",
+    )
